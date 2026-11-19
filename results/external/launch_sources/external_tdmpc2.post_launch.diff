@@ -1,0 +1,40 @@
+--- results/external/launch_sources/external_tdmpc2.py	2026-11-09 22:41:36.010079259 +0000
++++ code/scripts/external_tdmpc2.py	2026-11-09 23:08:39.421137590 +0000
+@@ -380,9 +380,9 @@
+ 
+ 
+ def licence_line(path):
+-    text = Path(path).read_text()
+-    first = next(line.strip() for line in text.splitlines() if line.strip())
+-    return f"{first} (`{Path(path).name}`, sha256 `{sha(path)}`)"
++    lines = [line.strip() for line in Path(path).read_text().splitlines() if line.strip()]
++    name = lines[0] + (" " + lines[1] if lines[1].startswith("Version") else "")
++    return f"{name} (`{Path(path).name}`, sha256 `{sha(path)}`)"
+ 
+ 
+ def report(tasks):
+@@ -422,8 +422,11 @@
+         if excluded.exists():
+             ex = json.loads(excluded.read_text())
+             summary += [f"## {task}: not audited", "",
+-                        f"Checkpoint `{checkpoint['file']}` (sha256 `{checkpoint['sha256']}`). {ex['reason']}. "
+-                        f"Across the {len(cals)} starts x {cals[0]['n_behaviour_oracle']} behaviour plans: share of "
++                        f"Checkpoint `{checkpoint['file']}` (sha256 `{checkpoint['sha256']}`). "
++                        f"{ex['reason'][0].upper() + ex['reason'][1:]}. "
++                        f"Starts at which every one of the {cals[0]['n_behaviour_oracle']:,} behaviour-plan returns is "
++                        f"exactly 0: {sum(c['oracle_max'] == 0 and c['oracle_min'] == 0 for c in cals)} of {len(cals)}. "
++                        f"Across the {len(cals)} starts: share of "
+                         f"returns exactly 0 per start {min(c['oracle_zero_share'] for c in cals):.4f} to "
+                         f"{max(c['oracle_zero_share'] for c in cals):.4f}; largest return "
+                         f"{max(c['oracle_max'] for c in cals):.6g}; checked acceptance at theta = the "
+@@ -504,8 +507,8 @@
+             f = fl[key(r)]
+             res, flip = f.get("residual_surrogate", {}), f.get("flip_surrogate", {})
+             cf = f.get("flip_closed_form", {})
+-            star_r = "*" if r["scoring"] == "margin" else ""
+-            star_f = "*" if r["scoring"] == "verdict" else ""
++            star_r = "*" if r["scoring"] == "margin" and "hackability" in res else ""
++            star_f = "*" if r["scoring"] == "verdict" and "hackability" in flip else ""
+             summary.append(
+                 f"| {r['attacker']} | {r['scoring']} | {r['budget']:,} | {fmt(r['hackability'])} | "
+                 f"{fmt(res.get('hackability'))}{star_r} | {fmt(res.get('excess'))} | {fmt(flip.get('hackability'))}{star_f} | "

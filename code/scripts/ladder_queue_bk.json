@@ -1,0 +1,229 @@
+{
+ "comment": "The brief's 16 runs with the three-stage model (pilot 5): map dynamics, census read off the next map, bookkeeping on scalars with its own schedule (2 updates of 4,096 rows per trunk step from the run's own index; about 384M third-stage samples per 6M-sample run). Model: SIZES (two-stage scalars, level histograms 32, ledger). Saved at half and at the end (TrainConfig.save_fracs). One-step: AdamW 8e-4, warm-up 3%, cosine to 5%, batch 128. Self-forcing: 4-month windows, half teacher-forced, peak lr 2e-4, from the base run's final checkpoint.",
+ "defaults": {
+  "batch_size": 128,
+  "budget_weight": 6.0,
+  "table_lr_mult": 10.0,
+  "workers": 6,
+  "bk_updates": 2,
+  "bk_batch": 4096
+ },
+ "runs": [
+  {
+   "name": "os_15m_small",
+   "size": "15m",
+   "index": "train_small",
+   "mode": "onestep",
+   "samples": 6000000,
+   "seed": 0,
+   "lr": 0.0008,
+   "model_overrides": {
+    "bookkeeping": true,
+    "bk_width": 256
+   }
+  },
+  {
+   "name": "os_15m_full",
+   "size": "15m",
+   "index": "train_full",
+   "mode": "onestep",
+   "samples": 6000000,
+   "seed": 0,
+   "lr": 0.0008,
+   "model_overrides": {
+    "bookkeeping": true,
+    "bk_width": 256
+   }
+  },
+  {
+   "name": "os_50m_small",
+   "size": "50m",
+   "index": "train_small",
+   "mode": "onestep",
+   "samples": 6000000,
+   "seed": 0,
+   "lr": 0.0008,
+   "model_overrides": {
+    "bookkeeping": true,
+    "bk_width": 384
+   }
+  },
+  {
+   "name": "os_50m_full",
+   "size": "50m",
+   "index": "train_full",
+   "mode": "onestep",
+   "samples": 6000000,
+   "seed": 0,
+   "lr": 0.0008,
+   "model_overrides": {
+    "bookkeeping": true,
+    "bk_width": 384
+   }
+  },
+  {
+   "name": "os_100m_small",
+   "size": "100m",
+   "index": "train_small",
+   "mode": "onestep",
+   "samples": 6000000,
+   "seed": 0,
+   "lr": 0.0008,
+   "model_overrides": {
+    "bookkeeping": true,
+    "bk_width": 512
+   }
+  },
+  {
+   "name": "os_100m_full",
+   "size": "100m",
+   "index": "train_full",
+   "mode": "onestep",
+   "samples": 6000000,
+   "seed": 0,
+   "lr": 0.0008,
+   "model_overrides": {
+    "bookkeeping": true,
+    "bk_width": 512
+   }
+  },
+  {
+   "name": "sf_15m_small",
+   "size": "15m",
+   "index": "train_small",
+   "mode": "selfforce",
+   "samples": 1500000,
+   "seed": 0,
+   "lr": 0.0002,
+   "init_from": "os_15m_small",
+   "model_overrides": {
+    "bookkeeping": true,
+    "bk_width": 256
+   }
+  },
+  {
+   "name": "sf_15m_full",
+   "size": "15m",
+   "index": "train_full",
+   "mode": "selfforce",
+   "samples": 1500000,
+   "seed": 0,
+   "lr": 0.0002,
+   "init_from": "os_15m_full",
+   "model_overrides": {
+    "bookkeeping": true,
+    "bk_width": 256
+   }
+  },
+  {
+   "name": "sf_50m_small",
+   "size": "50m",
+   "index": "train_small",
+   "mode": "selfforce",
+   "samples": 1500000,
+   "seed": 0,
+   "lr": 0.0002,
+   "init_from": "os_50m_small",
+   "model_overrides": {
+    "bookkeeping": true,
+    "bk_width": 384
+   }
+  },
+  {
+   "name": "sf_50m_full",
+   "size": "50m",
+   "index": "train_full",
+   "mode": "selfforce",
+   "samples": 1500000,
+   "seed": 0,
+   "lr": 0.0002,
+   "init_from": "os_50m_full",
+   "model_overrides": {
+    "bookkeeping": true,
+    "bk_width": 384
+   }
+  },
+  {
+   "name": "sf_100m_small",
+   "size": "100m",
+   "index": "train_small",
+   "mode": "selfforce",
+   "samples": 1500000,
+   "seed": 0,
+   "lr": 0.0002,
+   "init_from": "os_100m_small",
+   "model_overrides": {
+    "bookkeeping": true,
+    "bk_width": 512
+   }
+  },
+  {
+   "name": "sf_100m_full",
+   "size": "100m",
+   "index": "train_full",
+   "mode": "selfforce",
+   "samples": 1500000,
+   "seed": 0,
+   "lr": 0.0002,
+   "init_from": "os_100m_full",
+   "model_overrides": {
+    "bookkeeping": true,
+    "bk_width": 512
+   }
+  },
+  {
+   "name": "os_50m_full_s1",
+   "size": "50m",
+   "index": "train_full",
+   "mode": "onestep",
+   "samples": 6000000,
+   "seed": 1,
+   "lr": 0.0008,
+   "model_overrides": {
+    "bookkeeping": true,
+    "bk_width": 384
+   }
+  },
+  {
+   "name": "os_50m_full_s2",
+   "size": "50m",
+   "index": "train_full",
+   "mode": "onestep",
+   "samples": 6000000,
+   "seed": 2,
+   "lr": 0.0008,
+   "model_overrides": {
+    "bookkeeping": true,
+    "bk_width": 384
+   }
+  },
+  {
+   "name": "sf_50m_full_s1",
+   "size": "50m",
+   "index": "train_full",
+   "mode": "selfforce",
+   "samples": 1500000,
+   "seed": 1,
+   "lr": 0.0002,
+   "init_from": "os_50m_full_s1",
+   "model_overrides": {
+    "bookkeeping": true,
+    "bk_width": 384
+   }
+  },
+  {
+   "name": "sf_50m_full_s2",
+   "size": "50m",
+   "index": "train_full",
+   "mode": "selfforce",
+   "samples": 1500000,
+   "seed": 2,
+   "lr": 0.0002,
+   "init_from": "os_50m_full_s2",
+   "model_overrides": {
+    "bookkeeping": true,
+    "bk_width": 384
+   }
+  }
+ ]
+}

@@ -1,0 +1,1492 @@
+{
+ "rows": [
+  {
+   "kind": "scalar",
+   "entry": "funds",
+   "lower": 0,
+   "upper": null,
+   "source": "totalFunds changes only in spend/setFunds (src/micropolis.cpp:1066-1081): a tool is refused when totalFunds < cost (src/tool.cpp:154, charged at :127); the budget pays at most taxFund + totalFunds, otherwise nothing and auto-budget switches off (src/budget.cpp:124-230, 268-310); setFunds is otherwise called only at load or reset",
+   "caveat": "spend/setFunds take a 32-bit int: holds below 2,147,483,647"
+  },
+  {
+   "kind": "scalar",
+   "entry": "res_valve",
+   "lower": -2000,
+   "upper": 2000,
+   "source": "clamp to +-RES_VALVE_RANGE (src/simulate.cpp:671; = 2000, src/micropolis.h:286)",
+   "caveat": ""
+  },
+  {
+   "kind": "scalar",
+   "entry": "com_valve",
+   "lower": -1500,
+   "upper": 1500,
+   "source": "clamp to +-COM_VALVE_RANGE (src/simulate.cpp:672; = 1500, src/micropolis.h:287)",
+   "caveat": ""
+  },
+  {
+   "kind": "scalar",
+   "entry": "ind_valve",
+   "lower": -1500,
+   "upper": 1500,
+   "source": "clamp to +-IND_VALVE_RANGE (src/simulate.cpp:673; = 1500, src/micropolis.h:288)",
+   "caveat": ""
+  },
+  {
+   "kind": "scalar",
+   "entry": "res_pop",
+   "lower": 0,
+   "upper": null,
+   "source": "zeroed by the census (src/simulate.cpp:699), then += zone population 0..40 (src/zone.cpp:556-562, 711-715)",
+   "caveat": "16-bit short: would wrap only above 32,767 (more than 819 fully grown residential zones)"
+  },
+  {
+   "kind": "scalar",
+   "entry": "com_pop",
+   "lower": 0,
+   "upper": null,
+   "source": "zeroed by the census (src/simulate.cpp:700), then += zone population 0..5 (src/zone.cpp:774, 866-873)",
+   "caveat": ""
+  },
+  {
+   "kind": "scalar",
+   "entry": "ind_pop",
+   "lower": 0,
+   "upper": null,
+   "source": "zeroed by the census (src/simulate.cpp:701), then += zone population 0..4 (src/zone.cpp:926, 1001-1008)",
+   "caveat": ""
+  },
+  {
+   "kind": "scalar",
+   "entry": "score",
+   "lower": 0,
+   "upper": 1000,
+   "source": "cityScore = (cityScore + clamp(z, 0, 1000)) / 2 (src/evaluate.cpp:464-466); starts at 500 (src/evaluate.cpp:155, src/initialize.cpp:94); a loaded score outside 1..999 becomes 500 (src/simulate.cpp:504-506)",
+   "caveat": ""
+  },
+  {
+   "kind": "scalar",
+   "entry": "tax_fund",
+   "lower": 0,
+   "upper": null,
+   "source": "totalPop * landValueAverage / 120 * cityTax * FLevels, all factors non-negative (src/simulate.cpp:887); 0 at src/simulate.cpp:559",
+   "caveat": ""
+  },
+  {
+   "kind": "scalar",
+   "entry": "road_spend",
+   "lower": 0,
+   "upper": null,
+   "source": "set to an allocation min(fund x percent, cash left) or to the fund (src/budget.cpp:115-230, 280-282, 306-308); percents clamped to [0, 1] (c_api.cpp:139-141)",
+   "caveat": ""
+  },
+  {
+   "kind": "scalar",
+   "entry": "fire_spend",
+   "lower": 0,
+   "upper": null,
+   "source": "as road_spend (src/budget.cpp:280, 306)",
+   "caveat": ""
+  },
+  {
+   "kind": "scalar",
+   "entry": "police_spend",
+   "lower": 0,
+   "upper": null,
+   "source": "as road_spend (src/budget.cpp:281, 307)",
+   "caveat": ""
+  },
+  {
+   "kind": "scalar",
+   "entry": "powered_zones",
+   "lower": 0,
+   "upper": null,
+   "source": "zeroed by the census (src/simulate.cpp:694), ++ per powered zone (src/zone.cpp:100)",
+   "caveat": ""
+  },
+  {
+   "kind": "scalar",
+   "entry": "unpowered_zones",
+   "lower": 0,
+   "upper": null,
+   "source": "zeroed by the census (src/simulate.cpp:695), ++ per unpowered zone (src/zone.cpp:102)",
+   "caveat": ""
+  },
+  {
+   "kind": "scalar",
+   "entry": "coal_plants",
+   "lower": 0,
+   "upper": null,
+   "source": "zeroed by the census (src/simulate.cpp:710), ++ per plant (src/simulate.cpp:1462)",
+   "caveat": ""
+  },
+  {
+   "kind": "scalar",
+   "entry": "nuclear_plants",
+   "lower": 0,
+   "upper": null,
+   "source": "zeroed by the census (src/simulate.cpp:711), ++ per plant (src/simulate.cpp:1482)",
+   "caveat": ""
+  },
+  {
+   "kind": "scalar",
+   "entry": "road_total",
+   "lower": 0,
+   "upper": null,
+   "source": "zeroed by the census (src/simulate.cpp:697), += 1, 2 or 4 per road tile (src/simulate.cpp:1077, 1102, 1113)",
+   "caveat": "16-bit short: would wrap only above 32,767"
+  },
+  {
+   "kind": "cost",
+   "entry": "build_cost",
+   "lower": 0,
+   "upper": null,
+   "source": "monthBuildCost += before - after only when funds fell (c_api.cpp:151-153); zeroed every month (c_api.cpp:178)",
+   "caveat": ""
+  },
+  {
+   "kind": "ledger",
+   "entry": "sprite_cycle",
+   "lower": null,
+   "upper": null,
+   "source": "unbounded: tick counter spriteCycle++ (src/sprite.cpp:570) in a short; it wraps from 32,767 to -32,768, so a saturating bound would be wrong",
+   "caveat": ""
+  },
+  {
+   "kind": "ledger",
+   "entry": "total_pop",
+   "lower": 0,
+   "upper": null,
+   "source": "(short)(resPop / 8 + comPop + indPop) (src/simulate.cpp:611-613); 1 or 0 at src/simulate.cpp:314, 418",
+   "caveat": "non-negative while res_pop is"
+  },
+  {
+   "kind": "ledger",
+   "entry": "res_hist0",
+   "lower": 0,
+   "upper": null,
+   "source": "resHist[0] = resPop / 8 (src/simulate.cpp:733, 761)",
+   "caveat": "non-negative while res_pop is"
+  },
+  {
+   "kind": "ledger",
+   "entry": "res_hist1",
+   "lower": 0,
+   "upper": null,
+   "source": "previous resHist[0] (shift at src/simulate.cpp:748)",
+   "caveat": "non-negative while res_pop is"
+  },
+  {
+   "kind": "ledger",
+   "entry": "com_hist0",
+   "lower": 0,
+   "upper": null,
+   "source": "comHist[0] = comPop (src/simulate.cpp:762)",
+   "caveat": ""
+  },
+  {
+   "kind": "ledger",
+   "entry": "com_hist1",
+   "lower": 0,
+   "upper": null,
+   "source": "previous comHist[0] (src/simulate.cpp:749)",
+   "caveat": ""
+  },
+  {
+   "kind": "ledger",
+   "entry": "ind_hist0",
+   "lower": 0,
+   "upper": null,
+   "source": "indHist[0] = indPop (src/simulate.cpp:763)",
+   "caveat": ""
+  },
+  {
+   "kind": "ledger",
+   "entry": "ind_hist1",
+   "lower": 0,
+   "upper": null,
+   "source": "previous indHist[0] (src/simulate.cpp:750)",
+   "caveat": ""
+  },
+  {
+   "kind": "ledger",
+   "entry": "res_cap",
+   "lower": 0,
+   "upper": 1,
+   "source": "bool resCap (src/micropolis.h:2117)",
+   "caveat": ""
+  },
+  {
+   "kind": "ledger",
+   "entry": "com_cap",
+   "lower": 0,
+   "upper": 1,
+   "source": "bool comCap (src/micropolis.h:2118)",
+   "caveat": ""
+  },
+  {
+   "kind": "ledger",
+   "entry": "ind_cap",
+   "lower": 0,
+   "upper": 1,
+   "source": "bool indCap (src/micropolis.h:2119)",
+   "caveat": ""
+  },
+  {
+   "kind": "ledger",
+   "entry": "need_hospital",
+   "lower": -1,
+   "upper": 1,
+   "source": "assigned only -1, 0 or 1 (src/simulate.cpp:778-787; src/zone.cpp:296)",
+   "caveat": ""
+  },
+  {
+   "kind": "ledger",
+   "entry": "need_church",
+   "lower": -1,
+   "upper": 1,
+   "source": "assigned only -1, 0 or 1 (src/simulate.cpp:792-801; src/zone.cpp:312)",
+   "caveat": ""
+  },
+  {
+   "kind": "ledger",
+   "entry": "road_fund",
+   "lower": 0,
+   "upper": null,
+   "source": "(roadTotal + 2 railTotal) * RLevels (src/simulate.cpp:886); 0 at src/initialize.cpp:101",
+   "caveat": ""
+  },
+  {
+   "kind": "ledger",
+   "entry": "police_fund",
+   "lower": 0,
+   "upper": null,
+   "source": "policeStationPop * 100 (src/simulate.cpp:884); 0 at src/initialize.cpp:102",
+   "caveat": ""
+  },
+  {
+   "kind": "ledger",
+   "entry": "fire_fund",
+   "lower": 0,
+   "upper": null,
+   "source": "fireStationPop * 100 (src/simulate.cpp:885); 0 at src/initialize.cpp:103",
+   "caveat": ""
+  },
+  {
+   "kind": "ledger",
+   "entry": "auto_budget",
+   "lower": 0,
+   "upper": 1,
+   "source": "bool autoBudget (src/micropolis.h:2354)",
+   "caveat": ""
+  },
+  {
+   "kind": "ledger",
+   "entry": "fire_pop",
+   "lower": 0,
+   "upper": null,
+   "source": "zeroed by the census (src/simulate.cpp:696), ++ per fire tile (src/simulate.cpp:975)",
+   "caveat": ""
+  },
+  {
+   "kind": "ledger",
+   "entry": "city_center_x",
+   "lower": 0,
+   "upper": 119,
+   "source": "mean x of zone tiles, x in 0..119, or WORLD_W / 2 with no zones (src/scan.cpp:143-154, 177-182)",
+   "caveat": ""
+  },
+  {
+   "kind": "ledger",
+   "entry": "city_center_y",
+   "lower": 0,
+   "upper": 99,
+   "source": "mean y of zone tiles, y in 0..99, or WORLD_H / 2 with no zones (src/scan.cpp:143-154, 177-182)",
+   "caveat": ""
+  },
+  {
+   "kind": "ledger",
+   "entry": "pollution_max_x",
+   "lower": 0,
+   "upper": 118,
+   "source": "x of a 2 x 2 pollution block, x = 0, 2, ..., 118 (src/scan.cpp:305-317); 0 at src/micropolis.cpp:516",
+   "caveat": ""
+  },
+  {
+   "kind": "ledger",
+   "entry": "pollution_max_y",
+   "lower": 0,
+   "upper": 98,
+   "source": "y of a 2 x 2 pollution block, y = 0, 2, ..., 98 (src/scan.cpp:305-317); 0 at src/micropolis.cpp:516",
+   "caveat": ""
+  },
+  {
+   "kind": "ledger",
+   "entry": "flood_count",
+   "lower": 0,
+   "upper": 30,
+   "source": "set to 30 (src/disasters.cpp:369), decremented while non-zero (src/disasters.cpp:102-103)",
+   "caveat": ""
+  },
+  {
+   "kind": "ledger",
+   "entry": "abs_dist",
+   "lower": 0,
+   "upper": null,
+   "source": "absoluteValue(dispX) + absoluteValue(dispY) (src/sprite.cpp:508-510); 0 at src/micropolis.cpp:613",
+   "caveat": ""
+  },
+  {
+   "kind": "overlay",
+   "entry": "half overlays (5)",
+   "lower": 0,
+   "upper": 255,
+   "source": "byte maps MapByte2 (src/map_type.h:346; src/micropolis.h:1262-1266)",
+   "caveat": ""
+  },
+  {
+   "kind": "overlay",
+   "entry": "rate of growth",
+   "lower": -200,
+   "upper": 200,
+   "source": "clamp to +-200 (src/zone.cpp:355; decay src/simulate.cpp:385, 392)",
+   "caveat": ""
+  },
+  {
+   "kind": "overlay",
+   "entry": "fire, police coverage",
+   "lower": 0,
+   "upper": null,
+   "source": "sums of non-negative station effects (src/simulate.cpp:1515-1517, 1545-1547), smoothed by averaging (src/scan.cpp:90-112)",
+   "caveat": ""
+  },
+  {
+   "kind": "overlay",
+   "entry": "terrain",
+   "lower": 0,
+   "upper": 255,
+   "source": "byte map MapByte4 (src/micropolis.h:1273)",
+   "caveat": ""
+  },
+  {
+   "kind": "overlay",
+   "entry": "com_rate",
+   "lower": -64,
+   "upper": 64,
+   "source": "64 - 4 * (min(distance, 64) / 2) (src/scan.cpp:591-594, 408)",
+   "caveat": ""
+  }
+ ],
+ "data": {
+  "train_full": {
+   "scalar:funds": {
+    "n": 3049000,
+    "min": 0.0,
+    "max": 1012171.0,
+    "beyond": 0,
+    "share_at_lower": 0.14244998360118072,
+    "share_at_upper": null
+   },
+   "scalar:res_valve": {
+    "n": 3049000,
+    "min": -2000.0,
+    "max": 2000.0,
+    "beyond": 0,
+    "share_at_lower": 0.05361725155788783,
+    "share_at_upper": 0.6383312561495572
+   },
+   "scalar:com_valve": {
+    "n": 3049000,
+    "min": -1500.0,
+    "max": 1500.0,
+    "beyond": 0,
+    "share_at_lower": 0.1745801902263037,
+    "share_at_upper": 0.23550016398819285
+   },
+   "scalar:ind_valve": {
+    "n": 3049000,
+    "min": -1500.0,
+    "max": 1500.0,
+    "beyond": 0,
+    "share_at_lower": 0.15490357494260412,
+    "share_at_upper": 0.2634204657264677
+   },
+   "scalar:res_pop": {
+    "n": 3049000,
+    "min": 0.0,
+    "max": 6054.0,
+    "beyond": 0,
+    "share_at_lower": 0.0009180059035749426,
+    "share_at_upper": null
+   },
+   "scalar:com_pop": {
+    "n": 3049000,
+    "min": 0.0,
+    "max": 329.0,
+    "beyond": 0,
+    "share_at_lower": 0.002901607084289931,
+    "share_at_upper": null
+   },
+   "scalar:ind_pop": {
+    "n": 3049000,
+    "min": 0.0,
+    "max": 488.0,
+    "beyond": 0,
+    "share_at_lower": 0.0013561823548704493,
+    "share_at_upper": null
+   },
+   "scalar:score": {
+    "n": 3049000,
+    "min": 0.0,
+    "max": 903.0,
+    "beyond": 0,
+    "share_at_lower": 3.902918989832732e-05,
+    "share_at_upper": 0.0
+   },
+   "scalar:tax_fund": {
+    "n": 3049000,
+    "min": 0.0,
+    "max": 15008.0,
+    "beyond": 0,
+    "share_at_lower": 0.13319678583142014,
+    "share_at_upper": null
+   },
+   "scalar:road_spend": {
+    "n": 3049000,
+    "min": 0.0,
+    "max": 3780.0,
+    "beyond": 0,
+    "share_at_lower": 0.12696687438504428,
+    "share_at_upper": null
+   },
+   "scalar:fire_spend": {
+    "n": 3049000,
+    "min": 0.0,
+    "max": 3800.0,
+    "beyond": 0,
+    "share_at_lower": 0.24039488356838307,
+    "share_at_upper": null
+   },
+   "scalar:police_spend": {
+    "n": 3049000,
+    "min": 0.0,
+    "max": 3700.0,
+    "beyond": 0,
+    "share_at_lower": 0.23205411610364055,
+    "share_at_upper": null
+   },
+   "scalar:powered_zones": {
+    "n": 3049000,
+    "min": 0.0,
+    "max": 618.0,
+    "beyond": 0,
+    "share_at_lower": 0.015023614299770416,
+    "share_at_upper": null
+   },
+   "scalar:unpowered_zones": {
+    "n": 3049000,
+    "min": 0.0,
+    "max": 608.0,
+    "beyond": 0,
+    "share_at_lower": 0.46738865201705476,
+    "share_at_upper": null
+   },
+   "scalar:coal_plants": {
+    "n": 3049000,
+    "min": 0.0,
+    "max": 22.0,
+    "beyond": 0,
+    "share_at_lower": 0.24260905214824532,
+    "share_at_upper": null
+   },
+   "scalar:nuclear_plants": {
+    "n": 3049000,
+    "min": 0.0,
+    "max": 13.0,
+    "beyond": 0,
+    "share_at_lower": 0.3603079698261725,
+    "share_at_upper": null
+   },
+   "scalar:road_total": {
+    "n": 3049000,
+    "min": 0.0,
+    "max": 5418.0,
+    "beyond": 0,
+    "share_at_lower": 0.0010429649065267302,
+    "share_at_upper": null
+   },
+   "cost:build_cost": {
+    "n": 3000000,
+    "min": 0.0,
+    "max": 21018.0,
+    "beyond": 0,
+    "share_at_lower": 0.8062153333333333,
+    "share_at_upper": null
+   },
+   "ledger:sprite_cycle": {
+    "n": 3049000,
+    "min": -32608.0,
+    "max": 32609.0,
+    "beyond": 0,
+    "share_at_lower": null,
+    "share_at_upper": null
+   },
+   "ledger:total_pop": {
+    "n": 3049000,
+    "min": 0.0,
+    "max": 1349.0,
+    "beyond": 0,
+    "share_at_lower": 0.0002827156444735979,
+    "share_at_upper": null
+   },
+   "ledger:res_hist0": {
+    "n": 3049000,
+    "min": 0.0,
+    "max": 759.0,
+    "beyond": 0,
+    "share_at_lower": 0.0015368973433912759,
+    "share_at_upper": null
+   },
+   "ledger:res_hist1": {
+    "n": 3049000,
+    "min": 0.0,
+    "max": 759.0,
+    "beyond": 0,
+    "share_at_lower": 0.0014762217120367334,
+    "share_at_upper": null
+   },
+   "ledger:com_hist0": {
+    "n": 3049000,
+    "min": 0.0,
+    "max": 329.0,
+    "beyond": 0,
+    "share_at_lower": 0.0029665464086585766,
+    "share_at_upper": null
+   },
+   "ledger:com_hist1": {
+    "n": 3049000,
+    "min": 0.0,
+    "max": 329.0,
+    "beyond": 0,
+    "share_at_lower": 0.003304362085929813,
+    "share_at_upper": null
+   },
+   "ledger:ind_hist0": {
+    "n": 3049000,
+    "min": 0.0,
+    "max": 488.0,
+    "beyond": 0,
+    "share_at_lower": 0.0013538865201705478,
+    "share_at_upper": null
+   },
+   "ledger:ind_hist1": {
+    "n": 3049000,
+    "min": 0.0,
+    "max": 488.0,
+    "beyond": 0,
+    "share_at_lower": 0.0013023942276156116,
+    "share_at_upper": null
+   },
+   "ledger:res_cap": {
+    "n": 3049000,
+    "min": 0.0,
+    "max": 1.0,
+    "beyond": 0,
+    "share_at_lower": 0.9805795342735323,
+    "share_at_upper": 0.019420465726467693
+   },
+   "ledger:com_cap": {
+    "n": 3049000,
+    "min": 0.0,
+    "max": 1.0,
+    "beyond": 0,
+    "share_at_lower": 0.9891669399803215,
+    "share_at_upper": 0.010833060019678584
+   },
+   "ledger:ind_cap": {
+    "n": 3049000,
+    "min": 0.0,
+    "max": 1.0,
+    "beyond": 0,
+    "share_at_lower": 0.9936366021646441,
+    "share_at_upper": 0.006363397835355855
+   },
+   "ledger:need_hospital": {
+    "n": 3049000,
+    "min": -1.0,
+    "max": 1.0,
+    "beyond": 0,
+    "share_at_lower": 0.027092161364381764,
+    "share_at_upper": 0.2021426697277796
+   },
+   "ledger:need_church": {
+    "n": 3049000,
+    "min": -1.0,
+    "max": 1.0,
+    "beyond": 0,
+    "share_at_lower": 0.02121416857986225,
+    "share_at_upper": 0.30489931124959
+   },
+   "ledger:road_fund": {
+    "n": 3049000,
+    "min": 0.0,
+    "max": 3811.0,
+    "beyond": 0,
+    "share_at_lower": 0.1178596261069203,
+    "share_at_upper": null
+   },
+   "ledger:police_fund": {
+    "n": 3049000,
+    "min": 0.0,
+    "max": 3700.0,
+    "beyond": 0,
+    "share_at_lower": 0.13925418169891768,
+    "share_at_upper": null
+   },
+   "ledger:fire_fund": {
+    "n": 3049000,
+    "min": 0.0,
+    "max": 3800.0,
+    "beyond": 0,
+    "share_at_lower": 0.19078943916038046,
+    "share_at_upper": null
+   },
+   "ledger:auto_budget": {
+    "n": 3049000,
+    "min": 0.0,
+    "max": 1.0,
+    "beyond": 0,
+    "share_at_lower": 0.1561141357822237,
+    "share_at_upper": 0.8438858642177763
+   },
+   "ledger:fire_pop": {
+    "n": 3049000,
+    "min": 0.0,
+    "max": 854.0,
+    "beyond": 0,
+    "share_at_lower": 0.9232938668415874,
+    "share_at_upper": null
+   },
+   "ledger:city_center_x": {
+    "n": 3049000,
+    "min": 17.0,
+    "max": 101.0,
+    "beyond": 0,
+    "share_at_lower": 0.0,
+    "share_at_upper": 0.0
+   },
+   "ledger:city_center_y": {
+    "n": 3049000,
+    "min": 9.0,
+    "max": 84.0,
+    "beyond": 0,
+    "share_at_lower": 0.0,
+    "share_at_upper": 0.0
+   },
+   "ledger:pollution_max_x": {
+    "n": 3049000,
+    "min": 0.0,
+    "max": 118.0,
+    "beyond": 0,
+    "share_at_lower": 4.263693014102985e-06,
+    "share_at_upper": 2.0334535913414234e-05
+   },
+   "ledger:pollution_max_y": {
+    "n": 3049000,
+    "min": 0.0,
+    "max": 98.0,
+    "beyond": 0,
+    "share_at_lower": 2.623811085601837e-06,
+    "share_at_upper": 2.295834699901607e-06
+   },
+   "ledger:flood_count": {
+    "n": 3049000,
+    "min": 0.0,
+    "max": 30.0,
+    "beyond": 0,
+    "share_at_lower": 0.994286651361102,
+    "share_at_upper": 6.559527714004592e-05
+   },
+   "ledger:abs_dist": {
+    "n": 3049000,
+    "min": 0.0,
+    "max": 3588.0,
+    "beyond": 0,
+    "share_at_lower": 0.649401443096097,
+    "share_at_upper": null
+   },
+   "overlay:half overlays (5)": {
+    "n": 0
+   },
+   "overlay:rate of growth": {
+    "n": 0
+   },
+   "overlay:fire, police coverage": {
+    "n": 0
+   },
+   "overlay:terrain": {
+    "n": 0
+   },
+   "overlay:com_rate": {
+    "n": 0
+   }
+  },
+  "heldout_eval": {
+   "scalar:funds": {
+    "n": 73200,
+    "min": 0.0,
+    "max": 49230.0,
+    "beyond": 0,
+    "share_at_lower": 0.11752732240437158,
+    "share_at_upper": null
+   },
+   "scalar:res_valve": {
+    "n": 73200,
+    "min": -2000.0,
+    "max": 2000.0,
+    "beyond": 0,
+    "share_at_lower": 0.06228142076502732,
+    "share_at_upper": 0.6398633879781421
+   },
+   "scalar:com_valve": {
+    "n": 73200,
+    "min": -1500.0,
+    "max": 1500.0,
+    "beyond": 0,
+    "share_at_lower": 0.17075136612021857,
+    "share_at_upper": 0.27756830601092897
+   },
+   "scalar:ind_valve": {
+    "n": 73200,
+    "min": -1500.0,
+    "max": 1500.0,
+    "beyond": 0,
+    "share_at_lower": 0.16401639344262295,
+    "share_at_upper": 0.25561475409836065
+   },
+   "scalar:res_pop": {
+    "n": 73200,
+    "min": 0.0,
+    "max": 4385.0,
+    "beyond": 0,
+    "share_at_lower": 0.0002459016393442623,
+    "share_at_upper": null
+   },
+   "scalar:com_pop": {
+    "n": 73200,
+    "min": 0.0,
+    "max": 276.0,
+    "beyond": 0,
+    "share_at_lower": 0.0009426229508196722,
+    "share_at_upper": null
+   },
+   "scalar:ind_pop": {
+    "n": 73200,
+    "min": 0.0,
+    "max": 402.0,
+    "beyond": 0,
+    "share_at_lower": 0.00028688524590163934,
+    "share_at_upper": null
+   },
+   "scalar:score": {
+    "n": 73200,
+    "min": 1.0,
+    "max": 807.0,
+    "beyond": 0,
+    "share_at_lower": 0.0,
+    "share_at_upper": 0.0
+   },
+   "scalar:tax_fund": {
+    "n": 73200,
+    "min": 0.0,
+    "max": 13524.0,
+    "beyond": 0,
+    "share_at_lower": 0.12508196721311476,
+    "share_at_upper": null
+   },
+   "scalar:road_spend": {
+    "n": 73200,
+    "min": 0.0,
+    "max": 1903.0,
+    "beyond": 0,
+    "share_at_lower": 0.12265027322404372,
+    "share_at_upper": null
+   },
+   "scalar:fire_spend": {
+    "n": 73200,
+    "min": 0.0,
+    "max": 1700.0,
+    "beyond": 0,
+    "share_at_lower": 0.14221311475409837,
+    "share_at_upper": null
+   },
+   "scalar:police_spend": {
+    "n": 73200,
+    "min": 0.0,
+    "max": 2300.0,
+    "beyond": 0,
+    "share_at_lower": 0.18102459016393443,
+    "share_at_upper": null
+   },
+   "scalar:powered_zones": {
+    "n": 73200,
+    "min": 0.0,
+    "max": 428.0,
+    "beyond": 0,
+    "share_at_lower": 0.011967213114754098,
+    "share_at_upper": null
+   },
+   "scalar:unpowered_zones": {
+    "n": 73200,
+    "min": 0.0,
+    "max": 306.0,
+    "beyond": 0,
+    "share_at_lower": 0.4805737704918033,
+    "share_at_upper": null
+   },
+   "scalar:coal_plants": {
+    "n": 73200,
+    "min": 0.0,
+    "max": 9.0,
+    "beyond": 0,
+    "share_at_lower": 0.38989071038251366,
+    "share_at_upper": null
+   },
+   "scalar:nuclear_plants": {
+    "n": 73200,
+    "min": 0.0,
+    "max": 9.0,
+    "beyond": 0,
+    "share_at_lower": 0.24210382513661202,
+    "share_at_upper": null
+   },
+   "scalar:road_total": {
+    "n": 73200,
+    "min": 33.0,
+    "max": 1152.0,
+    "beyond": 0,
+    "share_at_lower": 0.0,
+    "share_at_upper": null
+   },
+   "cost:build_cost": {
+    "n": 72000,
+    "min": 0.0,
+    "max": 15550.0,
+    "beyond": 0,
+    "share_at_lower": 0.7984305555555555,
+    "share_at_upper": null
+   },
+   "ledger:sprite_cycle": {
+    "n": 73200,
+    "min": -32608.0,
+    "max": 32609.0,
+    "beyond": 0,
+    "share_at_lower": null,
+    "share_at_upper": null
+   },
+   "ledger:total_pop": {
+    "n": 73200,
+    "min": 1.0,
+    "max": 1099.0,
+    "beyond": 0,
+    "share_at_lower": 0.0,
+    "share_at_upper": null
+   },
+   "ledger:res_hist0": {
+    "n": 73200,
+    "min": 0.0,
+    "max": 548.0,
+    "beyond": 0,
+    "share_at_lower": 0.00047814207650273224,
+    "share_at_upper": null
+   },
+   "ledger:res_hist1": {
+    "n": 73200,
+    "min": 0.0,
+    "max": 548.0,
+    "beyond": 0,
+    "share_at_lower": 0.00045081967213114754,
+    "share_at_upper": null
+   },
+   "ledger:com_hist0": {
+    "n": 73200,
+    "min": 0.0,
+    "max": 276.0,
+    "beyond": 0,
+    "share_at_lower": 0.0009426229508196722,
+    "share_at_upper": null
+   },
+   "ledger:com_hist1": {
+    "n": 73200,
+    "min": 0.0,
+    "max": 276.0,
+    "beyond": 0,
+    "share_at_lower": 0.0009016393442622951,
+    "share_at_upper": null
+   },
+   "ledger:ind_hist0": {
+    "n": 73200,
+    "min": 0.0,
+    "max": 402.0,
+    "beyond": 0,
+    "share_at_lower": 0.00028688524590163934,
+    "share_at_upper": null
+   },
+   "ledger:ind_hist1": {
+    "n": 73200,
+    "min": 0.0,
+    "max": 402.0,
+    "beyond": 0,
+    "share_at_lower": 0.00025956284153005464,
+    "share_at_upper": null
+   },
+   "ledger:res_cap": {
+    "n": 73200,
+    "min": 0.0,
+    "max": 1.0,
+    "beyond": 0,
+    "share_at_lower": 0.9684426229508196,
+    "share_at_upper": 0.03155737704918033
+   },
+   "ledger:com_cap": {
+    "n": 73200,
+    "min": 0.0,
+    "max": 1.0,
+    "beyond": 0,
+    "share_at_lower": 0.9954098360655738,
+    "share_at_upper": 0.0045901639344262295
+   },
+   "ledger:ind_cap": {
+    "n": 73200,
+    "min": 0.0,
+    "max": 1.0,
+    "beyond": 0,
+    "share_at_lower": 0.9970628415300546,
+    "share_at_upper": 0.0029371584699453552
+   },
+   "ledger:need_hospital": {
+    "n": 73200,
+    "min": -1.0,
+    "max": 1.0,
+    "beyond": 0,
+    "share_at_lower": 0.017459016393442623,
+    "share_at_upper": 0.22647540983606557
+   },
+   "ledger:need_church": {
+    "n": 73200,
+    "min": -1.0,
+    "max": 1.0,
+    "beyond": 0,
+    "share_at_lower": 0.013510928961748634,
+    "share_at_upper": 0.36846994535519123
+   },
+   "ledger:road_fund": {
+    "n": 73200,
+    "min": 0.0,
+    "max": 1903.0,
+    "beyond": 0,
+    "share_at_lower": 0.1151639344262295,
+    "share_at_upper": null
+   },
+   "ledger:police_fund": {
+    "n": 73200,
+    "min": 0.0,
+    "max": 2300.0,
+    "beyond": 0,
+    "share_at_lower": 0.11536885245901639,
+    "share_at_upper": null
+   },
+   "ledger:fire_fund": {
+    "n": 73200,
+    "min": 0.0,
+    "max": 1700.0,
+    "beyond": 0,
+    "share_at_lower": 0.11562841530054645,
+    "share_at_upper": null
+   },
+   "ledger:auto_budget": {
+    "n": 73200,
+    "min": 0.0,
+    "max": 1.0,
+    "beyond": 0,
+    "share_at_lower": 0.1269398907103825,
+    "share_at_upper": 0.8730601092896175
+   },
+   "ledger:fire_pop": {
+    "n": 73200,
+    "min": 0.0,
+    "max": 367.0,
+    "beyond": 0,
+    "share_at_lower": 0.954603825136612,
+    "share_at_upper": null
+   },
+   "ledger:city_center_x": {
+    "n": 73200,
+    "min": 19.0,
+    "max": 98.0,
+    "beyond": 0,
+    "share_at_lower": 0.0,
+    "share_at_upper": 0.0
+   },
+   "ledger:city_center_y": {
+    "n": 73200,
+    "min": 16.0,
+    "max": 83.0,
+    "beyond": 0,
+    "share_at_lower": 0.0,
+    "share_at_upper": 0.0
+   },
+   "ledger:pollution_max_x": {
+    "n": 73200,
+    "min": 2.0,
+    "max": 116.0,
+    "beyond": 0,
+    "share_at_lower": 0.0,
+    "share_at_upper": 0.0
+   },
+   "ledger:pollution_max_y": {
+    "n": 73200,
+    "min": 2.0,
+    "max": 96.0,
+    "beyond": 0,
+    "share_at_lower": 0.0,
+    "share_at_upper": 0.0
+   },
+   "ledger:flood_count": {
+    "n": 73200,
+    "min": 0.0,
+    "max": 26.0,
+    "beyond": 0,
+    "share_at_lower": 0.9956830601092896,
+    "share_at_upper": 0.0
+   },
+   "ledger:abs_dist": {
+    "n": 73200,
+    "min": 0.0,
+    "max": 3305.0,
+    "beyond": 0,
+    "share_at_lower": 0.6558743169398907,
+    "share_at_upper": null
+   },
+   "overlay:half overlays (5)": {
+    "n": 1098000000,
+    "min": 0.0,
+    "max": 255.0,
+    "beyond": 0,
+    "share_at_lower": 0.8448353897996357,
+    "share_at_upper": 0.0005765965391621129
+   },
+   "overlay:rate of growth": {
+    "n": 14274000,
+    "min": -200.0,
+    "max": 200.0,
+    "beyond": 0,
+    "share_at_lower": 0.0006283452430993414,
+    "share_at_upper": 0.00031693989071038254
+   },
+   "overlay:fire, police coverage": {
+    "n": 28548000,
+    "min": 0.0,
+    "max": 684.0,
+    "beyond": 0,
+    "share_at_lower": 0.6829430082667788,
+    "share_at_upper": null
+   },
+   "overlay:terrain": {
+    "n": 54900000,
+    "min": 0.0,
+    "max": 127.0,
+    "beyond": 0,
+    "share_at_lower": 0.11441934426229508,
+    "share_at_upper": 0.0
+   },
+   "overlay:com_rate": {
+    "n": 14274000,
+    "min": -64.0,
+    "max": 64.0,
+    "beyond": 0,
+    "share_at_lower": 0.4491552473027883,
+    "share_at_upper": 0.0004064733081126524
+   }
+  },
+  "train_eval": {
+   "scalar:funds": {
+    "n": 98000,
+    "min": 0.0,
+    "max": 1000000.0,
+    "beyond": 0,
+    "share_at_lower": 0.10558163265306122,
+    "share_at_upper": null
+   },
+   "scalar:res_valve": {
+    "n": 98000,
+    "min": -2000.0,
+    "max": 2000.0,
+    "beyond": 0,
+    "share_at_lower": 0.048275510204081634,
+    "share_at_upper": 0.6390408163265306
+   },
+   "scalar:com_valve": {
+    "n": 98000,
+    "min": -1500.0,
+    "max": 1500.0,
+    "beyond": 0,
+    "share_at_lower": 0.17203061224489796,
+    "share_at_upper": 0.24040816326530612
+   },
+   "scalar:ind_valve": {
+    "n": 98000,
+    "min": -1500.0,
+    "max": 1500.0,
+    "beyond": 0,
+    "share_at_lower": 0.1514795918367347,
+    "share_at_upper": 0.2703265306122449
+   },
+   "scalar:res_pop": {
+    "n": 98000,
+    "min": 2.0,
+    "max": 6037.0,
+    "beyond": 0,
+    "share_at_lower": 0.0,
+    "share_at_upper": null
+   },
+   "scalar:com_pop": {
+    "n": 98000,
+    "min": 0.0,
+    "max": 326.0,
+    "beyond": 0,
+    "share_at_lower": 0.0011836734693877551,
+    "share_at_upper": null
+   },
+   "scalar:ind_pop": {
+    "n": 98000,
+    "min": 1.0,
+    "max": 442.0,
+    "beyond": 0,
+    "share_at_lower": 0.0,
+    "share_at_upper": null
+   },
+   "scalar:score": {
+    "n": 98000,
+    "min": 30.0,
+    "max": 878.0,
+    "beyond": 0,
+    "share_at_lower": 0.0,
+    "share_at_upper": 0.0
+   },
+   "scalar:tax_fund": {
+    "n": 98000,
+    "min": 0.0,
+    "max": 14140.0,
+    "beyond": 0,
+    "share_at_lower": 0.16629591836734695,
+    "share_at_upper": null
+   },
+   "scalar:road_spend": {
+    "n": 98000,
+    "min": 0.0,
+    "max": 3621.0,
+    "beyond": 0,
+    "share_at_lower": 0.1531938775510204,
+    "share_at_upper": null
+   },
+   "scalar:fire_spend": {
+    "n": 98000,
+    "min": 0.0,
+    "max": 3500.0,
+    "beyond": 0,
+    "share_at_lower": 0.263765306122449,
+    "share_at_upper": null
+   },
+   "scalar:police_spend": {
+    "n": 98000,
+    "min": 0.0,
+    "max": 3500.0,
+    "beyond": 0,
+    "share_at_lower": 0.23272448979591837,
+    "share_at_upper": null
+   },
+   "scalar:powered_zones": {
+    "n": 98000,
+    "min": 0.0,
+    "max": 619.0,
+    "beyond": 0,
+    "share_at_lower": 0.006795918367346939,
+    "share_at_upper": null
+   },
+   "scalar:unpowered_zones": {
+    "n": 98000,
+    "min": 0.0,
+    "max": 476.0,
+    "beyond": 0,
+    "share_at_lower": 0.4903265306122449,
+    "share_at_upper": null
+   },
+   "scalar:coal_plants": {
+    "n": 98000,
+    "min": 0.0,
+    "max": 12.0,
+    "beyond": 0,
+    "share_at_lower": 0.2445,
+    "share_at_upper": null
+   },
+   "scalar:nuclear_plants": {
+    "n": 98000,
+    "min": 0.0,
+    "max": 12.0,
+    "beyond": 0,
+    "share_at_lower": 0.3515714285714286,
+    "share_at_upper": null
+   },
+   "scalar:road_total": {
+    "n": 98000,
+    "min": 0.0,
+    "max": 5180.0,
+    "beyond": 0,
+    "share_at_lower": 0.0016020408163265306,
+    "share_at_upper": null
+   },
+   "cost:build_cost": {
+    "n": 96000,
+    "min": 0.0,
+    "max": 20534.0,
+    "beyond": 0,
+    "share_at_lower": 0.7744895833333333,
+    "share_at_upper": null
+   },
+   "ledger:sprite_cycle": {
+    "n": 98000,
+    "min": 0.0,
+    "max": 15346.0,
+    "beyond": 0,
+    "share_at_lower": null,
+    "share_at_upper": null
+   },
+   "ledger:total_pop": {
+    "n": 98000,
+    "min": 1.0,
+    "max": 1347.0,
+    "beyond": 0,
+    "share_at_lower": 0.0,
+    "share_at_upper": null
+   },
+   "ledger:res_hist0": {
+    "n": 98000,
+    "min": 0.0,
+    "max": 753.0,
+    "beyond": 0,
+    "share_at_lower": 0.0001326530612244898,
+    "share_at_upper": null
+   },
+   "ledger:res_hist1": {
+    "n": 98000,
+    "min": 0.0,
+    "max": 753.0,
+    "beyond": 0,
+    "share_at_lower": 0.00011224489795918367,
+    "share_at_upper": null
+   },
+   "ledger:com_hist0": {
+    "n": 98000,
+    "min": 0.0,
+    "max": 326.0,
+    "beyond": 0,
+    "share_at_lower": 0.0012244897959183673,
+    "share_at_upper": null
+   },
+   "ledger:com_hist1": {
+    "n": 98000,
+    "min": 0.0,
+    "max": 326.0,
+    "beyond": 0,
+    "share_at_lower": 0.0016938775510204082,
+    "share_at_upper": null
+   },
+   "ledger:ind_hist0": {
+    "n": 98000,
+    "min": 1.0,
+    "max": 442.0,
+    "beyond": 0,
+    "share_at_lower": 0.0,
+    "share_at_upper": null
+   },
+   "ledger:ind_hist1": {
+    "n": 98000,
+    "min": 1.0,
+    "max": 442.0,
+    "beyond": 0,
+    "share_at_lower": 0.0,
+    "share_at_upper": null
+   },
+   "ledger:res_cap": {
+    "n": 98000,
+    "min": 0.0,
+    "max": 1.0,
+    "beyond": 0,
+    "share_at_lower": 0.9834591836734694,
+    "share_at_upper": 0.01654081632653061
+   },
+   "ledger:com_cap": {
+    "n": 98000,
+    "min": 0.0,
+    "max": 1.0,
+    "beyond": 0,
+    "share_at_lower": 0.987969387755102,
+    "share_at_upper": 0.012030612244897959
+   },
+   "ledger:ind_cap": {
+    "n": 98000,
+    "min": 0.0,
+    "max": 1.0,
+    "beyond": 0,
+    "share_at_lower": 0.993234693877551,
+    "share_at_upper": 0.006765306122448979
+   },
+   "ledger:need_hospital": {
+    "n": 98000,
+    "min": -1.0,
+    "max": 1.0,
+    "beyond": 0,
+    "share_at_lower": 0.026326530612244898,
+    "share_at_upper": 0.21559183673469387
+   },
+   "ledger:need_church": {
+    "n": 98000,
+    "min": -1.0,
+    "max": 1.0,
+    "beyond": 0,
+    "share_at_lower": 0.021285714285714286,
+    "share_at_upper": 0.3206122448979592
+   },
+   "ledger:road_fund": {
+    "n": 98000,
+    "min": 0.0,
+    "max": 3651.0,
+    "beyond": 0,
+    "share_at_lower": 0.1495408163265306,
+    "share_at_upper": null
+   },
+   "ledger:police_fund": {
+    "n": 98000,
+    "min": 0.0,
+    "max": 3500.0,
+    "beyond": 0,
+    "share_at_lower": 0.16748979591836735,
+    "share_at_upper": null
+   },
+   "ledger:fire_fund": {
+    "n": 98000,
+    "min": 0.0,
+    "max": 3500.0,
+    "beyond": 0,
+    "share_at_lower": 0.2267142857142857,
+    "share_at_upper": null
+   },
+   "ledger:auto_budget": {
+    "n": 98000,
+    "min": 0.0,
+    "max": 1.0,
+    "beyond": 0,
+    "share_at_lower": 0.10763265306122449,
+    "share_at_upper": 0.8923673469387755
+   },
+   "ledger:fire_pop": {
+    "n": 98000,
+    "min": 0.0,
+    "max": 789.0,
+    "beyond": 0,
+    "share_at_lower": 0.932265306122449,
+    "share_at_upper": null
+   },
+   "ledger:city_center_x": {
+    "n": 98000,
+    "min": 18.0,
+    "max": 101.0,
+    "beyond": 0,
+    "share_at_lower": 0.0,
+    "share_at_upper": 0.0
+   },
+   "ledger:city_center_y": {
+    "n": 98000,
+    "min": 13.0,
+    "max": 83.0,
+    "beyond": 0,
+    "share_at_lower": 0.0,
+    "share_at_upper": 0.0
+   },
+   "ledger:pollution_max_x": {
+    "n": 98000,
+    "min": 2.0,
+    "max": 116.0,
+    "beyond": 0,
+    "share_at_lower": 0.0,
+    "share_at_upper": 0.0
+   },
+   "ledger:pollution_max_y": {
+    "n": 98000,
+    "min": 2.0,
+    "max": 96.0,
+    "beyond": 0,
+    "share_at_lower": 0.0,
+    "share_at_upper": 0.0
+   },
+   "ledger:flood_count": {
+    "n": 98000,
+    "min": 0.0,
+    "max": 30.0,
+    "beyond": 0,
+    "share_at_lower": 0.994295918367347,
+    "share_at_upper": 9.183673469387755e-05
+   },
+   "ledger:abs_dist": {
+    "n": 98000,
+    "min": 0.0,
+    "max": 3198.0,
+    "beyond": 0,
+    "share_at_lower": 0.6622959183673469,
+    "share_at_upper": null
+   },
+   "overlay:half overlays (5)": {
+    "n": 1470000000,
+    "min": 0.0,
+    "max": 255.0,
+    "beyond": 0,
+    "share_at_lower": 0.8142182074829932,
+    "share_at_upper": 0.0005309136054421769
+   },
+   "overlay:rate of growth": {
+    "n": 19110000,
+    "min": -200.0,
+    "max": 200.0,
+    "beyond": 0,
+    "share_at_lower": 0.00033746729461015174,
+    "share_at_upper": 0.0003543694400837258
+   },
+   "overlay:fire, police coverage": {
+    "n": 38220000,
+    "min": 0.0,
+    "max": 548.0,
+    "beyond": 0,
+    "share_at_lower": 0.7034113029827316,
+    "share_at_upper": null
+   },
+   "overlay:terrain": {
+    "n": 73500000,
+    "min": 0.0,
+    "max": 127.0,
+    "beyond": 0,
+    "share_at_lower": 0.11957968707482994,
+    "share_at_upper": 0.0
+   },
+   "overlay:com_rate": {
+    "n": 19110000,
+    "min": -64.0,
+    "max": 64.0,
+    "beyond": 0,
+    "share_at_lower": 0.4406139194139194,
+    "share_at_upper": 0.0006405023547880691
+   }
+  }
+ },
+ "funds_verdict": "Funds below zero is impossible in the engine, not merely unseen: totalFunds changes only through spend and setFunds (src/micropolis.cpp:1066-1081); every charge is checked first (a tool is refused when totalFunds < cost, src/tool.cpp:154; the yearly budget pays at most taxFund + totalFunds and otherwise pays nothing and switches auto-budget off, src/budget.cpp:124-230, 268-310); setFunds is otherwise called only at load or reset with a fixed positive amount. The one caveat is arithmetic: spend and setFunds take a 32-bit int, so the bound holds while funds stay below 2,147,483,647."
+}

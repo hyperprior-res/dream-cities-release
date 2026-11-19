@@ -1,0 +1,908 @@
+{
+ "summary": {
+  "instances_in_this_invocation_phase_files": 12,
+  "judge": {
+   "judge": "emulator",
+   "ckpt": "<cache>/ckpt/ladder_v2/os_50m_full/samples_006000000.pt",
+   "model_src": "auto",
+   "model_src_resolved": "2cbd5c2252e9f3b5578edb0057e4b770069fa8f9",
+   "model_src_commit": "2cbd5c2252e9f3b5578edb0057e4b770069fa8f9",
+   "model_py_sha256": "fd9cd9eec0364df780d16968652bd213987fbea3e45717a997aeee1a28c2c191",
+   "samples": 6000000,
+   "ckpt_sha256": "7b08be25577b36669ef6b35cdc6cc6a62f927de00d0e69f96496afc1b6934283",
+   "ckpt_trained_at": "2cbd5c2252e9f3b5578edb0057e4b770069fa8f9",
+   "model_config": {
+    "size": "50m",
+    "scalar_stage": "twostage",
+    "ledger": true,
+    "bookkeeping": true
+   },
+   "device": "cuda:0",
+   "chunk": 256,
+   "buckets": [
+    16,
+    64,
+    144,
+    256
+   ],
+   "compiled_trunk": true,
+   "fast": {
+    "fused": true,
+    "compile": true,
+    "graphs": true,
+    "source_sha": "5659be20f167508d7853784fdfad14f2428038d10c6cd83c9ccf1058774b4491"
+   },
+   "decoding": {
+    "temperature": 1.0,
+    "overlay": "sample",
+    "source": "model.rollout defaults",
+    "default_decoding": "a",
+    "default_decoding_matches": true
+   }
+  },
+  "judge_month_steps_computed": 5514432,
+  "judge_padded_month_steps": 146496,
+  "judge_seconds": 2754.9192667007446,
+  "judge_month_steps_per_s": 2001.667368860508,
+  "engine_replays": 765136,
+  "engine_replays_remote": 0,
+  "engine_city_months_replayed": 18363264,
+  "engine_seconds": 923.2035121917725,
+  "engine_city_months_per_s": 19890.808210211282,
+  "engine_workers": [
+   14
+  ],
+  "seconds_phase1_per_instance_mean": 239.37147629261017,
+  "seconds_phase2_per_instance_mean": 71.7896026968956,
+  "seconds_per_instance_by_step_mean": {
+   "attack_cem_seeded_s0": 209.6792876124382,
+   "engine_selected": 0.05872682730356852,
+   "floors_cem_seeded_s0": 1.6490618387858074e-06,
+   "pool_engine": 13.474624395370483,
+   "pool_verdicts": 14.96865407625834,
+   "proposals": 0.005423426628112793,
+   "verdict_selected": 1.174971878528595
+  },
+  "note": "computed from the per-instance phase files: counts and seconds of the invocation that computed each instance (a resumed run keeps the original instances' costs; shared per-start samples computed by a killed invocation and reused are in no phase file); engine replays are disk-cache misses",
+  "wall_seconds_per_instance_by_method": {
+   "cem_seeded": 210.9129879673322
+  },
+  "wall_seconds_per_instance_pool_statistics": 28.443278471628826,
+  "oracle_distinct_replays_per_instance_mean": 63761.333333333336,
+  "judge_month_steps_design_this_run": null,
+  "judge_month_steps_design_matches_counter": null,
+  "projection_full": {},
+  "design_amendment2": {
+   "this_run": {
+    "components": {
+     "random-search proposals (K=2)": 576000,
+     "shared 8-sample verdicts, behaviour plans": 0,
+     "best-of-n proposals (K=2)": 0,
+     "shared 8-sample verdicts, builder plans": 0,
+     "CEM (K=2)": 0,
+     "economy verdict rows, behaviour plans": 328512,
+     "economy verdict rows, builder plans": 0,
+     "selected-plan verdicts (8 samples)": 1920,
+     "seeded CEM (K=2) beyond its first generation (the shared proposals)": 5184000
+    },
+    "total": 6090432,
+    "rolled_out": 5514432,
+    "shared_computed": 0
+   },
+   "full_checkpoint": {
+    "components": {
+     "random-search proposals (K=2)": 3600000,
+     "shared 8-sample verdicts, behaviour plans": 8352000,
+     "best-of-n proposals (K=2)": 1920000,
+     "shared 8-sample verdicts, builder plans": 3840000,
+     "CEM (K=2)": 10292304,
+     "economy verdict rows, behaviour plans": 1416000,
+     "economy verdict rows, builder plans": 840000,
+     "selected-plan verdicts (8 samples)": 491328
+    },
+    "total": 30751632,
+    "rate": 2001.667368860508,
+    "hours_at_this_run_rate": 4.267502249818253,
+    "assumption": "economy verdict rows charged 125 per pool to every instance whose (start, forced events) group has no 1,000-row verdict prefix (an upper bound: kept rows already inside a shorter prefix are not sampled again); instances in a group with a cross-checked member need none",
+    "instances_charged_economy_rows": {
+     "behaviour": 59,
+     "builders": 35
+    }
+   }
+  },
+  "engine_majority": {
+   "this_run_by_purpose": {
+    "behaviour table, oracle seeds": 35328,
+    "pool rows, nine seeds": 89928,
+    "pool rows, truth seeds": 639488,
+    "selected plans, nine seeds": 72,
+    "selected plans, oracle seeds": 320
+   },
+   "this_run_total": 765136,
+   "full_checkpoint": {
+    "by_flip_scope": {
+     "verdict": {
+      "per_checkpoint": {
+       "real selected plans, oracle + nine seeds (upper bound)": 2518056,
+       "residual floors' selected plans, oracle seeds (upper bound)": 2147328,
+       "residual floors' CEM candidates, truth seeds 0..15": 99403392,
+       "residual floors' CEM selections, truth seeds 32..63 (upper bound)": 715776
+      },
+      "shared": {
+       "pool rows, nine seeds (behaviour 1,000 per instance; builders 1,000 on best-of-n instances; upper bound)": 63072000,
+       "pool rows, 64 truth seeds per (start, forced events) (behaviour 1,000; builders 1,000 where best-of-n runs; upper bound)": 176640000,
+       "behaviour plans up to the largest verdict-scored budget, oracle seeds (upper bound)": 42470400
+      },
+      "per_checkpoint_city_months": 104784552,
+      "shared_city_months": 282182400,
+      "hours_per_checkpoint_at_reference_rate": 0.8454726126366494,
+      "hours_shared_once_at_reference_rate": 2.2768383928203466
+     },
+     "all": {
+      "per_checkpoint": {
+       "real selected plans, oracle + nine seeds (upper bound)": 2518056,
+       "residual floors' selected plans, oracle seeds (upper bound)": 2147328,
+       "residual floors' CEM candidates, truth seeds 0..15": 99403392,
+       "residual floors' CEM selections, truth seeds 32..63 (upper bound)": 715776,
+       "flip floor's CEM candidates and floors' CEM selections, oracle seeds": 165862656,
+       "flip floor's selected CEM plans, nine seeds (diagnostic)": 166752
+      },
+      "shared": {
+       "pool rows, nine seeds (behaviour 1,000 per instance; builders 1,000 on best-of-n instances; upper bound)": 63072000,
+       "pool rows, 64 truth seeds per (start, forced events) (behaviour 1,000; builders 1,000 where best-of-n runs; upper bound)": 176640000,
+       "behaviour plans 1..1,000, oracle seeds (upper bound)": 148224000,
+       "builder plans 1..1,000 on best-of-n instances, oracle seeds (upper bound)": 76032000
+      },
+      "per_checkpoint_city_months": 270813960,
+      "shared_city_months": 463968000,
+      "hours_per_checkpoint_at_reference_rate": 2.1851101324523206,
+      "hours_shared_once_at_reference_rate": 3.7436075227940178
+     }
+    },
+    "this_run_flip_scope": "verdict",
+    "basis": {
+     "instances": 193,
+     "rows": 2559,
+     "cem_instances": 193,
+     "cross_check_instances": 40,
+     "best_of_n_instances": 99,
+     "oracle_seeds": 32,
+     "cem_distinct_candidates_per_residual_grader": 1111.0,
+     "cem_distinct_oracle_evals_per_instance": 1119.0,
+     "cem_counts": "upper bound (sum of budgets); flip floor's upper bound"
+    },
+    "rate_reference": {
+     "file": "results/audit/engine_reference/r3_A_instance/costs.json",
+     "city_months_per_s": 34426.68581449244,
+     "workers": "16 local + 22 host-b (that run's configuration)"
+    }
+   }
+  },
+  "wall_seconds_this_invocation": 3737.7762999534607,
+  "engine_cache": {
+   "root": "<cache>/audit/engine_cache",
+   "bytes_on_disk_start": 0,
+   "bytes_on_disk_end": 577032192,
+   "entries_written_by_this_run": 765136,
+   "value_bytes_written_by_this_run": 487797615,
+   "replays_kept_out_of_the_cache": 0,
+   "note": "the size difference includes whatever other processes wrote meanwhile"
+  }
+ },
+ "per_instance": [
+  {
+   "instance": "ho-g-18-v0|grow|H24",
+   "phase1": {
+    "seconds": 270.29972743988037,
+    "timing": {
+     "proposals": 0.0052602291107177734,
+     "pool_engine": 9.091166257858276,
+     "pool_verdicts": 39.78989839553833,
+     "attack_cem_seeded_s0": 210.16530847549438,
+     "verdict_selected": 11.175921440124512,
+     "engine_selected": 0.06087040901184082
+    },
+    "judge_month_steps": 456192,
+    "judge_padded_month_steps": 11136,
+    "judge_seconds": 260.9121959209442,
+    "judge_calls": 11,
+    "engine_requests": 12241,
+    "engine_cache_hits": 0,
+    "engine_replays": 9169,
+    "engine_replays_remote": 0,
+    "engine_replays_uncached": 0,
+    "engine_rows_put": 9169,
+    "engine_bytes_put": 5900050,
+    "engine_city_months_replayed": 220056,
+    "engine_seconds": 8.499988079071045,
+    "engine_workers": 14,
+    "oracle_distinct_replays": 9169,
+    "shared_month_steps_computed": 0,
+    "oracle_distinct_replays_by_purpose": {
+     "pool rows, nine seeds": 6408,
+     "behaviour table, oracle seeds": 2720,
+     "selected plans, nine seeds": 9,
+     "selected plans, oracle seeds": 32
+    }
+   },
+   "phase2": {
+    "seconds": 46.94852805137634,
+    "timing": {
+     "floors_cem_seeded_s0": 1.6689300537109375e-06
+    },
+    "engine_requests": 64000,
+    "engine_cache_hits": 0,
+    "engine_replays": 45568,
+    "engine_replays_remote": 0,
+    "engine_replays_uncached": 0,
+    "engine_rows_put": 45568,
+    "engine_bytes_put": 29466243,
+    "engine_city_months_replayed": 1093632,
+    "engine_seconds": 40.70181751251221,
+    "engine_workers": 14,
+    "oracle_distinct_replays": 45568,
+    "judge_month_steps": 6144,
+    "judge_padded_month_steps": 0,
+    "judge_seconds": 2.920718193054199,
+    "judge_calls": 1,
+    "oracle_distinct_replays_by_purpose": {
+     "pool rows, truth seeds": 45568
+    }
+   }
+  },
+  {
+   "instance": "ho-g-28-v0|grow|H24",
+   "phase1": {
+    "seconds": 234.78355240821838,
+    "timing": {
+     "proposals": 0.005932807922363281,
+     "pool_engine": 11.34646487236023,
+     "pool_verdicts": 11.667262315750122,
+     "attack_cem_seeded_s0": 211.36503386497498,
+     "verdict_selected": 0.32366013526916504,
+     "engine_selected": 0.06593489646911621
+    },
+    "judge_month_steps": 455040,
+    "judge_padded_month_steps": 12288,
+    "judge_seconds": 223.13194584846497,
+    "judge_calls": 11,
+    "engine_requests": 12241,
+    "engine_cache_hits": 0,
+    "engine_replays": 10551,
+    "engine_replays_remote": 0,
+    "engine_replays_uncached": 0,
+    "engine_rows_put": 10551,
+    "engine_bytes_put": 7018229,
+    "engine_city_months_replayed": 253224,
+    "engine_seconds": 10.658143758773804,
+    "engine_workers": 14,
+    "oracle_distinct_replays": 10551,
+    "shared_month_steps_computed": 0,
+    "oracle_distinct_replays_by_purpose": {
+     "pool rows, nine seeds": 7470,
+     "behaviour table, oracle seeds": 3040,
+     "selected plans, nine seeds": 9,
+     "selected plans, oracle seeds": 32
+    }
+   },
+   "phase2": {
+    "seconds": 59.943620681762695,
+    "timing": {
+     "floors_cem_seeded_s0": 2.384185791015625e-06
+    },
+    "engine_requests": 64000,
+    "engine_cache_hits": 0,
+    "engine_replays": 53120,
+    "engine_replays_remote": 0,
+    "engine_replays_uncached": 0,
+    "engine_rows_put": 53120,
+    "engine_bytes_put": 35396548,
+    "engine_city_months_replayed": 1274880,
+    "engine_seconds": 52.80211329460144,
+    "engine_workers": 14,
+    "oracle_distinct_replays": 53120,
+    "judge_month_steps": 6336,
+    "judge_padded_month_steps": 192,
+    "judge_seconds": 3.255244255065918,
+    "judge_calls": 1,
+    "oracle_distinct_replays_by_purpose": {
+     "pool rows, truth seeds": 53120
+    }
+   }
+  },
+  {
+   "instance": "ho-g-38-v0|grow|H24",
+   "phase1": {
+    "seconds": 238.5301501750946,
+    "timing": {
+     "proposals": 0.00571751594543457,
+     "pool_engine": 17.9377338886261,
+     "pool_verdicts": 11.573559999465942,
+     "attack_cem_seeded_s0": 208.57936596870422,
+     "verdict_selected": 0.3253903388977051,
+     "engine_selected": 0.09776973724365234
+    },
+    "judge_month_steps": 456000,
+    "judge_padded_month_steps": 11328,
+    "judge_seconds": 220.25910258293152,
+    "judge_calls": 11,
+    "engine_requests": 12241,
+    "engine_cache_hits": 0,
+    "engine_replays": 11347,
+    "engine_replays_remote": 0,
+    "engine_replays_uncached": 0,
+    "engine_rows_put": 11347,
+    "engine_bytes_put": 7337754,
+    "engine_city_months_replayed": 272328,
+    "engine_seconds": 17.24829339981079,
+    "engine_workers": 14,
+    "oracle_distinct_replays": 11347,
+    "shared_month_steps_computed": 0,
+    "oracle_distinct_replays_by_purpose": {
+     "pool rows, nine seeds": 8298,
+     "behaviour table, oracle seeds": 3008,
+     "selected plans, nine seeds": 9,
+     "selected plans, oracle seeds": 32
+    }
+   },
+   "phase2": {
+    "seconds": 94.12417125701904,
+    "timing": {
+     "floors_cem_seeded_s0": 1.1920928955078125e-06
+    },
+    "engine_requests": 64000,
+    "engine_cache_hits": 0,
+    "engine_replays": 59008,
+    "engine_replays_remote": 0,
+    "engine_replays_uncached": 0,
+    "engine_rows_put": 59008,
+    "engine_bytes_put": 38188779,
+    "engine_city_months_replayed": 1416192,
+    "engine_seconds": 87.21755814552307,
+    "engine_workers": 14,
+    "oracle_distinct_replays": 59008,
+    "judge_month_steps": 3648,
+    "judge_padded_month_steps": 2496,
+    "judge_seconds": 2.880403995513916,
+    "judge_calls": 1,
+    "oracle_distinct_replays_by_purpose": {
+     "pool rows, truth seeds": 59008
+    }
+   }
+  },
+  {
+   "instance": "ho-g-24-v0|solvent|H24",
+   "phase1": {
+    "seconds": 234.87958908081055,
+    "timing": {
+     "proposals": 0.005482673645019531,
+     "pool_engine": 14.9461669921875,
+     "pool_verdicts": 11.485081672668457,
+     "attack_cem_seeded_s0": 208.03219413757324,
+     "verdict_selected": 0.3240640163421631,
+     "engine_selected": 0.07569336891174316
+    },
+    "judge_month_steps": 456192,
+    "judge_padded_month_steps": 11136,
+    "judge_seconds": 219.6214361190796,
+    "judge_calls": 11,
+    "engine_requests": 12241,
+    "engine_cache_hits": 0,
+    "engine_replays": 11388,
+    "engine_replays_remote": 0,
+    "engine_replays_uncached": 0,
+    "engine_rows_put": 11388,
+    "engine_bytes_put": 7170326,
+    "engine_city_months_replayed": 273312,
+    "engine_seconds": 14.202157497406006,
+    "engine_workers": 14,
+    "oracle_distinct_replays": 11388,
+    "shared_month_steps_computed": 0,
+    "oracle_distinct_replays_by_purpose": {
+     "pool rows, nine seeds": 8307,
+     "behaviour table, oracle seeds": 3040,
+     "selected plans, nine seeds": 9,
+     "selected plans, oracle seeds": 32
+    }
+   },
+   "phase2": {
+    "seconds": 80.2390968799591,
+    "timing": {
+     "floors_cem_seeded_s0": 1.430511474609375e-06
+    },
+    "engine_requests": 64000,
+    "engine_cache_hits": 0,
+    "engine_replays": 59072,
+    "engine_replays_remote": 0,
+    "engine_replays_uncached": 0,
+    "engine_rows_put": 59072,
+    "engine_bytes_put": 37139763,
+    "engine_city_months_replayed": 1417728,
+    "engine_seconds": 74.27635598182678,
+    "engine_workers": 14,
+    "oracle_distinct_replays": 59072,
+    "judge_month_steps": 2304,
+    "judge_padded_month_steps": 1152,
+    "judge_seconds": 1.6789464950561523,
+    "judge_calls": 1,
+    "oracle_distinct_replays_by_purpose": {
+     "pool rows, truth seeds": 59072
+    }
+   }
+  },
+  {
+   "instance": "ho-g-35-v0|solvent|H24",
+   "phase1": {
+    "seconds": 237.87551403045654,
+    "timing": {
+     "proposals": 0.005347728729248047,
+     "pool_engine": 18.52370262145996,
+     "pool_verdicts": 11.540475368499756,
+     "attack_cem_seeded_s0": 207.38418769836426,
+     "verdict_selected": 0.32582521438598633,
+     "engine_selected": 0.08643126487731934
+    },
+    "judge_month_steps": 455808,
+    "judge_padded_month_steps": 11520,
+    "judge_seconds": 219.02854704856873,
+    "judge_calls": 11,
+    "engine_requests": 12241,
+    "engine_cache_hits": 0,
+    "engine_replays": 11287,
+    "engine_replays_remote": 0,
+    "engine_replays_uncached": 0,
+    "engine_rows_put": 11287,
+    "engine_bytes_put": 6168352,
+    "engine_city_months_replayed": 270888,
+    "engine_seconds": 17.989408493041992,
+    "engine_workers": 14,
+    "oracle_distinct_replays": 11287,
+    "shared_month_steps_computed": 0,
+    "oracle_distinct_replays_by_purpose": {
+     "pool rows, nine seeds": 8334,
+     "behaviour table, oracle seeds": 2912,
+     "selected plans, nine seeds": 9,
+     "selected plans, oracle seeds": 32
+    }
+   },
+   "phase2": {
+    "seconds": 97.57141828536987,
+    "timing": {
+     "floors_cem_seeded_s0": 1.430511474609375e-06
+    },
+    "engine_requests": 64000,
+    "engine_cache_hits": 0,
+    "engine_replays": 59264,
+    "engine_replays_remote": 0,
+    "engine_replays_uncached": 0,
+    "engine_rows_put": 59264,
+    "engine_bytes_put": 32211924,
+    "engine_city_months_replayed": 1422336,
+    "engine_seconds": 92.63783979415894,
+    "engine_workers": 14,
+    "oracle_distinct_replays": 59264,
+    "judge_month_steps": 2112,
+    "judge_padded_month_steps": 1344,
+    "judge_seconds": 1.6757049560546875,
+    "judge_calls": 1,
+    "oracle_distinct_replays_by_purpose": {
+     "pool rows, truth seeds": 59264
+    }
+   }
+  },
+  {
+   "instance": "ho-g-20-v0|treasury|H24",
+   "phase1": {
+    "seconds": 249.0154025554657,
+    "timing": {
+     "proposals": 0.005051136016845703,
+     "pool_engine": 9.962499380111694,
+     "pool_verdicts": 26.369827032089233,
+     "attack_cem_seeded_s0": 212.34180736541748,
+     "verdict_selected": 0.32572197914123535,
+     "engine_selected": 0.0010581016540527344
+    },
+    "judge_month_steps": 446976,
+    "judge_padded_month_steps": 11520,
+    "judge_seconds": 238.81717777252197,
+    "judge_calls": 11,
+    "engine_requests": 12241,
+    "engine_cache_hits": 41,
+    "engine_replays": 8620,
+    "engine_replays_remote": 0,
+    "engine_replays_uncached": 0,
+    "engine_rows_put": 8620,
+    "engine_bytes_put": 5601919,
+    "engine_city_months_replayed": 206880,
+    "engine_seconds": 9.329130411148071,
+    "engine_workers": 14,
+    "oracle_distinct_replays": 8620,
+    "shared_month_steps_computed": 0,
+    "oracle_distinct_replays_by_purpose": {
+     "pool rows, nine seeds": 5868,
+     "behaviour table, oracle seeds": 2752
+    }
+   },
+   "phase2": {
+    "seconds": 65.1384744644165,
+    "timing": {
+     "floors_cem_seeded_s0": 1.430511474609375e-06
+    },
+    "engine_requests": 64000,
+    "engine_cache_hits": 0,
+    "engine_replays": 41728,
+    "engine_replays_remote": 0,
+    "engine_replays_uncached": 0,
+    "engine_rows_put": 41728,
+    "engine_bytes_put": 27293321,
+    "engine_city_months_replayed": 1001472,
+    "engine_seconds": 43.294447898864746,
+    "engine_workers": 14,
+    "oracle_distinct_replays": 41728,
+    "judge_month_steps": 7296,
+    "judge_padded_month_steps": 384,
+    "judge_seconds": 18.723813772201538,
+    "judge_calls": 1,
+    "oracle_distinct_replays_by_purpose": {
+     "pool rows, truth seeds": 41728
+    }
+   }
+  },
+  {
+   "instance": "ho-g-30-v0|treasury|H24",
+   "phase1": {
+    "seconds": 239.8295340538025,
+    "timing": {
+     "proposals": 0.005357027053833008,
+     "pool_engine": 18.596397876739502,
+     "pool_verdicts": 11.612541198730469,
+     "attack_cem_seeded_s0": 209.60314202308655,
+     "verdict_selected": 0.0002346038818359375,
+     "engine_selected": 0.0010831356048583984
+    },
+    "judge_month_steps": 455616,
+    "judge_padded_month_steps": 11328,
+    "judge_seconds": 220.99203252792358,
+    "judge_calls": 10,
+    "engine_requests": 12241,
+    "engine_cache_hits": 41,
+    "engine_replays": 11102,
+    "engine_replays_remote": 0,
+    "engine_replays_uncached": 0,
+    "engine_rows_put": 11102,
+    "engine_bytes_put": 6520047,
+    "engine_city_months_replayed": 266448,
+    "engine_seconds": 17.976608276367188,
+    "engine_workers": 14,
+    "oracle_distinct_replays": 11102,
+    "shared_month_steps_computed": 0,
+    "oracle_distinct_replays_by_purpose": {
+     "pool rows, nine seeds": 8190,
+     "behaviour table, oracle seeds": 2912
+    }
+   },
+   "phase2": {
+    "seconds": 104.4153425693512,
+    "timing": {
+     "floors_cem_seeded_s0": 1.430511474609375e-06
+    },
+    "engine_requests": 64000,
+    "engine_cache_hits": 0,
+    "engine_replays": 58240,
+    "engine_replays_remote": 0,
+    "engine_replays_uncached": 0,
+    "engine_rows_put": 58240,
+    "engine_bytes_put": 34084643,
+    "engine_city_months_replayed": 1397760,
+    "engine_seconds": 95.37870073318481,
+    "engine_workers": 14,
+    "oracle_distinct_replays": 58240,
+    "judge_month_steps": 12096,
+    "judge_padded_month_steps": 192,
+    "judge_seconds": 5.793149948120117,
+    "judge_calls": 1,
+    "oracle_distinct_replays_by_purpose": {
+     "pool rows, truth seeds": 58240
+    }
+   }
+  },
+  {
+   "instance": "ho-g-16-v0|recover|H24",
+   "phase1": {
+    "seconds": 228.79013538360596,
+    "timing": {
+     "proposals": 0.005269289016723633,
+     "pool_engine": 9.332690954208374,
+     "pool_verdicts": 10.307298421859741,
+     "attack_cem_seeded_s0": 208.74449276924133,
+     "verdict_selected": 0.3261678218841553,
+     "engine_selected": 0.06493663787841797
+    },
+    "judge_month_steps": 453504,
+    "judge_padded_month_steps": 11136,
+    "judge_seconds": 219.15259313583374,
+    "judge_calls": 11,
+    "engine_requests": 12241,
+    "engine_cache_hits": 0,
+    "engine_replays": 10366,
+    "engine_replays_remote": 0,
+    "engine_replays_uncached": 0,
+    "engine_rows_put": 10366,
+    "engine_bytes_put": 6542942,
+    "engine_city_months_replayed": 248784,
+    "engine_seconds": 8.697820901870728,
+    "engine_workers": 14,
+    "oracle_distinct_replays": 10366,
+    "shared_month_steps_computed": 0,
+    "oracle_distinct_replays_by_purpose": {
+     "pool rows, nine seeds": 7317,
+     "behaviour table, oracle seeds": 3008,
+     "selected plans, nine seeds": 9,
+     "selected plans, oracle seeds": 32
+    }
+   },
+   "phase2": {
+    "seconds": 48.383830070495605,
+    "timing": {
+     "floors_cem_seeded_s0": 1.9073486328125e-06
+    },
+    "engine_requests": 64000,
+    "engine_cache_hits": 0,
+    "engine_replays": 52032,
+    "engine_replays_remote": 0,
+    "engine_replays_uncached": 0,
+    "engine_rows_put": 52032,
+    "engine_bytes_put": 32759688,
+    "engine_city_months_replayed": 1248768,
+    "engine_seconds": 41.9408802986145,
+    "engine_workers": 14,
+    "oracle_distinct_replays": 52032,
+    "judge_month_steps": 6144,
+    "judge_padded_month_steps": 0,
+    "judge_seconds": 2.888481378555298,
+    "judge_calls": 1,
+    "oracle_distinct_replays_by_purpose": {
+     "pool rows, truth seeds": 52032
+    }
+   }
+  },
+  {
+   "instance": "ho-g-26-v0|recover|H24",
+   "phase1": {
+    "seconds": 234.1068971157074,
+    "timing": {
+     "proposals": 0.005231142044067383,
+     "pool_engine": 11.469980001449585,
+     "pool_verdicts": 11.640071868896484,
+     "attack_cem_seeded_s0": 210.60060214996338,
+     "verdict_selected": 0.3248298168182373,
+     "engine_selected": 0.056693315505981445
+    },
+    "judge_month_steps": 454848,
+    "judge_padded_month_steps": 12480,
+    "judge_seconds": 222.3437671661377,
+    "judge_calls": 11,
+    "engine_requests": 12241,
+    "engine_cache_hits": 0,
+    "engine_replays": 10546,
+    "engine_replays_remote": 0,
+    "engine_replays_uncached": 0,
+    "engine_rows_put": 10546,
+    "engine_bytes_put": 7425834,
+    "engine_city_months_replayed": 253104,
+    "engine_seconds": 10.715639352798462,
+    "engine_workers": 14,
+    "oracle_distinct_replays": 10546,
+    "shared_month_steps_computed": 0,
+    "oracle_distinct_replays_by_purpose": {
+     "pool rows, nine seeds": 7497,
+     "behaviour table, oracle seeds": 3008,
+     "selected plans, nine seeds": 9,
+     "selected plans, oracle seeds": 32
+    }
+   },
+   "phase2": {
+    "seconds": 61.731834173202515,
+    "timing": {
+     "floors_cem_seeded_s0": 1.430511474609375e-06
+    },
+    "engine_requests": 64000,
+    "engine_cache_hits": 0,
+    "engine_replays": 53312,
+    "engine_replays_remote": 0,
+    "engine_replays_uncached": 0,
+    "engine_rows_put": 53312,
+    "engine_bytes_put": 37517335,
+    "engine_city_months_replayed": 1279488,
+    "engine_seconds": 51.746171712875366,
+    "engine_workers": 14,
+    "oracle_distinct_replays": 53312,
+    "judge_month_steps": 10752,
+    "judge_padded_month_steps": 1536,
+    "judge_seconds": 5.820500135421753,
+    "judge_calls": 1,
+    "oracle_distinct_replays_by_purpose": {
+     "pool rows, truth seeds": 53312
+    }
+   }
+  },
+  {
+   "instance": "ho-g-16-v0|power|H24",
+   "phase1": {
+    "seconds": 230.4796962738037,
+    "timing": {
+     "proposals": 0.005517244338989258,
+     "pool_engine": 9.445866346359253,
+     "pool_verdicts": 11.578531265258789,
+     "attack_cem_seeded_s0": 209.07861733436584,
+     "verdict_selected": 0.32335758209228516,
+     "engine_selected": 0.03931283950805664
+    },
+    "judge_month_steps": 456000,
+    "judge_padded_month_steps": 11328,
+    "judge_seconds": 220.75487184524536,
+    "judge_calls": 11,
+    "engine_requests": 12241,
+    "engine_cache_hits": 9,
+    "engine_replays": 10357,
+    "engine_replays_remote": 0,
+    "engine_replays_uncached": 0,
+    "engine_rows_put": 10357,
+    "engine_bytes_put": 6309076,
+    "engine_city_months_replayed": 248568,
+    "engine_seconds": 8.815168857574463,
+    "engine_workers": 14,
+    "oracle_distinct_replays": 10357,
+    "shared_month_steps_computed": 0,
+    "oracle_distinct_replays_by_purpose": {
+     "pool rows, nine seeds": 7317,
+     "behaviour table, oracle seeds": 3008,
+     "selected plans, oracle seeds": 32
+    }
+   },
+   "phase2": {
+    "seconds": 46.324480056762695,
+    "timing": {
+     "floors_cem_seeded_s0": 1.9073486328125e-06
+    },
+    "engine_requests": 64000,
+    "engine_cache_hits": 0,
+    "engine_replays": 52032,
+    "engine_replays_remote": 0,
+    "engine_replays_uncached": 0,
+    "engine_rows_put": 52032,
+    "engine_bytes_put": 31528483,
+    "engine_city_months_replayed": 1248768,
+    "engine_seconds": 42.804959535598755,
+    "engine_workers": 14,
+    "oracle_distinct_replays": 52032,
+    "judge_month_steps": 0,
+    "judge_padded_month_steps": 0,
+    "judge_seconds": 0.0,
+    "judge_calls": 0,
+    "oracle_distinct_replays_by_purpose": {
+     "pool rows, truth seeds": 52032
+    }
+   }
+  },
+  {
+   "instance": "ho-g-26-v0|power|H24",
+   "phase1": {
+    "seconds": 234.69650721549988,
+    "timing": {
+     "proposals": 0.005657196044921875,
+     "pool_engine": 11.934718132019043,
+     "pool_verdicts": 11.644522666931152,
+     "attack_cem_seeded_s0": 210.7137851715088,
+     "verdict_selected": 0.3242528438568115,
+     "engine_selected": 0.06531906127929688
+    },
+    "judge_month_steps": 455616,
+    "judge_padded_month_steps": 11712,
+    "judge_seconds": 222.46021223068237,
+    "judge_calls": 11,
+    "engine_requests": 12241,
+    "engine_cache_hits": 0,
+    "engine_replays": 10546,
+    "engine_replays_remote": 0,
+    "engine_replays_uncached": 0,
+    "engine_rows_put": 10546,
+    "engine_bytes_put": 6995232,
+    "engine_city_months_replayed": 253104,
+    "engine_seconds": 11.224794387817383,
+    "engine_workers": 14,
+    "oracle_distinct_replays": 10546,
+    "shared_month_steps_computed": 0,
+    "oracle_distinct_replays_by_purpose": {
+     "pool rows, nine seeds": 7497,
+     "behaviour table, oracle seeds": 3008,
+     "selected plans, nine seeds": 9,
+     "selected plans, oracle seeds": 32
+    }
+   },
+   "phase2": {
+    "seconds": 59.337735176086426,
+    "timing": {
+     "floors_cem_seeded_s0": 1.9073486328125e-06
+    },
+    "engine_requests": 64000,
+    "engine_cache_hits": 0,
+    "engine_replays": 53312,
+    "engine_replays_remote": 0,
+    "engine_replays_uncached": 0,
+    "engine_rows_put": 53312,
+    "engine_bytes_put": 35408618,
+    "engine_city_months_replayed": 1279488,
+    "engine_seconds": 53.555007457733154,
+    "engine_workers": 14,
+    "oracle_distinct_replays": 53312,
+    "judge_month_steps": 2304,
+    "judge_padded_month_steps": 1152,
+    "judge_seconds": 1.7041127681732178,
+    "judge_calls": 1,
+    "oracle_distinct_replays_by_purpose": {
+     "pool rows, truth seeds": 53312
+    }
+   }
+  },
+  {
+   "instance": "ho-g-36-v0|power|H24",
+   "phase1": {
+    "seconds": 239.17100977897644,
+    "timing": {
+     "proposals": 0.005257129669189453,
+     "pool_engine": 19.108105421066284,
+     "pool_verdicts": 10.414778709411621,
+     "attack_cem_seeded_s0": 209.54291439056396,
+     "verdict_selected": 0.00023674964904785156,
+     "engine_selected": 0.08961915969848633
+    },
+    "judge_month_steps": 453120,
+    "judge_padded_month_steps": 11136,
+    "judge_seconds": 219.73083519935608,
+    "judge_calls": 10,
+    "engine_requests": 12241,
+    "engine_cache_hits": 9,
+    "engine_replays": 10369,
+    "engine_replays_remote": 0,
+    "engine_replays_uncached": 0,
+    "engine_rows_put": 10369,
+    "engine_bytes_put": 7203442,
+    "engine_city_months_replayed": 248856,
+    "engine_seconds": 18.44316816329956,
+    "engine_workers": 14,
+    "oracle_distinct_replays": 10369,
+    "shared_month_steps_computed": 0,
+    "oracle_distinct_replays_by_purpose": {
+     "pool rows, nine seeds": 7425,
+     "behaviour table, oracle seeds": 2912,
+     "selected plans, oracle seeds": 32
+    }
+   },
+   "phase2": {
+    "seconds": 97.31670069694519,
+    "timing": {
+     "floors_cem_seeded_s0": 1.6689300537109375e-06
+    },
+    "engine_requests": 64000,
+    "engine_cache_hits": 0,
+    "engine_replays": 52800,
+    "engine_replays_remote": 0,
+    "engine_replays_uncached": 0,
+    "engine_rows_put": 52800,
+    "engine_bytes_put": 36609067,
+    "engine_city_months_replayed": 1267200,
+    "engine_seconds": 93.0473382472992,
+    "engine_workers": 14,
+    "oracle_distinct_replays": 52800,
+    "judge_month_steps": 384,
+    "judge_padded_month_steps": 0,
+    "judge_seconds": 0.3734734058380127,
+    "judge_calls": 1,
+    "oracle_distinct_replays_by_purpose": {
+     "pool rows, truth seeds": 52800
+    }
+   }
+  }
+ ]
+}

@@ -1,0 +1,5294 @@
+{
+ "generated_utc": "2026-11-12T13:00:46Z",
+ "command": "PYTHONPATH=hpr-dream:code .venv/bin/python code/scripts/defence_baselines.py",
+ "inputs": {
+  "results/defences/frontier.json": "632a9abe4490537700c2bed04a22c92ff5e89a38263b397177135974487fbdb2"
+ },
+ "definitions": {
+  "false_acceptance": "false acceptance: the defended judge accepts the selected plan and the 32-seed majority oracle rejects it, over instances",
+  "false_rejection": "false rejection: among selected plans the oracle accepts, the share the defended judge rejects",
+  "real_success": "real success: the oracle accepts the selected plan, over instances",
+  "emulator_accepts": "the defended judge accepts the selected plan, over instances",
+  "baseline": "the setting's own undefended model, from its judge field: member 0 or the ensemble",
+  "difference": "defended rate minus the baseline's rate on the same instances (point value)",
+  "intervals": "as stored in frontier.json: cluster bootstrap over city families, 2,000 resamples, seed 0, 95 per cent; BCa with the percentile interval where BCa is undefined",
+  "penalty_increments": "a penalty setting's rate minus the lambda = 0 row's (point value)"
+ },
+ "design": {
+  "budget": 1000,
+  "n_instances": 60,
+  "n_city_families": 39,
+  "searches": [
+   "random",
+   "cem_seeded"
+  ]
+ },
+ "searches": {
+  "random": {
+   "perfect_emulator": {
+    "false_acceptance": {
+     "value": 0.05,
+     "lo": 0.0,
+     "hi": 0.11666666666666667,
+     "n_units": 60,
+     "n_clusters": 39,
+     "n_boot": 2000,
+     "n_boot_undefined": 0,
+     "level": 0.95,
+     "method": "cluster bootstrap, percentile",
+     "bca_lo": 0.014705882352941176,
+     "bca_hi": 0.13598113736515338
+    },
+    "false_rejection": {
+     "value": 0.08823529411764706,
+     "lo": 0.0,
+     "hi": 0.19458333333333258,
+     "n_units": 34,
+     "n_clusters": 25,
+     "n_boot": 2000,
+     "n_boot_undefined": 0,
+     "level": 0.95,
+     "method": "cluster bootstrap, percentile",
+     "bca_lo": 0.02518355289916908,
+     "bca_hi": 0.2289416906282855
+    },
+    "real_success": {
+     "value": 0.5666666666666667,
+     "lo": 0.4313640973630832,
+     "hi": 0.7142857142857143,
+     "n_units": 60,
+     "n_clusters": 39,
+     "n_boot": 2000,
+     "n_boot_undefined": 0,
+     "level": 0.95,
+     "method": "cluster bootstrap, percentile",
+     "bca_lo": 0.43729189216294423,
+     "bca_hi": 0.7216189868559348
+    },
+    "emulator_accepts": {
+     "value": 0.5666666666666667,
+     "lo": 0.4333208955223881,
+     "hi": 0.7167187499999997,
+     "n_units": 60,
+     "n_clusters": 39,
+     "n_boot": 2000,
+     "n_boot_undefined": 0,
+     "level": 0.95,
+     "method": "cluster bootstrap, percentile",
+     "bca_lo": 0.43333333333333335,
+     "bca_hi": 0.71875
+    }
+   },
+   "undefended": {
+    "member0": {
+     "label": "member 0, undefended",
+     "n": 60,
+     "n_clusters": 39,
+     "false_acceptance": {
+      "value": 0.13333333333333333,
+      "lo": 0.05084745762711865,
+      "hi": 0.23405086436170208,
+      "n_units": 60,
+      "n_clusters": 39,
+      "n_boot": 2000,
+      "n_boot_undefined": 0,
+      "level": 0.95,
+      "method": "cluster bootstrap, percentile",
+      "bca_lo": 0.05871169341301205,
+      "bca_hi": 0.24489795918367346
+     },
+     "false_rejection": {
+      "value": 0.2916666666666667,
+      "lo": 0.13043478260869565,
+      "hi": 0.4782608695652174,
+      "n_units": 24,
+      "n_clusters": 18,
+      "n_boot": 2000,
+      "n_boot_undefined": 0,
+      "level": 0.95,
+      "method": "cluster bootstrap, percentile",
+      "bca_lo": 0.13333333333333333,
+      "bca_hi": 0.5
+     },
+     "real_success": {
+      "value": 0.4,
+      "lo": 0.29089442815249267,
+      "hi": 0.5074745321013977,
+      "n_units": 60,
+      "n_clusters": 39,
+      "n_boot": 2000,
+      "n_boot_undefined": 0,
+      "level": 0.95,
+      "method": "cluster bootstrap, percentile",
+      "bca_lo": 0.28846153846153844,
+      "bca_hi": 0.507272614505855
+     },
+     "emulator_accepts": {
+      "value": 0.4166666666666667,
+      "lo": 0.30766666666666675,
+      "hi": 0.5385245901639341,
+      "n_units": 60,
+      "n_clusters": 39,
+      "n_boot": 2000,
+      "n_boot_undefined": 0,
+      "level": 0.95,
+      "method": "cluster bootstrap, percentile",
+      "bca_lo": 0.3085064521879994,
+      "bca_hi": 0.5416666666666666
+     },
+     "n_hacked": 8,
+     "n_false_rejections": 7,
+     "n_oracle_accept": 24,
+     "n_judge_accept": 25
+    },
+    "ensemble": {
+     "label": "ensemble, undefended",
+     "n": 60,
+     "n_clusters": 39,
+     "false_acceptance": {
+      "value": 0.21666666666666667,
+      "lo": 0.09615384615384616,
+      "hi": 0.35,
+      "n_units": 60,
+      "n_clusters": 39,
+      "n_boot": 2000,
+      "n_boot_undefined": 0,
+      "level": 0.95,
+      "method": "cluster bootstrap, percentile",
+      "bca_lo": 0.11594202898550725,
+      "bca_hi": 0.3880597014925373
+     },
+     "false_rejection": {
+      "value": 0.2692307692307692,
+      "lo": 0.125,
+      "hi": 0.44,
+      "n_units": 26,
+      "n_clusters": 21,
+      "n_boot": 2000,
+      "n_boot_undefined": 0,
+      "level": 0.95,
+      "method": "cluster bootstrap, percentile",
+      "bca_lo": 0.13043478260869565,
+      "bca_hi": 0.44
+     },
+     "real_success": {
+      "value": 0.43333333333333335,
+      "lo": 0.3194444444444444,
+      "hi": 0.5660534591194968,
+      "n_units": 60,
+      "n_clusters": 39,
+      "n_boot": 2000,
+      "n_boot_undefined": 0,
+      "level": 0.95,
+      "method": "cluster bootstrap, percentile",
+      "bca_lo": 0.32191804319522555,
+      "bca_hi": 0.5683733875827632
+     },
+     "emulator_accepts": {
+      "value": 0.5333333333333333,
+      "lo": 0.39991379310344843,
+      "hi": 0.6610169491525424,
+      "n_units": 60,
+      "n_clusters": 39,
+      "n_boot": 2000,
+      "n_boot_undefined": 0,
+      "level": 0.95,
+      "method": "cluster bootstrap, percentile",
+      "bca_lo": 0.40384615384615385,
+      "bca_hi": 0.6716417910447762
+     },
+     "n_hacked": 13,
+     "n_false_rejections": 7,
+     "n_oracle_accept": 26,
+     "n_judge_accept": 32
+    }
+   },
+   "settings": [
+    {
+     "setting": "temp0.75",
+     "label": "member 0, temperature 0.75",
+     "judge": "member0",
+     "defence": "temperature",
+     "param": 0.75,
+     "derived_from": null,
+     "neutral": false,
+     "n": 60,
+     "n_clusters": 39,
+     "baseline": "member0",
+     "same_plan_as_ensemble": 2,
+     "counts": {
+      "n_hacked": 11,
+      "n_false_rejections": 5,
+      "n_oracle_accept": 18,
+      "n_judge_accept": 24
+     },
+     "baseline_counts": {
+      "n_hacked": 8,
+      "n_false_rejections": 7,
+      "n_oracle_accept": 24,
+      "n_judge_accept": 25
+     },
+     "against_own_baseline": {
+      "false_acceptance": {
+       "defended": {
+        "value": 0.18333333333333332,
+        "lo": 0.078125,
+        "hi": 0.30357142857142855,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.08188868588264143,
+        "bca_hi": 0.3090909090909091
+       },
+       "undefended": {
+        "value": 0.13333333333333333,
+        "lo": 0.05084745762711865,
+        "hi": 0.23405086436170208,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.05871169341301205,
+        "bca_hi": 0.24489795918367346
+       },
+       "difference": 0.04999999999999999,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      },
+      "false_rejection": {
+       "defended": {
+        "value": 0.2777777777777778,
+        "lo": 0.1111111111111111,
+        "hi": 0.45,
+        "n_units": 18,
+        "n_clusters": 14,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.125,
+        "bca_hi": 0.5
+       },
+       "undefended": {
+        "value": 0.2916666666666667,
+        "lo": 0.13043478260869565,
+        "hi": 0.4782608695652174,
+        "n_units": 24,
+        "n_clusters": 18,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.13333333333333333,
+        "bca_hi": 0.5
+       },
+       "difference": -0.013888888888888895,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      },
+      "real_success": {
+       "defended": {
+        "value": 0.3,
+        "lo": 0.19148153942428037,
+        "hi": 0.4126984126984127,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.19672131147540983,
+        "bca_hi": 0.42478250398743017
+       },
+       "undefended": {
+        "value": 0.4,
+        "lo": 0.29089442815249267,
+        "hi": 0.5074745321013977,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.28846153846153844,
+        "bca_hi": 0.507272614505855
+       },
+       "difference": -0.10000000000000003,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      },
+      "emulator_accepts": {
+       "defended": {
+        "value": 0.4,
+        "lo": 0.296875,
+        "hi": 0.5192307692307693,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.2981821939977079,
+        "bca_hi": 0.5208333333333334
+       },
+       "undefended": {
+        "value": 0.4166666666666667,
+        "lo": 0.30766666666666675,
+        "hi": 0.5385245901639341,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.3085064521879994,
+        "bca_hi": 0.5416666666666666
+       },
+       "difference": -0.016666666666666663,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      }
+     },
+     "false_acceptance_minus_ensemble_paired": {
+      "value": -0.03333333333333333,
+      "lo": -0.19785714285714276,
+      "hi": 0.13638591800356492,
+      "n_units": 60,
+      "n_clusters": 39,
+      "n_boot": 2000,
+      "n_boot_undefined": 0,
+      "level": 0.95,
+      "method": "cluster bootstrap, percentile",
+      "bca_lo": -0.23818138207306921,
+      "bca_hi": 0.10909090909090909,
+      "n_paired": 60
+     }
+    },
+    {
+     "setting": "temp1.25",
+     "label": "member 0, temperature 1.25",
+     "judge": "member0",
+     "defence": "temperature",
+     "param": 1.25,
+     "derived_from": null,
+     "neutral": false,
+     "n": 60,
+     "n_clusters": 39,
+     "baseline": "member0",
+     "same_plan_as_ensemble": 1,
+     "counts": {
+      "n_hacked": 4,
+      "n_false_rejections": 16,
+      "n_oracle_accept": 19,
+      "n_judge_accept": 7
+     },
+     "baseline_counts": {
+      "n_hacked": 8,
+      "n_false_rejections": 7,
+      "n_oracle_accept": 24,
+      "n_judge_accept": 25
+     },
+     "against_own_baseline": {
+      "false_acceptance": {
+       "defended": {
+        "value": 0.06666666666666667,
+        "lo": 0.015873015873015872,
+        "hi": 0.131177675988428,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.017857142857142856,
+        "bca_hi": 0.14474679524212097
+       },
+       "undefended": {
+        "value": 0.13333333333333333,
+        "lo": 0.05084745762711865,
+        "hi": 0.23405086436170208,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.05871169341301205,
+        "bca_hi": 0.24489795918367346
+       },
+       "difference": -0.06666666666666667,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      },
+      "false_rejection": {
+       "defended": {
+        "value": 0.8421052631578947,
+        "lo": 0.68,
+        "hi": 1.0,
+        "n_units": 19,
+        "n_clusters": 13,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.6156508409645929,
+        "bca_hi": 1.0
+       },
+       "undefended": {
+        "value": 0.2916666666666667,
+        "lo": 0.13043478260869565,
+        "hi": 0.4782608695652174,
+        "n_units": 24,
+        "n_clusters": 18,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.13333333333333333,
+        "bca_hi": 0.5
+       },
+       "difference": 0.550438596491228,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      },
+      "real_success": {
+       "defended": {
+        "value": 0.31666666666666665,
+        "lo": 0.20330508474576287,
+        "hi": 0.42028985507246375,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.21153846153846154,
+        "bca_hi": 0.43177248936141843
+       },
+       "undefended": {
+        "value": 0.4,
+        "lo": 0.29089442815249267,
+        "hi": 0.5074745321013977,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.28846153846153844,
+        "bca_hi": 0.507272614505855
+       },
+       "difference": -0.08333333333333337,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      },
+      "emulator_accepts": {
+       "defended": {
+        "value": 0.11666666666666667,
+        "lo": 0.038461538461538464,
+        "hi": 0.1864406779661017,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.048554539420732845,
+        "bca_hi": 0.19718309859154928
+       },
+       "undefended": {
+        "value": 0.4166666666666667,
+        "lo": 0.30766666666666675,
+        "hi": 0.5385245901639341,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.3085064521879994,
+        "bca_hi": 0.5416666666666666
+       },
+       "difference": -0.30000000000000004,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      }
+     },
+     "false_acceptance_minus_ensemble_paired": {
+      "value": -0.15,
+      "lo": -0.30265507518796986,
+      "hi": -0.018518518518518517,
+      "n_units": 60,
+      "n_clusters": 39,
+      "n_boot": 2000,
+      "n_boot_undefined": 0,
+      "level": 0.95,
+      "method": "cluster bootstrap, percentile",
+      "bca_lo": -0.3490258083731615,
+      "bca_hi": -0.0425531914893617,
+      "n_paired": 60
+     }
+    },
+    {
+     "setting": "temp1.5",
+     "label": "member 0, temperature 1.5",
+     "judge": "member0",
+     "defence": "temperature",
+     "param": 1.5,
+     "derived_from": null,
+     "neutral": false,
+     "n": 60,
+     "n_clusters": 39,
+     "baseline": "member0",
+     "same_plan_as_ensemble": 0,
+     "counts": {
+      "n_hacked": 0,
+      "n_false_rejections": 16,
+      "n_oracle_accept": 16,
+      "n_judge_accept": 0
+     },
+     "baseline_counts": {
+      "n_hacked": 8,
+      "n_false_rejections": 7,
+      "n_oracle_accept": 24,
+      "n_judge_accept": 25
+     },
+     "against_own_baseline": {
+      "false_acceptance": {
+       "defended": {
+        "value": 0.0,
+        "lo": 0.0,
+        "hi": 0.07393758892668656,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "no hacked unit: one-sided exact binomial upper bound on clusters",
+        "bca_lo": 0.0,
+        "bca_hi": 0.07393758892668656
+       },
+       "undefended": {
+        "value": 0.13333333333333333,
+        "lo": 0.05084745762711865,
+        "hi": 0.23405086436170208,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.05871169341301205,
+        "bca_hi": 0.24489795918367346
+       },
+       "difference": -0.13333333333333333,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      },
+      "false_rejection": {
+       "defended": {
+        "value": 1.0,
+        "lo": 1.0,
+        "hi": 1.0,
+        "n_units": 16,
+        "n_clusters": 12,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 1.0,
+        "bca_hi": 1.0
+       },
+       "undefended": {
+        "value": 0.2916666666666667,
+        "lo": 0.13043478260869565,
+        "hi": 0.4782608695652174,
+        "n_units": 24,
+        "n_clusters": 18,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.13333333333333333,
+        "bca_hi": 0.5
+       },
+       "difference": 0.7083333333333333,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      },
+      "real_success": {
+       "defended": {
+        "value": 0.26666666666666666,
+        "lo": 0.14487577639751562,
+        "hi": 0.3898305084745763,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.15644746615720503,
+        "bca_hi": 0.4
+       },
+       "undefended": {
+        "value": 0.4,
+        "lo": 0.29089442815249267,
+        "hi": 0.5074745321013977,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.28846153846153844,
+        "bca_hi": 0.507272614505855
+       },
+       "difference": -0.13333333333333336,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      },
+      "emulator_accepts": {
+       "defended": {
+        "value": 0.0,
+        "lo": 0.0,
+        "hi": 0.0,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.0,
+        "bca_hi": 0.0
+       },
+       "undefended": {
+        "value": 0.4166666666666667,
+        "lo": 0.30766666666666675,
+        "hi": 0.5385245901639341,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.3085064521879994,
+        "bca_hi": 0.5416666666666666
+       },
+       "difference": -0.4166666666666667,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      }
+     },
+     "false_acceptance_minus_ensemble_paired": {
+      "value": -0.21666666666666667,
+      "lo": -0.35,
+      "hi": -0.09615384615384616,
+      "n_units": 60,
+      "n_clusters": 39,
+      "n_boot": 2000,
+      "n_boot_undefined": 0,
+      "level": 0.95,
+      "method": "cluster bootstrap, percentile",
+      "bca_lo": -0.3880597014925373,
+      "bca_hi": -0.11594202898550725,
+      "n_paired": 60
+     }
+    },
+    {
+     "setting": "penalty1",
+     "label": "ensemble, disagreement penalty lambda 1",
+     "judge": "ensemble",
+     "defence": "penalty",
+     "param": 1.0,
+     "derived_from": null,
+     "neutral": false,
+     "n": 60,
+     "n_clusters": 39,
+     "baseline": "ensemble",
+     "same_plan_as_ensemble": 30,
+     "counts": {
+      "n_hacked": 5,
+      "n_false_rejections": 17,
+      "n_oracle_accept": 23,
+      "n_judge_accept": 11
+     },
+     "baseline_counts": {
+      "n_hacked": 13,
+      "n_false_rejections": 7,
+      "n_oracle_accept": 26,
+      "n_judge_accept": 32
+     },
+     "against_own_baseline": {
+      "false_acceptance": {
+       "defended": {
+        "value": 0.08333333333333333,
+        "lo": 0.016666666666666666,
+        "hi": 0.16666666666666666,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.02130883430727654,
+        "bca_hi": 0.1864406779661017
+       },
+       "undefended": {
+        "value": 0.21666666666666667,
+        "lo": 0.09615384615384616,
+        "hi": 0.35,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.11594202898550725,
+        "bca_hi": 0.3880597014925373
+       },
+       "difference": -0.13333333333333336,
+       "difference_interval": {
+        "value": -0.13333333333333333,
+        "lo": -0.22033898305084745,
+        "hi": -0.0377183787561147,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": -0.22581503433927413,
+        "bca_hi": -0.04145641480035386,
+        "n_paired": 60
+       }
+      },
+      "false_rejection": {
+       "defended": {
+        "value": 0.7391304347826086,
+        "lo": 0.5238095238095238,
+        "hi": 0.9090909090909091,
+        "n_units": 23,
+        "n_clusters": 18,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.5,
+        "bca_hi": 0.9047619047619048
+       },
+       "undefended": {
+        "value": 0.2692307692307692,
+        "lo": 0.125,
+        "hi": 0.44,
+        "n_units": 26,
+        "n_clusters": 21,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.13043478260869565,
+        "bca_hi": 0.44
+       },
+       "difference": 0.46989966555183943,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      },
+      "real_success": {
+       "defended": {
+        "value": 0.38333333333333336,
+        "lo": 0.2675821596244132,
+        "hi": 0.5084820101100207,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.27450980392156865,
+        "bca_hi": 0.5178571428571429
+       },
+       "undefended": {
+        "value": 0.43333333333333335,
+        "lo": 0.3194444444444444,
+        "hi": 0.5660534591194968,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.32191804319522555,
+        "bca_hi": 0.5683733875827632
+       },
+       "difference": -0.04999999999999999,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      },
+      "emulator_accepts": {
+       "defended": {
+        "value": 0.18333333333333332,
+        "lo": 0.07142857142857142,
+        "hi": 0.3064826302729527,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.08250136096271946,
+        "bca_hi": 0.32558139534883723
+       },
+       "undefended": {
+        "value": 0.5333333333333333,
+        "lo": 0.39991379310344843,
+        "hi": 0.6610169491525424,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.40384615384615385,
+        "bca_hi": 0.6716417910447762
+       },
+       "difference": -0.35,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      }
+     },
+     "false_acceptance_minus_ensemble_paired": {
+      "value": -0.13333333333333333,
+      "lo": -0.22033898305084745,
+      "hi": -0.0377183787561147,
+      "n_units": 60,
+      "n_clusters": 39,
+      "n_boot": 2000,
+      "n_boot_undefined": 0,
+      "level": 0.95,
+      "method": "cluster bootstrap, percentile",
+      "bca_lo": -0.22581503433927413,
+      "bca_hi": -0.04145641480035386,
+      "n_paired": 60
+     }
+    },
+    {
+     "setting": "penalty2",
+     "label": "ensemble, disagreement penalty lambda 2",
+     "judge": "ensemble",
+     "defence": "penalty",
+     "param": 2.0,
+     "derived_from": null,
+     "neutral": false,
+     "n": 60,
+     "n_clusters": 39,
+     "baseline": "ensemble",
+     "same_plan_as_ensemble": 22,
+     "counts": {
+      "n_hacked": 3,
+      "n_false_rejections": 20,
+      "n_oracle_accept": 26,
+      "n_judge_accept": 9
+     },
+     "baseline_counts": {
+      "n_hacked": 13,
+      "n_false_rejections": 7,
+      "n_oracle_accept": 26,
+      "n_judge_accept": 32
+     },
+     "against_own_baseline": {
+      "false_acceptance": {
+       "defended": {
+        "value": 0.05,
+        "lo": 0.0,
+        "hi": 0.1111111111111111,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.013888888888888888,
+        "bca_hi": 0.12727272727272726
+       },
+       "undefended": {
+        "value": 0.21666666666666667,
+        "lo": 0.09615384615384616,
+        "hi": 0.35,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.11594202898550725,
+        "bca_hi": 0.3880597014925373
+       },
+       "difference": -0.16666666666666669,
+       "difference_interval": {
+        "value": -0.16666666666666666,
+        "lo": -0.30137529897803866,
+        "hi": -0.045454545454545456,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": -0.3496908267462581,
+        "bca_hi": -0.06451612903225806,
+        "n_paired": 60
+       }
+      },
+      "false_rejection": {
+       "defended": {
+        "value": 0.7692307692307693,
+        "lo": 0.5789473684210527,
+        "hi": 0.9189459459459458,
+        "n_units": 26,
+        "n_clusters": 19,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.56,
+        "bca_hi": 0.9090909090909091
+       },
+       "undefended": {
+        "value": 0.2692307692307692,
+        "lo": 0.125,
+        "hi": 0.44,
+        "n_units": 26,
+        "n_clusters": 21,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.13043478260869565,
+        "bca_hi": 0.44
+       },
+       "difference": 0.5,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      },
+      "real_success": {
+       "defended": {
+        "value": 0.43333333333333335,
+        "lo": 0.302612959285005,
+        "hi": 0.5733382352941176,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.3076923076923077,
+        "bca_hi": 0.5818181818181818
+       },
+       "undefended": {
+        "value": 0.43333333333333335,
+        "lo": 0.3194444444444444,
+        "hi": 0.5660534591194968,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.32191804319522555,
+        "bca_hi": 0.5683733875827632
+       },
+       "difference": 0.0,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      },
+      "emulator_accepts": {
+       "defended": {
+        "value": 0.15,
+        "lo": 0.05796404682274249,
+        "hi": 0.2545454545454545,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.06451612903225806,
+        "bca_hi": 0.26785714285714285
+       },
+       "undefended": {
+        "value": 0.5333333333333333,
+        "lo": 0.39991379310344843,
+        "hi": 0.6610169491525424,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.40384615384615385,
+        "bca_hi": 0.6716417910447762
+       },
+       "difference": -0.3833333333333333,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      }
+     },
+     "false_acceptance_minus_ensemble_paired": {
+      "value": -0.16666666666666666,
+      "lo": -0.30137529897803866,
+      "hi": -0.045454545454545456,
+      "n_units": 60,
+      "n_clusters": 39,
+      "n_boot": 2000,
+      "n_boot_undefined": 0,
+      "level": 0.95,
+      "method": "cluster bootstrap, percentile",
+      "bca_lo": -0.3496908267462581,
+      "bca_hi": -0.06451612903225806,
+      "n_paired": 60
+     }
+    },
+    {
+     "setting": "halt95",
+     "label": "ensemble, halt above 95th percentile",
+     "judge": "ensemble",
+     "defence": "halt",
+     "param": 95.0,
+     "derived_from": null,
+     "neutral": false,
+     "n": 60,
+     "n_clusters": 39,
+     "baseline": "ensemble",
+     "same_plan_as_ensemble": 59,
+     "counts": {
+      "n_hacked": 13,
+      "n_false_rejections": 7,
+      "n_oracle_accept": 26,
+      "n_judge_accept": 32
+     },
+     "baseline_counts": {
+      "n_hacked": 13,
+      "n_false_rejections": 7,
+      "n_oracle_accept": 26,
+      "n_judge_accept": 32
+     },
+     "against_own_baseline": {
+      "false_acceptance": {
+       "defended": {
+        "value": 0.21666666666666667,
+        "lo": 0.09615384615384616,
+        "hi": 0.35,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.11594202898550725,
+        "bca_hi": 0.3880597014925373
+       },
+       "undefended": {
+        "value": 0.21666666666666667,
+        "lo": 0.09615384615384616,
+        "hi": 0.35,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.11594202898550725,
+        "bca_hi": 0.3880597014925373
+       },
+       "difference": 0.0,
+       "difference_interval": {
+        "value": 0.0,
+        "lo": 0.0,
+        "hi": 0.0,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.0,
+        "bca_hi": 0.0,
+        "n_paired": 60
+       }
+      },
+      "false_rejection": {
+       "defended": {
+        "value": 0.2692307692307692,
+        "lo": 0.125,
+        "hi": 0.44,
+        "n_units": 26,
+        "n_clusters": 21,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.13043478260869565,
+        "bca_hi": 0.44
+       },
+       "undefended": {
+        "value": 0.2692307692307692,
+        "lo": 0.125,
+        "hi": 0.44,
+        "n_units": 26,
+        "n_clusters": 21,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.13043478260869565,
+        "bca_hi": 0.44
+       },
+       "difference": 0.0,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      },
+      "real_success": {
+       "defended": {
+        "value": 0.43333333333333335,
+        "lo": 0.3194444444444444,
+        "hi": 0.5660534591194968,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.32191804319522555,
+        "bca_hi": 0.5683733875827632
+       },
+       "undefended": {
+        "value": 0.43333333333333335,
+        "lo": 0.3194444444444444,
+        "hi": 0.5660534591194968,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.32191804319522555,
+        "bca_hi": 0.5683733875827632
+       },
+       "difference": 0.0,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      },
+      "emulator_accepts": {
+       "defended": {
+        "value": 0.5333333333333333,
+        "lo": 0.39991379310344843,
+        "hi": 0.6610169491525424,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.40384615384615385,
+        "bca_hi": 0.6716417910447762
+       },
+       "undefended": {
+        "value": 0.5333333333333333,
+        "lo": 0.39991379310344843,
+        "hi": 0.6610169491525424,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.40384615384615385,
+        "bca_hi": 0.6716417910447762
+       },
+       "difference": 0.0,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      }
+     },
+     "false_acceptance_minus_ensemble_paired": {
+      "value": 0.0,
+      "lo": 0.0,
+      "hi": 0.0,
+      "n_units": 60,
+      "n_clusters": 39,
+      "n_boot": 2000,
+      "n_boot_undefined": 0,
+      "level": 0.95,
+      "method": "cluster bootstrap, percentile",
+      "bca_lo": 0.0,
+      "bca_hi": 0.0,
+      "n_paired": 60
+     }
+    },
+    {
+     "setting": "halt80",
+     "label": "ensemble, halt above 80th percentile",
+     "judge": "ensemble",
+     "defence": "halt",
+     "param": 80.0,
+     "derived_from": null,
+     "neutral": false,
+     "n": 60,
+     "n_clusters": 39,
+     "baseline": "ensemble",
+     "same_plan_as_ensemble": 56,
+     "counts": {
+      "n_hacked": 12,
+      "n_false_rejections": 8,
+      "n_oracle_accept": 26,
+      "n_judge_accept": 30
+     },
+     "baseline_counts": {
+      "n_hacked": 13,
+      "n_false_rejections": 7,
+      "n_oracle_accept": 26,
+      "n_judge_accept": 32
+     },
+     "against_own_baseline": {
+      "false_acceptance": {
+       "defended": {
+        "value": 0.2,
+        "lo": 0.08329918032786891,
+        "hi": 0.3333333333333333,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.09803921568627451,
+        "bca_hi": 0.3749832337501345
+       },
+       "undefended": {
+        "value": 0.21666666666666667,
+        "lo": 0.09615384615384616,
+        "hi": 0.35,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.11594202898550725,
+        "bca_hi": 0.3880597014925373
+       },
+       "difference": -0.016666666666666663,
+       "difference_interval": {
+        "value": -0.016666666666666666,
+        "lo": -0.058823529411764705,
+        "hi": 0.0,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": -0.09428274792805859,
+        "bca_hi": 0.0,
+        "n_paired": 60
+       }
+      },
+      "false_rejection": {
+       "defended": {
+        "value": 0.3076923076923077,
+        "lo": 0.15384615384615385,
+        "hi": 0.5,
+        "n_units": 26,
+        "n_clusters": 21,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.16,
+        "bca_hi": 0.5
+       },
+       "undefended": {
+        "value": 0.2692307692307692,
+        "lo": 0.125,
+        "hi": 0.44,
+        "n_units": 26,
+        "n_clusters": 21,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.13043478260869565,
+        "bca_hi": 0.44
+       },
+       "difference": 0.03846153846153849,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      },
+      "real_success": {
+       "defended": {
+        "value": 0.43333333333333335,
+        "lo": 0.3194444444444444,
+        "hi": 0.5660534591194968,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.32191804319522555,
+        "bca_hi": 0.5683733875827632
+       },
+       "undefended": {
+        "value": 0.43333333333333335,
+        "lo": 0.3194444444444444,
+        "hi": 0.5660534591194968,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.32191804319522555,
+        "bca_hi": 0.5683733875827632
+       },
+       "difference": 0.0,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      },
+      "emulator_accepts": {
+       "defended": {
+        "value": 0.5,
+        "lo": 0.36538461538461536,
+        "hi": 0.6286659663865541,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.375,
+        "bca_hi": 0.6445547527888504
+       },
+       "undefended": {
+        "value": 0.5333333333333333,
+        "lo": 0.39991379310344843,
+        "hi": 0.6610169491525424,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.40384615384615385,
+        "bca_hi": 0.6716417910447762
+       },
+       "difference": -0.033333333333333326,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      }
+     },
+     "false_acceptance_minus_ensemble_paired": {
+      "value": -0.016666666666666666,
+      "lo": -0.058823529411764705,
+      "hi": 0.0,
+      "n_units": 60,
+      "n_clusters": 39,
+      "n_boot": 2000,
+      "n_boot_undefined": 0,
+      "level": 0.95,
+      "method": "cluster bootstrap, percentile",
+      "bca_lo": -0.09428274792805859,
+      "bca_hi": 0.0,
+      "n_paired": 60
+     }
+    },
+    {
+     "setting": "detector0.5",
+     "label": "ensemble, detector p > 0.5",
+     "judge": "ensemble",
+     "defence": "detector",
+     "param": 0.5,
+     "derived_from": null,
+     "neutral": false,
+     "n": 60,
+     "n_clusters": 39,
+     "baseline": "ensemble",
+     "same_plan_as_ensemble": 32,
+     "counts": {
+      "n_hacked": 8,
+      "n_false_rejections": 11,
+      "n_oracle_accept": 26,
+      "n_judge_accept": 23
+     },
+     "baseline_counts": {
+      "n_hacked": 13,
+      "n_false_rejections": 7,
+      "n_oracle_accept": 26,
+      "n_judge_accept": 32
+     },
+     "against_own_baseline": {
+      "false_acceptance": {
+       "defended": {
+        "value": 0.13333333333333333,
+        "lo": 0.057692307692307696,
+        "hi": 0.2105448480355818,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.06779661016949153,
+        "bca_hi": 0.22615085044311087
+       },
+       "undefended": {
+        "value": 0.21666666666666667,
+        "lo": 0.09615384615384616,
+        "hi": 0.35,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.11594202898550725,
+        "bca_hi": 0.3880597014925373
+       },
+       "difference": -0.08333333333333334,
+       "difference_interval": {
+        "value": -0.08333333333333333,
+        "lo": -0.18310446009389672,
+        "hi": 0.01818181818181818,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": -0.1832061371384003,
+        "bca_hi": 0.01818181818181818,
+        "n_paired": 60
+       }
+      },
+      "false_rejection": {
+       "defended": {
+        "value": 0.4230769230769231,
+        "lo": 0.2498106060606064,
+        "hi": 0.625,
+        "n_units": 26,
+        "n_clusters": 21,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.2413793103448276,
+        "bca_hi": 0.625
+       },
+       "undefended": {
+        "value": 0.2692307692307692,
+        "lo": 0.125,
+        "hi": 0.44,
+        "n_units": 26,
+        "n_clusters": 21,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.13043478260869565,
+        "bca_hi": 0.44
+       },
+       "difference": 0.15384615384615385,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      },
+      "real_success": {
+       "defended": {
+        "value": 0.43333333333333335,
+        "lo": 0.3333333333333333,
+        "hi": 0.5490196078431373,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.3333333333333333,
+        "bca_hi": 0.5490196078431373
+       },
+       "undefended": {
+        "value": 0.43333333333333335,
+        "lo": 0.3194444444444444,
+        "hi": 0.5660534591194968,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.32191804319522555,
+        "bca_hi": 0.5683733875827632
+       },
+       "difference": 0.0,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      },
+      "emulator_accepts": {
+       "defended": {
+        "value": 0.38333333333333336,
+        "lo": 0.2563953488372093,
+        "hi": 0.5074684270952927,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.27018894556639017,
+        "bca_hi": 0.5164229656087802
+       },
+       "undefended": {
+        "value": 0.5333333333333333,
+        "lo": 0.39991379310344843,
+        "hi": 0.6610169491525424,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.40384615384615385,
+        "bca_hi": 0.6716417910447762
+       },
+       "difference": -0.14999999999999997,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      }
+     },
+     "false_acceptance_minus_ensemble_paired": {
+      "value": -0.08333333333333333,
+      "lo": -0.18310446009389672,
+      "hi": 0.01818181818181818,
+      "n_units": 60,
+      "n_clusters": 39,
+      "n_boot": 2000,
+      "n_boot_undefined": 0,
+      "level": 0.95,
+      "method": "cluster bootstrap, percentile",
+      "bca_lo": -0.1832061371384003,
+      "bca_hi": 0.01818181818181818,
+      "n_paired": 60
+     }
+    },
+    {
+     "setting": "detector0.2",
+     "label": "ensemble, detector p > 0.2",
+     "judge": "ensemble",
+     "defence": "detector",
+     "param": 0.2,
+     "derived_from": null,
+     "neutral": false,
+     "n": 60,
+     "n_clusters": 39,
+     "baseline": "ensemble",
+     "same_plan_as_ensemble": 21,
+     "counts": {
+      "n_hacked": 2,
+      "n_false_rejections": 18,
+      "n_oracle_accept": 25,
+      "n_judge_accept": 9
+     },
+     "baseline_counts": {
+      "n_hacked": 13,
+      "n_false_rejections": 7,
+      "n_oracle_accept": 26,
+      "n_judge_accept": 32
+     },
+     "against_own_baseline": {
+      "false_acceptance": {
+       "defended": {
+        "value": 0.03333333333333333,
+        "lo": 0.0,
+        "hi": 0.08451301026497968,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.0,
+        "bca_hi": 0.10698225767018925
+       },
+       "undefended": {
+        "value": 0.21666666666666667,
+        "lo": 0.09615384615384616,
+        "hi": 0.35,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.11594202898550725,
+        "bca_hi": 0.3880597014925373
+       },
+       "difference": -0.18333333333333335,
+       "difference_interval": {
+        "value": -0.18333333333333332,
+        "lo": -0.288135593220339,
+        "hi": -0.08157596371882117,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": -0.3126479971525712,
+        "bca_hi": -0.09090909090909091,
+        "n_paired": 60
+       }
+      },
+      "false_rejection": {
+       "defended": {
+        "value": 0.72,
+        "lo": 0.5652173913043478,
+        "hi": 0.8636363636363636,
+        "n_units": 25,
+        "n_clusters": 18,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.5384615384615384,
+        "bca_hi": 0.8461538461538461
+       },
+       "undefended": {
+        "value": 0.2692307692307692,
+        "lo": 0.125,
+        "hi": 0.44,
+        "n_units": 26,
+        "n_clusters": 21,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.13043478260869565,
+        "bca_hi": 0.44
+       },
+       "difference": 0.45076923076923076,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      },
+      "real_success": {
+       "defended": {
+        "value": 0.4166666666666667,
+        "lo": 0.2902760545905708,
+        "hi": 0.5441176470588235,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.29241706955648744,
+        "bca_hi": 0.5471271943832994
+       },
+       "undefended": {
+        "value": 0.43333333333333335,
+        "lo": 0.3194444444444444,
+        "hi": 0.5660534591194968,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.32191804319522555,
+        "bca_hi": 0.5683733875827632
+       },
+       "difference": -0.016666666666666663,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      },
+      "emulator_accepts": {
+       "defended": {
+        "value": 0.15,
+        "lo": 0.06666666666666667,
+        "hi": 0.2462499999999995,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.07549364144926518,
+        "bca_hi": 0.2553191489361702
+       },
+       "undefended": {
+        "value": 0.5333333333333333,
+        "lo": 0.39991379310344843,
+        "hi": 0.6610169491525424,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.40384615384615385,
+        "bca_hi": 0.6716417910447762
+       },
+       "difference": -0.3833333333333333,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      }
+     },
+     "false_acceptance_minus_ensemble_paired": {
+      "value": -0.18333333333333332,
+      "lo": -0.288135593220339,
+      "hi": -0.08157596371882117,
+      "n_units": 60,
+      "n_clusters": 39,
+      "n_boot": 2000,
+      "n_boot_undefined": 0,
+      "level": 0.95,
+      "method": "cluster bootstrap, percentile",
+      "bca_lo": -0.3126479971525712,
+      "bca_hi": -0.09090909090909091,
+      "n_paired": 60
+     }
+    },
+    {
+     "setting": "deflation-member0",
+     "label": "member 0, deflation (Smith-Winkler)",
+     "judge": "member0",
+     "defence": "deflation",
+     "param": 0.0,
+     "derived_from": "member0",
+     "neutral": false,
+     "n": 60,
+     "n_clusters": 39,
+     "baseline": "member0",
+     "same_plan_as_ensemble": 13,
+     "counts": {
+      "n_hacked": 1,
+      "n_false_rejections": 15,
+      "n_oracle_accept": 24,
+      "n_judge_accept": 10
+     },
+     "baseline_counts": {
+      "n_hacked": 8,
+      "n_false_rejections": 7,
+      "n_oracle_accept": 24,
+      "n_judge_accept": 25
+     },
+     "against_own_baseline": {
+      "false_acceptance": {
+       "defended": {
+        "value": 0.016666666666666666,
+        "lo": 0.0,
+        "hi": 0.058823529411764705,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.0,
+        "bca_hi": 0.10192489205936936
+       },
+       "undefended": {
+        "value": 0.13333333333333333,
+        "lo": 0.05084745762711865,
+        "hi": 0.23405086436170208,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.05871169341301205,
+        "bca_hi": 0.24489795918367346
+       },
+       "difference": -0.11666666666666667,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      },
+      "false_rejection": {
+       "defended": {
+        "value": 0.625,
+        "lo": 0.47344924812030115,
+        "hi": 0.7727272727272727,
+        "n_units": 24,
+        "n_clusters": 18,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.45454545454545453,
+        "bca_hi": 0.7727272727272727
+       },
+       "undefended": {
+        "value": 0.2916666666666667,
+        "lo": 0.13043478260869565,
+        "hi": 0.4782608695652174,
+        "n_units": 24,
+        "n_clusters": 18,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.13333333333333333,
+        "bca_hi": 0.5
+       },
+       "difference": 0.3333333333333333,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      },
+      "real_success": {
+       "defended": {
+        "value": 0.4,
+        "lo": 0.29089442815249267,
+        "hi": 0.5074745321013977,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.28846153846153844,
+        "bca_hi": 0.507272614505855
+       },
+       "undefended": {
+        "value": 0.4,
+        "lo": 0.29089442815249267,
+        "hi": 0.5074745321013977,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.28846153846153844,
+        "bca_hi": 0.507272614505855
+       },
+       "difference": 0.0,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      },
+      "emulator_accepts": {
+       "defended": {
+        "value": 0.16666666666666666,
+        "lo": 0.10165254237288143,
+        "hi": 0.23880597014925373,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.10909090909090909,
+        "bca_hi": 0.2549019607843137
+       },
+       "undefended": {
+        "value": 0.4166666666666667,
+        "lo": 0.30766666666666675,
+        "hi": 0.5385245901639341,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.3085064521879994,
+        "bca_hi": 0.5416666666666666
+       },
+       "difference": -0.25,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      }
+     },
+     "false_acceptance_minus_ensemble_paired": {
+      "value": -0.2,
+      "lo": -0.3382352941176471,
+      "hi": -0.07139724310776958,
+      "n_units": 60,
+      "n_clusters": 39,
+      "n_boot": 2000,
+      "n_boot_undefined": 0,
+      "level": 0.95,
+      "method": "cluster bootstrap, percentile",
+      "bca_lo": -0.3780868047592935,
+      "bca_hi": -0.08928571428571429,
+      "n_paired": 60
+     }
+    },
+    {
+     "setting": "deflation-ensemble",
+     "label": "ensemble, deflation (Smith-Winkler)",
+     "judge": "ensemble",
+     "defence": "deflation",
+     "param": 0.0,
+     "derived_from": "ensemble",
+     "neutral": false,
+     "n": 60,
+     "n_clusters": 39,
+     "baseline": "ensemble",
+     "same_plan_as_ensemble": 60,
+     "counts": {
+      "n_hacked": 4,
+      "n_false_rejections": 16,
+      "n_oracle_accept": 26,
+      "n_judge_accept": 14
+     },
+     "baseline_counts": {
+      "n_hacked": 13,
+      "n_false_rejections": 7,
+      "n_oracle_accept": 26,
+      "n_judge_accept": 32
+     },
+     "against_own_baseline": {
+      "false_acceptance": {
+       "defended": {
+        "value": 0.06666666666666667,
+        "lo": 0.0,
+        "hi": 0.16883574172306565,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.0,
+        "bca_hi": 0.23084701791049336
+       },
+       "undefended": {
+        "value": 0.21666666666666667,
+        "lo": 0.09615384615384616,
+        "hi": 0.35,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.11594202898550725,
+        "bca_hi": 0.3880597014925373
+       },
+       "difference": -0.15000000000000002,
+       "difference_interval": {
+        "value": -0.15,
+        "lo": -0.23333333333333334,
+        "hi": -0.07809495192307708,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": -0.23728813559322035,
+        "bca_hi": -0.08333333333333333,
+        "n_paired": 60
+       }
+      },
+      "false_rejection": {
+       "defended": {
+        "value": 0.6153846153846154,
+        "lo": 0.46153846153846156,
+        "hi": 0.782608695652174,
+        "n_units": 26,
+        "n_clusters": 21,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.4583333333333333,
+        "bca_hi": 0.7770116994209774
+       },
+       "undefended": {
+        "value": 0.2692307692307692,
+        "lo": 0.125,
+        "hi": 0.44,
+        "n_units": 26,
+        "n_clusters": 21,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.13043478260869565,
+        "bca_hi": 0.44
+       },
+       "difference": 0.3461538461538462,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      },
+      "real_success": {
+       "defended": {
+        "value": 0.43333333333333335,
+        "lo": 0.3194444444444444,
+        "hi": 0.5660534591194968,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.32191804319522555,
+        "bca_hi": 0.5683733875827632
+       },
+       "undefended": {
+        "value": 0.43333333333333335,
+        "lo": 0.3194444444444444,
+        "hi": 0.5660534591194968,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.32191804319522555,
+        "bca_hi": 0.5683733875827632
+       },
+       "difference": 0.0,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      },
+      "emulator_accepts": {
+       "defended": {
+        "value": 0.23333333333333334,
+        "lo": 0.13951873385012922,
+        "hi": 0.3333333333333333,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.14754098360655737,
+        "bca_hi": 0.3492063492063492
+       },
+       "undefended": {
+        "value": 0.5333333333333333,
+        "lo": 0.39991379310344843,
+        "hi": 0.6610169491525424,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.40384615384615385,
+        "bca_hi": 0.6716417910447762
+       },
+       "difference": -0.3,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      }
+     },
+     "false_acceptance_minus_ensemble_paired": {
+      "value": -0.15,
+      "lo": -0.23333333333333334,
+      "hi": -0.07809495192307708,
+      "n_units": 60,
+      "n_clusters": 39,
+      "n_boot": 2000,
+      "n_boot_undefined": 0,
+      "level": 0.95,
+      "method": "cluster bootstrap, percentile",
+      "bca_lo": -0.23728813559322035,
+      "bca_hi": -0.08333333333333333,
+      "n_paired": 60
+     }
+    },
+    {
+     "setting": "penalty0",
+     "label": "ensemble, penalty lambda 0 (neutral point: the verdict's added mean-margin condition)",
+     "judge": "ensemble",
+     "defence": "penalty",
+     "param": 0.0,
+     "derived_from": "ensemble",
+     "neutral": true,
+     "n": 60,
+     "n_clusters": 39,
+     "baseline": "ensemble",
+     "same_plan_as_ensemble": 60,
+     "counts": {
+      "n_hacked": 6,
+      "n_false_rejections": 17,
+      "n_oracle_accept": 26,
+      "n_judge_accept": 15
+     },
+     "baseline_counts": {
+      "n_hacked": 13,
+      "n_false_rejections": 7,
+      "n_oracle_accept": 26,
+      "n_judge_accept": 32
+     },
+     "against_own_baseline": {
+      "false_acceptance": {
+       "defended": {
+        "value": 0.1,
+        "lo": 0.020833333333333332,
+        "hi": 0.1765231092436972,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.03553841475457997,
+        "bca_hi": 0.2
+       },
+       "undefended": {
+        "value": 0.21666666666666667,
+        "lo": 0.09615384615384616,
+        "hi": 0.35,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.11594202898550725,
+        "bca_hi": 0.3880597014925373
+       },
+       "difference": -0.11666666666666667,
+       "difference_interval": {
+        "value": -0.11666666666666667,
+        "lo": -0.19718309859154928,
+        "hi": -0.03998039215686285,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": -0.21130767969668032,
+        "bca_hi": -0.05103742345006552,
+        "n_paired": 60
+       }
+      },
+      "false_rejection": {
+       "defended": {
+        "value": 0.6538461538461539,
+        "lo": 0.43478260869565216,
+        "hi": 0.8214810924369744,
+        "n_units": 26,
+        "n_clusters": 21,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.4389823254120301,
+        "bca_hi": 0.8275862068965517
+       },
+       "undefended": {
+        "value": 0.2692307692307692,
+        "lo": 0.125,
+        "hi": 0.44,
+        "n_units": 26,
+        "n_clusters": 21,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.13043478260869565,
+        "bca_hi": 0.44
+       },
+       "difference": 0.38461538461538464,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      },
+      "real_success": {
+       "defended": {
+        "value": 0.43333333333333335,
+        "lo": 0.3194444444444444,
+        "hi": 0.5660534591194968,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.32191804319522555,
+        "bca_hi": 0.5683733875827632
+       },
+       "undefended": {
+        "value": 0.43333333333333335,
+        "lo": 0.3194444444444444,
+        "hi": 0.5660534591194968,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.32191804319522555,
+        "bca_hi": 0.5683733875827632
+       },
+       "difference": 0.0,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      },
+      "emulator_accepts": {
+       "defended": {
+        "value": 0.25,
+        "lo": 0.12727272727272726,
+        "hi": 0.3728813559322034,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.1320754716981132,
+        "bca_hi": 0.3771367951916763
+       },
+       "undefended": {
+        "value": 0.5333333333333333,
+        "lo": 0.39991379310344843,
+        "hi": 0.6610169491525424,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.40384615384615385,
+        "bca_hi": 0.6716417910447762
+       },
+       "difference": -0.2833333333333333,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      }
+     },
+     "false_acceptance_minus_ensemble_paired": {
+      "value": -0.11666666666666667,
+      "lo": -0.19718309859154928,
+      "hi": -0.03998039215686285,
+      "n_units": 60,
+      "n_clusters": 39,
+      "n_boot": 2000,
+      "n_boot_undefined": 0,
+      "level": 0.95,
+      "method": "cluster bootstrap, percentile",
+      "bca_lo": -0.21130767969668032,
+      "bca_hi": -0.05103742345006552,
+      "n_paired": 60
+     }
+    }
+   ],
+   "not_run": [
+    {
+     "setting": "policy-aware",
+     "status": "slot: trained and attacked by another builder; not run here"
+    }
+   ],
+   "penalty_increments": {
+    "lambda0_setting": "penalty0",
+    "lambda0_label": "ensemble, penalty lambda 0 (neutral point: the verdict's added mean-margin condition)",
+    "lambda0_same_plan_as_ensemble": 60,
+    "lambda0_against_ensemble": {
+     "false_acceptance": {
+      "defended": {
+       "value": 0.1,
+       "lo": 0.020833333333333332,
+       "hi": 0.1765231092436972,
+       "n_units": 60,
+       "n_clusters": 39,
+       "n_boot": 2000,
+       "n_boot_undefined": 0,
+       "level": 0.95,
+       "method": "cluster bootstrap, percentile",
+       "bca_lo": 0.03553841475457997,
+       "bca_hi": 0.2
+      },
+      "undefended": {
+       "value": 0.21666666666666667,
+       "lo": 0.09615384615384616,
+       "hi": 0.35,
+       "n_units": 60,
+       "n_clusters": 39,
+       "n_boot": 2000,
+       "n_boot_undefined": 0,
+       "level": 0.95,
+       "method": "cluster bootstrap, percentile",
+       "bca_lo": 0.11594202898550725,
+       "bca_hi": 0.3880597014925373
+      },
+      "difference": -0.11666666666666667,
+      "difference_interval": {
+       "value": -0.11666666666666667,
+       "lo": -0.19718309859154928,
+       "hi": -0.03998039215686285,
+       "n_units": 60,
+       "n_clusters": 39,
+       "n_boot": 2000,
+       "n_boot_undefined": 0,
+       "level": 0.95,
+       "method": "cluster bootstrap, percentile",
+       "bca_lo": -0.21130767969668032,
+       "bca_hi": -0.05103742345006552,
+       "n_paired": 60
+      }
+     },
+     "false_rejection": {
+      "defended": {
+       "value": 0.6538461538461539,
+       "lo": 0.43478260869565216,
+       "hi": 0.8214810924369744,
+       "n_units": 26,
+       "n_clusters": 21,
+       "n_boot": 2000,
+       "n_boot_undefined": 0,
+       "level": 0.95,
+       "method": "cluster bootstrap, percentile",
+       "bca_lo": 0.4389823254120301,
+       "bca_hi": 0.8275862068965517
+      },
+      "undefended": {
+       "value": 0.2692307692307692,
+       "lo": 0.125,
+       "hi": 0.44,
+       "n_units": 26,
+       "n_clusters": 21,
+       "n_boot": 2000,
+       "n_boot_undefined": 0,
+       "level": 0.95,
+       "method": "cluster bootstrap, percentile",
+       "bca_lo": 0.13043478260869565,
+       "bca_hi": 0.44
+      },
+      "difference": 0.38461538461538464,
+      "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+     },
+     "real_success": {
+      "defended": {
+       "value": 0.43333333333333335,
+       "lo": 0.3194444444444444,
+       "hi": 0.5660534591194968,
+       "n_units": 60,
+       "n_clusters": 39,
+       "n_boot": 2000,
+       "n_boot_undefined": 0,
+       "level": 0.95,
+       "method": "cluster bootstrap, percentile",
+       "bca_lo": 0.32191804319522555,
+       "bca_hi": 0.5683733875827632
+      },
+      "undefended": {
+       "value": 0.43333333333333335,
+       "lo": 0.3194444444444444,
+       "hi": 0.5660534591194968,
+       "n_units": 60,
+       "n_clusters": 39,
+       "n_boot": 2000,
+       "n_boot_undefined": 0,
+       "level": 0.95,
+       "method": "cluster bootstrap, percentile",
+       "bca_lo": 0.32191804319522555,
+       "bca_hi": 0.5683733875827632
+      },
+      "difference": 0.0,
+      "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+     },
+     "emulator_accepts": {
+      "defended": {
+       "value": 0.25,
+       "lo": 0.12727272727272726,
+       "hi": 0.3728813559322034,
+       "n_units": 60,
+       "n_clusters": 39,
+       "n_boot": 2000,
+       "n_boot_undefined": 0,
+       "level": 0.95,
+       "method": "cluster bootstrap, percentile",
+       "bca_lo": 0.1320754716981132,
+       "bca_hi": 0.3771367951916763
+      },
+      "undefended": {
+       "value": 0.5333333333333333,
+       "lo": 0.39991379310344843,
+       "hi": 0.6610169491525424,
+       "n_units": 60,
+       "n_clusters": 39,
+       "n_boot": 2000,
+       "n_boot_undefined": 0,
+       "level": 0.95,
+       "method": "cluster bootstrap, percentile",
+       "bca_lo": 0.40384615384615385,
+       "bca_hi": 0.6716417910447762
+      },
+      "difference": -0.2833333333333333,
+      "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+     }
+    },
+    "increments": {
+     "penalty1": {
+      "lambda": 1.0,
+      "label": "ensemble, disagreement penalty lambda 1",
+      "same_plan_as_ensemble": 30,
+      "over_lambda0": {
+       "false_acceptance": {
+        "defended": {
+         "value": 0.08333333333333333,
+         "lo": 0.016666666666666666,
+         "hi": 0.16666666666666666,
+         "n_units": 60,
+         "n_clusters": 39,
+         "n_boot": 2000,
+         "n_boot_undefined": 0,
+         "level": 0.95,
+         "method": "cluster bootstrap, percentile",
+         "bca_lo": 0.02130883430727654,
+         "bca_hi": 0.1864406779661017
+        },
+        "undefended": {
+         "value": 0.1,
+         "lo": 0.020833333333333332,
+         "hi": 0.1765231092436972,
+         "n_units": 60,
+         "n_clusters": 39,
+         "n_boot": 2000,
+         "n_boot_undefined": 0,
+         "level": 0.95,
+         "method": "cluster bootstrap, percentile",
+         "bca_lo": 0.03553841475457997,
+         "bca_hi": 0.2
+        },
+        "difference": -0.016666666666666677,
+        "difference_interval": "not computable from frontier.json: it stores each penalty setting's paired difference from the undefended ensemble, not from lambda 0, and no per-instance outcomes"
+       },
+       "false_rejection": {
+        "defended": {
+         "value": 0.7391304347826086,
+         "lo": 0.5238095238095238,
+         "hi": 0.9090909090909091,
+         "n_units": 23,
+         "n_clusters": 18,
+         "n_boot": 2000,
+         "n_boot_undefined": 0,
+         "level": 0.95,
+         "method": "cluster bootstrap, percentile",
+         "bca_lo": 0.5,
+         "bca_hi": 0.9047619047619048
+        },
+        "undefended": {
+         "value": 0.6538461538461539,
+         "lo": 0.43478260869565216,
+         "hi": 0.8214810924369744,
+         "n_units": 26,
+         "n_clusters": 21,
+         "n_boot": 2000,
+         "n_boot_undefined": 0,
+         "level": 0.95,
+         "method": "cluster bootstrap, percentile",
+         "bca_lo": 0.4389823254120301,
+         "bca_hi": 0.8275862068965517
+        },
+        "difference": 0.08528428093645479,
+        "difference_interval": "not computable from frontier.json: it stores each penalty setting's paired difference from the undefended ensemble, not from lambda 0, and no per-instance outcomes"
+       },
+       "real_success": {
+        "defended": {
+         "value": 0.38333333333333336,
+         "lo": 0.2675821596244132,
+         "hi": 0.5084820101100207,
+         "n_units": 60,
+         "n_clusters": 39,
+         "n_boot": 2000,
+         "n_boot_undefined": 0,
+         "level": 0.95,
+         "method": "cluster bootstrap, percentile",
+         "bca_lo": 0.27450980392156865,
+         "bca_hi": 0.5178571428571429
+        },
+        "undefended": {
+         "value": 0.43333333333333335,
+         "lo": 0.3194444444444444,
+         "hi": 0.5660534591194968,
+         "n_units": 60,
+         "n_clusters": 39,
+         "n_boot": 2000,
+         "n_boot_undefined": 0,
+         "level": 0.95,
+         "method": "cluster bootstrap, percentile",
+         "bca_lo": 0.32191804319522555,
+         "bca_hi": 0.5683733875827632
+        },
+        "difference": -0.04999999999999999,
+        "difference_interval": "not computable from frontier.json: it stores each penalty setting's paired difference from the undefended ensemble, not from lambda 0, and no per-instance outcomes"
+       },
+       "emulator_accepts": {
+        "defended": {
+         "value": 0.18333333333333332,
+         "lo": 0.07142857142857142,
+         "hi": 0.3064826302729527,
+         "n_units": 60,
+         "n_clusters": 39,
+         "n_boot": 2000,
+         "n_boot_undefined": 0,
+         "level": 0.95,
+         "method": "cluster bootstrap, percentile",
+         "bca_lo": 0.08250136096271946,
+         "bca_hi": 0.32558139534883723
+        },
+        "undefended": {
+         "value": 0.25,
+         "lo": 0.12727272727272726,
+         "hi": 0.3728813559322034,
+         "n_units": 60,
+         "n_clusters": 39,
+         "n_boot": 2000,
+         "n_boot_undefined": 0,
+         "level": 0.95,
+         "method": "cluster bootstrap, percentile",
+         "bca_lo": 0.1320754716981132,
+         "bca_hi": 0.3771367951916763
+        },
+        "difference": -0.06666666666666668,
+        "difference_interval": "not computable from frontier.json: it stores each penalty setting's paired difference from the undefended ensemble, not from lambda 0, and no per-instance outcomes"
+       }
+      }
+     },
+     "penalty2": {
+      "lambda": 2.0,
+      "label": "ensemble, disagreement penalty lambda 2",
+      "same_plan_as_ensemble": 22,
+      "over_lambda0": {
+       "false_acceptance": {
+        "defended": {
+         "value": 0.05,
+         "lo": 0.0,
+         "hi": 0.1111111111111111,
+         "n_units": 60,
+         "n_clusters": 39,
+         "n_boot": 2000,
+         "n_boot_undefined": 0,
+         "level": 0.95,
+         "method": "cluster bootstrap, percentile",
+         "bca_lo": 0.013888888888888888,
+         "bca_hi": 0.12727272727272726
+        },
+        "undefended": {
+         "value": 0.1,
+         "lo": 0.020833333333333332,
+         "hi": 0.1765231092436972,
+         "n_units": 60,
+         "n_clusters": 39,
+         "n_boot": 2000,
+         "n_boot_undefined": 0,
+         "level": 0.95,
+         "method": "cluster bootstrap, percentile",
+         "bca_lo": 0.03553841475457997,
+         "bca_hi": 0.2
+        },
+        "difference": -0.05,
+        "difference_interval": "not computable from frontier.json: it stores each penalty setting's paired difference from the undefended ensemble, not from lambda 0, and no per-instance outcomes"
+       },
+       "false_rejection": {
+        "defended": {
+         "value": 0.7692307692307693,
+         "lo": 0.5789473684210527,
+         "hi": 0.9189459459459458,
+         "n_units": 26,
+         "n_clusters": 19,
+         "n_boot": 2000,
+         "n_boot_undefined": 0,
+         "level": 0.95,
+         "method": "cluster bootstrap, percentile",
+         "bca_lo": 0.56,
+         "bca_hi": 0.9090909090909091
+        },
+        "undefended": {
+         "value": 0.6538461538461539,
+         "lo": 0.43478260869565216,
+         "hi": 0.8214810924369744,
+         "n_units": 26,
+         "n_clusters": 21,
+         "n_boot": 2000,
+         "n_boot_undefined": 0,
+         "level": 0.95,
+         "method": "cluster bootstrap, percentile",
+         "bca_lo": 0.4389823254120301,
+         "bca_hi": 0.8275862068965517
+        },
+        "difference": 0.11538461538461542,
+        "difference_interval": "not computable from frontier.json: it stores each penalty setting's paired difference from the undefended ensemble, not from lambda 0, and no per-instance outcomes"
+       },
+       "real_success": {
+        "defended": {
+         "value": 0.43333333333333335,
+         "lo": 0.302612959285005,
+         "hi": 0.5733382352941176,
+         "n_units": 60,
+         "n_clusters": 39,
+         "n_boot": 2000,
+         "n_boot_undefined": 0,
+         "level": 0.95,
+         "method": "cluster bootstrap, percentile",
+         "bca_lo": 0.3076923076923077,
+         "bca_hi": 0.5818181818181818
+        },
+        "undefended": {
+         "value": 0.43333333333333335,
+         "lo": 0.3194444444444444,
+         "hi": 0.5660534591194968,
+         "n_units": 60,
+         "n_clusters": 39,
+         "n_boot": 2000,
+         "n_boot_undefined": 0,
+         "level": 0.95,
+         "method": "cluster bootstrap, percentile",
+         "bca_lo": 0.32191804319522555,
+         "bca_hi": 0.5683733875827632
+        },
+        "difference": 0.0,
+        "difference_interval": "not computable from frontier.json: it stores each penalty setting's paired difference from the undefended ensemble, not from lambda 0, and no per-instance outcomes"
+       },
+       "emulator_accepts": {
+        "defended": {
+         "value": 0.15,
+         "lo": 0.05796404682274249,
+         "hi": 0.2545454545454545,
+         "n_units": 60,
+         "n_clusters": 39,
+         "n_boot": 2000,
+         "n_boot_undefined": 0,
+         "level": 0.95,
+         "method": "cluster bootstrap, percentile",
+         "bca_lo": 0.06451612903225806,
+         "bca_hi": 0.26785714285714285
+        },
+        "undefended": {
+         "value": 0.25,
+         "lo": 0.12727272727272726,
+         "hi": 0.3728813559322034,
+         "n_units": 60,
+         "n_clusters": 39,
+         "n_boot": 2000,
+         "n_boot_undefined": 0,
+         "level": 0.95,
+         "method": "cluster bootstrap, percentile",
+         "bca_lo": 0.1320754716981132,
+         "bca_hi": 0.3771367951916763
+        },
+        "difference": -0.1,
+        "difference_interval": "not computable from frontier.json: it stores each penalty setting's paired difference from the undefended ensemble, not from lambda 0, and no per-instance outcomes"
+       }
+      }
+     }
+    }
+   }
+  },
+  "cem_seeded": {
+   "perfect_emulator": {
+    "false_acceptance": {
+     "value": 0.1,
+     "lo": 0.022222222222222223,
+     "hi": 0.18333333333333332,
+     "n_units": 60,
+     "n_clusters": 39,
+     "n_boot": 2000,
+     "n_boot_undefined": 0,
+     "level": 0.95,
+     "method": "cluster bootstrap, percentile",
+     "bca_lo": 0.03278688524590164,
+     "bca_hi": 0.19448906669102187
+    },
+    "false_rejection": {
+     "value": 0.13793103448275862,
+     "lo": 0.038461538461538464,
+     "hi": 0.24405487804877965,
+     "n_units": 29,
+     "n_clusters": 20,
+     "n_boot": 2000,
+     "n_boot_undefined": 0,
+     "level": 0.95,
+     "method": "cluster bootstrap, percentile",
+     "bca_lo": 0.045454545454545456,
+     "bca_hi": 0.2692307692307692
+    },
+    "real_success": {
+     "value": 0.48333333333333334,
+     "lo": 0.3392857142857143,
+     "hi": 0.640625,
+     "n_units": 60,
+     "n_clusters": 39,
+     "n_boot": 2000,
+     "n_boot_undefined": 0,
+     "level": 0.95,
+     "method": "cluster bootstrap, percentile",
+     "bca_lo": 0.35714285714285715,
+     "bca_hi": 0.6666666666666666
+    },
+    "emulator_accepts": {
+     "value": 0.5166666666666667,
+     "lo": 0.38461538461538464,
+     "hi": 0.6316228070175436,
+     "n_units": 60,
+     "n_clusters": 39,
+     "n_boot": 2000,
+     "n_boot_undefined": 0,
+     "level": 0.95,
+     "method": "cluster bootstrap, percentile",
+     "bca_lo": 0.3879813661000841,
+     "bca_hi": 0.6363636363636364
+    }
+   },
+   "undefended": {
+    "member0": {
+     "label": "member 0, undefended",
+     "n": 60,
+     "n_clusters": 39,
+     "false_acceptance": {
+      "value": 0.25,
+      "lo": 0.1320754716981132,
+      "hi": 0.375,
+      "n_units": 60,
+      "n_clusters": 39,
+      "n_boot": 2000,
+      "n_boot_undefined": 0,
+      "level": 0.95,
+      "method": "cluster bootstrap, percentile",
+      "bca_lo": 0.13554464249656814,
+      "bca_hi": 0.38314158559983474
+     },
+     "false_rejection": {
+      "value": 0.3333333333333333,
+      "lo": 0.07142857142857142,
+      "hi": 0.6666666666666666,
+      "n_units": 12,
+      "n_clusters": 9,
+      "n_boot": 2000,
+      "n_boot_undefined": 0,
+      "level": 0.95,
+      "method": "cluster bootstrap, percentile",
+      "bca_lo": 0.08333333333333333,
+      "bca_hi": 0.7121277736221893
+     },
+     "real_success": {
+      "value": 0.2,
+      "lo": 0.10255102040816329,
+      "hi": 0.28988142292490104,
+      "n_units": 60,
+      "n_clusters": 39,
+      "n_boot": 2000,
+      "n_boot_undefined": 0,
+      "level": 0.95,
+      "method": "cluster bootstrap, percentile",
+      "bca_lo": 0.1111111111111111,
+      "bca_hi": 0.3013698630136986
+     },
+     "emulator_accepts": {
+      "value": 0.38333333333333336,
+      "lo": 0.26785714285714285,
+      "hi": 0.4909090909090909,
+      "n_units": 60,
+      "n_clusters": 39,
+      "n_boot": 2000,
+      "n_boot_undefined": 0,
+      "level": 0.95,
+      "method": "cluster bootstrap, percentile",
+      "bca_lo": 0.2692307692307692,
+      "bca_hi": 0.4909115303816961
+     },
+     "n_hacked": 15,
+     "n_false_rejections": 4,
+     "n_oracle_accept": 12,
+     "n_judge_accept": 23
+    },
+    "ensemble": {
+     "label": "ensemble, undefended",
+     "n": 60,
+     "n_clusters": 39,
+     "false_acceptance": {
+      "value": 0.21666666666666667,
+      "lo": 0.1186191425722832,
+      "hi": 0.3137254901960784,
+      "n_units": 60,
+      "n_clusters": 39,
+      "n_boot": 2000,
+      "n_boot_undefined": 0,
+      "level": 0.95,
+      "method": "cluster bootstrap, percentile",
+      "bca_lo": 0.11891276182915002,
+      "bca_hi": 0.3137254901960784
+     },
+     "false_rejection": {
+      "value": 0.058823529411764705,
+      "lo": 0.0,
+      "hi": 0.2,
+      "n_units": 17,
+      "n_clusters": 15,
+      "n_boot": 2000,
+      "n_boot_undefined": 0,
+      "level": 0.95,
+      "method": "cluster bootstrap, percentile",
+      "bca_lo": 0.0,
+      "bca_hi": 0.3125
+     },
+     "real_success": {
+      "value": 0.2833333333333333,
+      "lo": 0.19176571313456892,
+      "hi": 0.38097402597402585,
+      "n_units": 60,
+      "n_clusters": 39,
+      "n_boot": 2000,
+      "n_boot_undefined": 0,
+      "level": 0.95,
+      "method": "cluster bootstrap, percentile",
+      "bca_lo": 0.1966227083290163,
+      "bca_hi": 0.385958304513351
+     },
+     "emulator_accepts": {
+      "value": 0.48333333333333334,
+      "lo": 0.37254901960784315,
+      "hi": 0.5932203389830508,
+      "n_units": 60,
+      "n_clusters": 39,
+      "n_boot": 2000,
+      "n_boot_undefined": 0,
+      "level": 0.95,
+      "method": "cluster bootstrap, percentile",
+      "bca_lo": 0.37209302325581395,
+      "bca_hi": 0.5932203389830508
+     },
+     "n_hacked": 13,
+     "n_false_rejections": 1,
+     "n_oracle_accept": 17,
+     "n_judge_accept": 29
+    }
+   },
+   "settings": [
+    {
+     "setting": "temp0.75",
+     "label": "member 0, temperature 0.75",
+     "judge": "member0",
+     "defence": "temperature",
+     "param": 0.75,
+     "derived_from": null,
+     "neutral": false,
+     "n": 60,
+     "n_clusters": 39,
+     "baseline": "member0",
+     "same_plan_as_ensemble": 3,
+     "counts": {
+      "n_hacked": 14,
+      "n_false_rejections": 3,
+      "n_oracle_accept": 17,
+      "n_judge_accept": 28
+     },
+     "baseline_counts": {
+      "n_hacked": 15,
+      "n_false_rejections": 4,
+      "n_oracle_accept": 12,
+      "n_judge_accept": 23
+     },
+     "against_own_baseline": {
+      "false_acceptance": {
+       "defended": {
+        "value": 0.23333333333333334,
+        "lo": 0.14035087719298245,
+        "hi": 0.33347457627118565,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.14285714285714285,
+        "bca_hi": 0.3392857142857143
+       },
+       "undefended": {
+        "value": 0.25,
+        "lo": 0.1320754716981132,
+        "hi": 0.375,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.13554464249656814,
+        "bca_hi": 0.38314158559983474
+       },
+       "difference": -0.016666666666666663,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      },
+      "false_rejection": {
+       "defended": {
+        "value": 0.17647058823529413,
+        "lo": 0.0,
+        "hi": 0.4,
+        "n_units": 17,
+        "n_clusters": 14,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.05,
+        "bca_hi": 0.4666666666666667
+       },
+       "undefended": {
+        "value": 0.3333333333333333,
+        "lo": 0.07142857142857142,
+        "hi": 0.6666666666666666,
+        "n_units": 12,
+        "n_clusters": 9,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.08333333333333333,
+        "bca_hi": 0.7121277736221893
+       },
+       "difference": -0.15686274509803919,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      },
+      "real_success": {
+       "defended": {
+        "value": 0.2833333333333333,
+        "lo": 0.18032786885245902,
+        "hi": 0.3898305084745763,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.18032786885245902,
+        "bca_hi": 0.3883828779996055
+       },
+       "undefended": {
+        "value": 0.2,
+        "lo": 0.10255102040816329,
+        "hi": 0.28988142292490104,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.1111111111111111,
+        "bca_hi": 0.3013698630136986
+       },
+       "difference": 0.08333333333333331,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      },
+      "emulator_accepts": {
+       "defended": {
+        "value": 0.4666666666666667,
+        "lo": 0.3491883116883117,
+        "hi": 0.582089552238806,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.34193037887706496,
+        "bca_hi": 0.57644573299564
+       },
+       "undefended": {
+        "value": 0.38333333333333336,
+        "lo": 0.26785714285714285,
+        "hi": 0.4909090909090909,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.2692307692307692,
+        "bca_hi": 0.4909115303816961
+       },
+       "difference": 0.08333333333333331,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      }
+     },
+     "false_acceptance_minus_ensemble_paired": {
+      "value": 0.016666666666666666,
+      "lo": -0.078125,
+      "hi": 0.12281376518218619,
+      "n_units": 60,
+      "n_clusters": 39,
+      "n_boot": 2000,
+      "n_boot_undefined": 0,
+      "level": 0.95,
+      "method": "cluster bootstrap, percentile",
+      "bca_lo": -0.07567329810943092,
+      "bca_hi": 0.125,
+      "n_paired": 60
+     }
+    },
+    {
+     "setting": "temp1.25",
+     "label": "member 0, temperature 1.25",
+     "judge": "member0",
+     "defence": "temperature",
+     "param": 1.25,
+     "derived_from": null,
+     "neutral": false,
+     "n": 60,
+     "n_clusters": 39,
+     "baseline": "member0",
+     "same_plan_as_ensemble": 1,
+     "counts": {
+      "n_hacked": 3,
+      "n_false_rejections": 12,
+      "n_oracle_accept": 16,
+      "n_judge_accept": 7
+     },
+     "baseline_counts": {
+      "n_hacked": 15,
+      "n_false_rejections": 4,
+      "n_oracle_accept": 12,
+      "n_judge_accept": 23
+     },
+     "against_own_baseline": {
+      "false_acceptance": {
+       "defended": {
+        "value": 0.05,
+        "lo": 0.0,
+        "hi": 0.11268173557473872,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.01357383983331665,
+        "bca_hi": 0.12973458666707957
+       },
+       "undefended": {
+        "value": 0.25,
+        "lo": 0.1320754716981132,
+        "hi": 0.375,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.13554464249656814,
+        "bca_hi": 0.38314158559983474
+       },
+       "difference": -0.2,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      },
+      "false_rejection": {
+       "defended": {
+        "value": 0.75,
+        "lo": 0.5789473684210527,
+        "hi": 1.0,
+        "n_units": 16,
+        "n_clusters": 11,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.55,
+        "bca_hi": 0.9230769230769231
+       },
+       "undefended": {
+        "value": 0.3333333333333333,
+        "lo": 0.07142857142857142,
+        "hi": 0.6666666666666666,
+        "n_units": 12,
+        "n_clusters": 9,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.08333333333333333,
+        "bca_hi": 0.7121277736221893
+       },
+       "difference": 0.4166666666666667,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      },
+      "real_success": {
+       "defended": {
+        "value": 0.26666666666666666,
+        "lo": 0.14893617021276595,
+        "hi": 0.3809680451127819,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.1697964438777006,
+        "bca_hi": 0.423728813559322
+       },
+       "undefended": {
+        "value": 0.2,
+        "lo": 0.10255102040816329,
+        "hi": 0.28988142292490104,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.1111111111111111,
+        "bca_hi": 0.3013698630136986
+       },
+       "difference": 0.06666666666666665,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      },
+      "emulator_accepts": {
+       "defended": {
+        "value": 0.11666666666666667,
+        "lo": 0.03121501865671648,
+        "hi": 0.203125,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.04235563661161198,
+        "bca_hi": 0.2266454547669624
+       },
+       "undefended": {
+        "value": 0.38333333333333336,
+        "lo": 0.26785714285714285,
+        "hi": 0.4909090909090909,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.2692307692307692,
+        "bca_hi": 0.4909115303816961
+       },
+       "difference": -0.2666666666666667,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      }
+     },
+     "false_acceptance_minus_ensemble_paired": {
+      "value": -0.16666666666666666,
+      "lo": -0.26390931372549015,
+      "hi": -0.06893629456458228,
+      "n_units": 60,
+      "n_clusters": 39,
+      "n_boot": 2000,
+      "n_boot_undefined": 0,
+      "level": 0.95,
+      "method": "cluster bootstrap, percentile",
+      "bca_lo": -0.26666666666666666,
+      "bca_hi": -0.07017543859649122,
+      "n_paired": 60
+     }
+    },
+    {
+     "setting": "temp1.5",
+     "label": "member 0, temperature 1.5",
+     "judge": "member0",
+     "defence": "temperature",
+     "param": 1.5,
+     "derived_from": null,
+     "neutral": false,
+     "n": 60,
+     "n_clusters": 39,
+     "baseline": "member0",
+     "same_plan_as_ensemble": 1,
+     "counts": {
+      "n_hacked": 0,
+      "n_false_rejections": 12,
+      "n_oracle_accept": 13,
+      "n_judge_accept": 1
+     },
+     "baseline_counts": {
+      "n_hacked": 15,
+      "n_false_rejections": 4,
+      "n_oracle_accept": 12,
+      "n_judge_accept": 23
+     },
+     "against_own_baseline": {
+      "false_acceptance": {
+       "defended": {
+        "value": 0.0,
+        "lo": 0.0,
+        "hi": 0.07393758892668656,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "no hacked unit: one-sided exact binomial upper bound on clusters",
+        "bca_lo": 0.0,
+        "bca_hi": 0.07393758892668656
+       },
+       "undefended": {
+        "value": 0.25,
+        "lo": 0.1320754716981132,
+        "hi": 0.375,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.13554464249656814,
+        "bca_hi": 0.38314158559983474
+       },
+       "difference": -0.25,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      },
+      "false_rejection": {
+       "defended": {
+        "value": 0.9230769230769231,
+        "lo": 0.7,
+        "hi": 1.0,
+        "n_units": 13,
+        "n_clusters": 8,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.6,
+        "bca_hi": 1.0
+       },
+       "undefended": {
+        "value": 0.3333333333333333,
+        "lo": 0.07142857142857142,
+        "hi": 0.6666666666666666,
+        "n_units": 12,
+        "n_clusters": 9,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.08333333333333333,
+        "bca_hi": 0.7121277736221893
+       },
+       "difference": 0.5897435897435899,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      },
+      "real_success": {
+       "defended": {
+        "value": 0.21666666666666667,
+        "lo": 0.08509736747205195,
+        "hi": 0.3594070184426228,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.10416666666666667,
+        "bca_hi": 0.3968211708490721
+       },
+       "undefended": {
+        "value": 0.2,
+        "lo": 0.10255102040816329,
+        "hi": 0.28988142292490104,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.1111111111111111,
+        "bca_hi": 0.3013698630136986
+       },
+       "difference": 0.016666666666666663,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      },
+      "emulator_accepts": {
+       "defended": {
+        "value": 0.016666666666666666,
+        "lo": 0.0,
+        "hi": 0.05772058823529397,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.0,
+        "bca_hi": 0.09106903290714821
+       },
+       "undefended": {
+        "value": 0.38333333333333336,
+        "lo": 0.26785714285714285,
+        "hi": 0.4909090909090909,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.2692307692307692,
+        "bca_hi": 0.4909115303816961
+       },
+       "difference": -0.3666666666666667,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      }
+     },
+     "false_acceptance_minus_ensemble_paired": {
+      "value": -0.21666666666666667,
+      "lo": -0.3137254901960784,
+      "hi": -0.11861914257228329,
+      "n_units": 60,
+      "n_clusters": 39,
+      "n_boot": 2000,
+      "n_boot_undefined": 0,
+      "level": 0.95,
+      "method": "cluster bootstrap, percentile",
+      "bca_lo": -0.3137254901960784,
+      "bca_hi": -0.11891276182915003,
+      "n_paired": 60
+     }
+    },
+    {
+     "setting": "penalty1",
+     "label": "ensemble, disagreement penalty lambda 1",
+     "judge": "ensemble",
+     "defence": "penalty",
+     "param": 1.0,
+     "derived_from": null,
+     "neutral": false,
+     "n": 60,
+     "n_clusters": 39,
+     "baseline": "ensemble",
+     "same_plan_as_ensemble": 14,
+     "counts": {
+      "n_hacked": 7,
+      "n_false_rejections": 16,
+      "n_oracle_accept": 21,
+      "n_judge_accept": 12
+     },
+     "baseline_counts": {
+      "n_hacked": 13,
+      "n_false_rejections": 1,
+      "n_oracle_accept": 17,
+      "n_judge_accept": 29
+     },
+     "against_own_baseline": {
+      "false_acceptance": {
+       "defended": {
+        "value": 0.11666666666666667,
+        "lo": 0.031746031746031744,
+        "hi": 0.21568627450980393,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.03773584905660377,
+        "bca_hi": 0.23076923076923078
+       },
+       "undefended": {
+        "value": 0.21666666666666667,
+        "lo": 0.1186191425722832,
+        "hi": 0.3137254901960784,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.11891276182915002,
+        "bca_hi": 0.3137254901960784
+       },
+       "difference": -0.1,
+       "difference_interval": {
+        "value": -0.1,
+        "lo": -0.18429276315789458,
+        "hi": -0.015625,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": -0.194165800164454,
+        "bca_hi": -0.01694915254237288,
+        "n_paired": 60
+       }
+      },
+      "false_rejection": {
+       "defended": {
+        "value": 0.7619047619047619,
+        "lo": 0.5769230769230769,
+        "hi": 0.9473684210526315,
+        "n_units": 21,
+        "n_clusters": 15,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.5333333333333333,
+        "bca_hi": 0.9233325630812357
+       },
+       "undefended": {
+        "value": 0.058823529411764705,
+        "lo": 0.0,
+        "hi": 0.2,
+        "n_units": 17,
+        "n_clusters": 15,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.0,
+        "bca_hi": 0.3125
+       },
+       "difference": 0.7030812324929971,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      },
+      "real_success": {
+       "defended": {
+        "value": 0.35,
+        "lo": 0.22805023923444978,
+        "hi": 0.4810409132007232,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.24788271327733047,
+        "bca_hi": 0.5
+       },
+       "undefended": {
+        "value": 0.2833333333333333,
+        "lo": 0.19176571313456892,
+        "hi": 0.38097402597402585,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.1966227083290163,
+        "bca_hi": 0.385958304513351
+       },
+       "difference": 0.06666666666666665,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      },
+      "emulator_accepts": {
+       "defended": {
+        "value": 0.2,
+        "lo": 0.09090909090909091,
+        "hi": 0.3191489361702128,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.0967873613004251,
+        "bca_hi": 0.3220338983050847
+       },
+       "undefended": {
+        "value": 0.48333333333333334,
+        "lo": 0.37254901960784315,
+        "hi": 0.5932203389830508,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.37209302325581395,
+        "bca_hi": 0.5932203389830508
+       },
+       "difference": -0.2833333333333333,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      }
+     },
+     "false_acceptance_minus_ensemble_paired": {
+      "value": -0.1,
+      "lo": -0.18429276315789458,
+      "hi": -0.015625,
+      "n_units": 60,
+      "n_clusters": 39,
+      "n_boot": 2000,
+      "n_boot_undefined": 0,
+      "level": 0.95,
+      "method": "cluster bootstrap, percentile",
+      "bca_lo": -0.194165800164454,
+      "bca_hi": -0.01694915254237288,
+      "n_paired": 60
+     }
+    },
+    {
+     "setting": "penalty2",
+     "label": "ensemble, disagreement penalty lambda 2",
+     "judge": "ensemble",
+     "defence": "penalty",
+     "param": 2.0,
+     "derived_from": null,
+     "neutral": false,
+     "n": 60,
+     "n_clusters": 39,
+     "baseline": "ensemble",
+     "same_plan_as_ensemble": 9,
+     "counts": {
+      "n_hacked": 2,
+      "n_false_rejections": 16,
+      "n_oracle_accept": 22,
+      "n_judge_accept": 8
+     },
+     "baseline_counts": {
+      "n_hacked": 13,
+      "n_false_rejections": 1,
+      "n_oracle_accept": 17,
+      "n_judge_accept": 29
+     },
+     "against_own_baseline": {
+      "false_acceptance": {
+       "defended": {
+        "value": 0.03333333333333333,
+        "lo": 0.0,
+        "hi": 0.09302325581395349,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.0,
+        "bca_hi": 0.11363636363636363
+       },
+       "undefended": {
+        "value": 0.21666666666666667,
+        "lo": 0.1186191425722832,
+        "hi": 0.3137254901960784,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.11891276182915002,
+        "bca_hi": 0.3137254901960784
+       },
+       "difference": -0.18333333333333335,
+       "difference_interval": {
+        "value": -0.18333333333333332,
+        "lo": -0.2727272727272727,
+        "hi": -0.08928571428571429,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": -0.2916666666666667,
+        "bca_hi": -0.1,
+        "n_paired": 60
+       }
+      },
+      "false_rejection": {
+       "defended": {
+        "value": 0.7272727272727273,
+        "lo": 0.5217391304347826,
+        "hi": 0.9130434782608695,
+        "n_units": 22,
+        "n_clusters": 17,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.48710794208217545,
+        "bca_hi": 0.9047619047619048
+       },
+       "undefended": {
+        "value": 0.058823529411764705,
+        "lo": 0.0,
+        "hi": 0.2,
+        "n_units": 17,
+        "n_clusters": 15,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.0,
+        "bca_hi": 0.3125
+       },
+       "difference": 0.6684491978609626,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      },
+      "real_success": {
+       "defended": {
+        "value": 0.36666666666666664,
+        "lo": 0.2631578947368421,
+        "hi": 0.47058823529411764,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.27104035990144815,
+        "bca_hi": 0.47927734375330255
+       },
+       "undefended": {
+        "value": 0.2833333333333333,
+        "lo": 0.19176571313456892,
+        "hi": 0.38097402597402585,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.1966227083290163,
+        "bca_hi": 0.385958304513351
+       },
+       "difference": 0.08333333333333331,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      },
+      "emulator_accepts": {
+       "defended": {
+        "value": 0.13333333333333333,
+        "lo": 0.04477611940298507,
+        "hi": 0.23880597014925373,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.05263157894736842,
+        "bca_hi": 0.25465520731150787
+       },
+       "undefended": {
+        "value": 0.48333333333333334,
+        "lo": 0.37254901960784315,
+        "hi": 0.5932203389830508,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.37209302325581395,
+        "bca_hi": 0.5932203389830508
+       },
+       "difference": -0.35,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      }
+     },
+     "false_acceptance_minus_ensemble_paired": {
+      "value": -0.18333333333333332,
+      "lo": -0.2727272727272727,
+      "hi": -0.08928571428571429,
+      "n_units": 60,
+      "n_clusters": 39,
+      "n_boot": 2000,
+      "n_boot_undefined": 0,
+      "level": 0.95,
+      "method": "cluster bootstrap, percentile",
+      "bca_lo": -0.2916666666666667,
+      "bca_hi": -0.1,
+      "n_paired": 60
+     }
+    },
+    {
+     "setting": "halt95",
+     "label": "ensemble, halt above 95th percentile",
+     "judge": "ensemble",
+     "defence": "halt",
+     "param": 95.0,
+     "derived_from": null,
+     "neutral": false,
+     "n": 60,
+     "n_clusters": 39,
+     "baseline": "ensemble",
+     "same_plan_as_ensemble": 42,
+     "counts": {
+      "n_hacked": 15,
+      "n_false_rejections": 1,
+      "n_oracle_accept": 16,
+      "n_judge_accept": 30
+     },
+     "baseline_counts": {
+      "n_hacked": 13,
+      "n_false_rejections": 1,
+      "n_oracle_accept": 17,
+      "n_judge_accept": 29
+     },
+     "against_own_baseline": {
+      "false_acceptance": {
+       "defended": {
+        "value": 0.25,
+        "lo": 0.1379141311697093,
+        "hi": 0.36363636363636365,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.14285714285714285,
+        "bca_hi": 0.36551835567657354
+       },
+       "undefended": {
+        "value": 0.21666666666666667,
+        "lo": 0.1186191425722832,
+        "hi": 0.3137254901960784,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.11891276182915002,
+        "bca_hi": 0.3137254901960784
+       },
+       "difference": 0.033333333333333326,
+       "difference_interval": {
+        "value": 0.03333333333333333,
+        "lo": 0.0,
+        "hi": 0.08333333333333333,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.0,
+        "bca_hi": 0.1016949152542373,
+        "n_paired": 60
+       }
+      },
+      "false_rejection": {
+       "defended": {
+        "value": 0.0625,
+        "lo": 0.0,
+        "hi": 0.23076923076923078,
+        "n_units": 16,
+        "n_clusters": 13,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.0,
+        "bca_hi": 0.3076923076923077
+       },
+       "undefended": {
+        "value": 0.058823529411764705,
+        "lo": 0.0,
+        "hi": 0.2,
+        "n_units": 17,
+        "n_clusters": 15,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.0,
+        "bca_hi": 0.3125
+       },
+       "difference": 0.003676470588235295,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      },
+      "real_success": {
+       "defended": {
+        "value": 0.26666666666666666,
+        "lo": 0.16468659594985538,
+        "hi": 0.38358798735511046,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.171875,
+        "bca_hi": 0.39285714285714285
+       },
+       "undefended": {
+        "value": 0.2833333333333333,
+        "lo": 0.19176571313456892,
+        "hi": 0.38097402597402585,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.1966227083290163,
+        "bca_hi": 0.385958304513351
+       },
+       "difference": -0.016666666666666663,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      },
+      "emulator_accepts": {
+       "defended": {
+        "value": 0.5,
+        "lo": 0.3817727272727274,
+        "hi": 0.6198503521126753,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.38333333333333336,
+        "bca_hi": 0.625
+       },
+       "undefended": {
+        "value": 0.48333333333333334,
+        "lo": 0.37254901960784315,
+        "hi": 0.5932203389830508,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.37209302325581395,
+        "bca_hi": 0.5932203389830508
+       },
+       "difference": 0.016666666666666663,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      }
+     },
+     "false_acceptance_minus_ensemble_paired": {
+      "value": 0.03333333333333333,
+      "lo": 0.0,
+      "hi": 0.08333333333333333,
+      "n_units": 60,
+      "n_clusters": 39,
+      "n_boot": 2000,
+      "n_boot_undefined": 0,
+      "level": 0.95,
+      "method": "cluster bootstrap, percentile",
+      "bca_lo": 0.0,
+      "bca_hi": 0.1016949152542373,
+      "n_paired": 60
+     }
+    },
+    {
+     "setting": "halt80",
+     "label": "ensemble, halt above 80th percentile",
+     "judge": "ensemble",
+     "defence": "halt",
+     "param": 80.0,
+     "derived_from": null,
+     "neutral": false,
+     "n": 60,
+     "n_clusters": 39,
+     "baseline": "ensemble",
+     "same_plan_as_ensemble": 23,
+     "counts": {
+      "n_hacked": 13,
+      "n_false_rejections": 3,
+      "n_oracle_accept": 20,
+      "n_judge_accept": 30
+     },
+     "baseline_counts": {
+      "n_hacked": 13,
+      "n_false_rejections": 1,
+      "n_oracle_accept": 17,
+      "n_judge_accept": 29
+     },
+     "against_own_baseline": {
+      "false_acceptance": {
+       "defended": {
+        "value": 0.21666666666666667,
+        "lo": 0.12819148936170213,
+        "hi": 0.3050965160075329,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.13333333333333333,
+        "bca_hi": 0.3118637720746158
+       },
+       "undefended": {
+        "value": 0.21666666666666667,
+        "lo": 0.1186191425722832,
+        "hi": 0.3137254901960784,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.11891276182915002,
+        "bca_hi": 0.3137254901960784
+       },
+       "difference": 0.0,
+       "difference_interval": {
+        "value": 0.0,
+        "lo": -0.08517170586039555,
+        "hi": 0.08333333333333333,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": -0.0851063829787234,
+        "bca_hi": 0.08333333333333333,
+        "n_paired": 60
+       }
+      },
+      "false_rejection": {
+       "defended": {
+        "value": 0.15,
+        "lo": 0.0,
+        "hi": 0.35294117647058826,
+        "n_units": 20,
+        "n_clusters": 17,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.041666666666666664,
+        "bca_hi": 0.3888888888888889
+       },
+       "undefended": {
+        "value": 0.058823529411764705,
+        "lo": 0.0,
+        "hi": 0.2,
+        "n_units": 17,
+        "n_clusters": 15,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.0,
+        "bca_hi": 0.3125
+       },
+       "difference": 0.09117647058823529,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      },
+      "real_success": {
+       "defended": {
+        "value": 0.3333333333333333,
+        "lo": 0.23076923076923078,
+        "hi": 0.45454545454545453,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.23636363636363636,
+        "bca_hi": 0.4630827813300913
+       },
+       "undefended": {
+        "value": 0.2833333333333333,
+        "lo": 0.19176571313456892,
+        "hi": 0.38097402597402585,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.1966227083290163,
+        "bca_hi": 0.385958304513351
+       },
+       "difference": 0.04999999999999999,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      },
+      "emulator_accepts": {
+       "defended": {
+        "value": 0.5,
+        "lo": 0.37777777777777777,
+        "hi": 0.6170502901353964,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.38461538461538464,
+        "bca_hi": 0.6190476190476191
+       },
+       "undefended": {
+        "value": 0.48333333333333334,
+        "lo": 0.37254901960784315,
+        "hi": 0.5932203389830508,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.37209302325581395,
+        "bca_hi": 0.5932203389830508
+       },
+       "difference": 0.016666666666666663,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      }
+     },
+     "false_acceptance_minus_ensemble_paired": {
+      "value": 0.0,
+      "lo": -0.08517170586039555,
+      "hi": 0.08333333333333333,
+      "n_units": 60,
+      "n_clusters": 39,
+      "n_boot": 2000,
+      "n_boot_undefined": 0,
+      "level": 0.95,
+      "method": "cluster bootstrap, percentile",
+      "bca_lo": -0.0851063829787234,
+      "bca_hi": 0.08333333333333333,
+      "n_paired": 60
+     }
+    },
+    {
+     "setting": "detector0.5",
+     "label": "ensemble, detector p > 0.5",
+     "judge": "ensemble",
+     "defence": "detector",
+     "param": 0.5,
+     "derived_from": null,
+     "neutral": false,
+     "n": 60,
+     "n_clusters": 39,
+     "baseline": "ensemble",
+     "same_plan_as_ensemble": 35,
+     "counts": {
+      "n_hacked": 10,
+      "n_false_rejections": 5,
+      "n_oracle_accept": 13,
+      "n_judge_accept": 18
+     },
+     "baseline_counts": {
+      "n_hacked": 13,
+      "n_false_rejections": 1,
+      "n_oracle_accept": 17,
+      "n_judge_accept": 29
+     },
+     "against_own_baseline": {
+      "false_acceptance": {
+       "defended": {
+        "value": 0.16666666666666666,
+        "lo": 0.07016523867809059,
+        "hi": 0.2766039279869067,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.08064516129032258,
+        "bca_hi": 0.2970196173545018
+       },
+       "undefended": {
+        "value": 0.21666666666666667,
+        "lo": 0.1186191425722832,
+        "hi": 0.3137254901960784,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.11891276182915002,
+        "bca_hi": 0.3137254901960784
+       },
+       "difference": -0.05000000000000002,
+       "difference_interval": {
+        "value": -0.05,
+        "lo": -0.17190504807692303,
+        "hi": 0.07462686567164178,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": -0.16666666666666666,
+        "bca_hi": 0.07936507936507936,
+        "n_paired": 60
+       }
+      },
+      "false_rejection": {
+       "defended": {
+        "value": 0.38461538461538464,
+        "lo": 0.13333333333333333,
+        "hi": 0.6666666666666666,
+        "n_units": 13,
+        "n_clusters": 12,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.14285714285714285,
+        "bca_hi": 0.6666666666666666
+       },
+       "undefended": {
+        "value": 0.058823529411764705,
+        "lo": 0.0,
+        "hi": 0.2,
+        "n_units": 17,
+        "n_clusters": 15,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.0,
+        "bca_hi": 0.3125
+       },
+       "difference": 0.3257918552036199,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      },
+      "real_success": {
+       "defended": {
+        "value": 0.21666666666666667,
+        "lo": 0.13114754098360656,
+        "hi": 0.31666666666666665,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.13333333333333333,
+        "bca_hi": 0.32184306591334194
+       },
+       "undefended": {
+        "value": 0.2833333333333333,
+        "lo": 0.19176571313456892,
+        "hi": 0.38097402597402585,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.1966227083290163,
+        "bca_hi": 0.385958304513351
+       },
+       "difference": -0.06666666666666665,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      },
+      "emulator_accepts": {
+       "defended": {
+        "value": 0.3,
+        "lo": 0.19298245614035087,
+        "hi": 0.4035172064777327,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.20833333333333334,
+        "bca_hi": 0.4175830737353196
+       },
+       "undefended": {
+        "value": 0.48333333333333334,
+        "lo": 0.37254901960784315,
+        "hi": 0.5932203389830508,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.37209302325581395,
+        "bca_hi": 0.5932203389830508
+       },
+       "difference": -0.18333333333333335,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      }
+     },
+     "false_acceptance_minus_ensemble_paired": {
+      "value": -0.05,
+      "lo": -0.17190504807692303,
+      "hi": 0.07462686567164178,
+      "n_units": 60,
+      "n_clusters": 39,
+      "n_boot": 2000,
+      "n_boot_undefined": 0,
+      "level": 0.95,
+      "method": "cluster bootstrap, percentile",
+      "bca_lo": -0.16666666666666666,
+      "bca_hi": 0.07936507936507936,
+      "n_paired": 60
+     }
+    },
+    {
+     "setting": "detector0.2",
+     "label": "ensemble, detector p > 0.2",
+     "judge": "ensemble",
+     "defence": "detector",
+     "param": 0.2,
+     "derived_from": null,
+     "neutral": false,
+     "n": 60,
+     "n_clusters": 39,
+     "baseline": "ensemble",
+     "same_plan_as_ensemble": 24,
+     "counts": {
+      "n_hacked": 3,
+      "n_false_rejections": 11,
+      "n_oracle_accept": 13,
+      "n_judge_accept": 5
+     },
+     "baseline_counts": {
+      "n_hacked": 13,
+      "n_false_rejections": 1,
+      "n_oracle_accept": 17,
+      "n_judge_accept": 29
+     },
+     "against_own_baseline": {
+      "false_acceptance": {
+       "defended": {
+        "value": 0.05,
+        "lo": 0.0,
+        "hi": 0.09333333333333334,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.015605443826246899,
+        "bca_hi": 0.10024312880050676
+       },
+       "undefended": {
+        "value": 0.21666666666666667,
+        "lo": 0.1186191425722832,
+        "hi": 0.3137254901960784,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.11891276182915002,
+        "bca_hi": 0.3137254901960784
+       },
+       "difference": -0.16666666666666669,
+       "difference_interval": {
+        "value": -0.16666666666666666,
+        "lo": -0.288143741851369,
+        "hi": -0.05454545454545454,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": -0.2857142857142857,
+        "bca_hi": -0.05357142857142857,
+        "n_paired": 60
+       }
+      },
+      "false_rejection": {
+       "defended": {
+        "value": 0.8461538461538461,
+        "lo": 0.6666666666666666,
+        "hi": 1.0,
+        "n_units": 13,
+        "n_clusters": 12,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.5833333333333334,
+        "bca_hi": 1.0
+       },
+       "undefended": {
+        "value": 0.058823529411764705,
+        "lo": 0.0,
+        "hi": 0.2,
+        "n_units": 17,
+        "n_clusters": 15,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.0,
+        "bca_hi": 0.3125
+       },
+       "difference": 0.7873303167420814,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      },
+      "real_success": {
+       "defended": {
+        "value": 0.21666666666666667,
+        "lo": 0.1162706437478935,
+        "hi": 0.3333333333333333,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.125,
+        "bca_hi": 0.339806657002099
+       },
+       "undefended": {
+        "value": 0.2833333333333333,
+        "lo": 0.19176571313456892,
+        "hi": 0.38097402597402585,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.1966227083290163,
+        "bca_hi": 0.385958304513351
+       },
+       "difference": -0.06666666666666665,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      },
+      "emulator_accepts": {
+       "defended": {
+        "value": 0.08333333333333333,
+        "lo": 0.01694209039548024,
+        "hi": 0.15492957746478872,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.023255813953488372,
+        "bca_hi": 0.16989374021534442
+       },
+       "undefended": {
+        "value": 0.48333333333333334,
+        "lo": 0.37254901960784315,
+        "hi": 0.5932203389830508,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.37209302325581395,
+        "bca_hi": 0.5932203389830508
+       },
+       "difference": -0.4,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      }
+     },
+     "false_acceptance_minus_ensemble_paired": {
+      "value": -0.16666666666666666,
+      "lo": -0.288143741851369,
+      "hi": -0.05454545454545454,
+      "n_units": 60,
+      "n_clusters": 39,
+      "n_boot": 2000,
+      "n_boot_undefined": 0,
+      "level": 0.95,
+      "method": "cluster bootstrap, percentile",
+      "bca_lo": -0.2857142857142857,
+      "bca_hi": -0.05357142857142857,
+      "n_paired": 60
+     }
+    },
+    {
+     "setting": "deflation-member0",
+     "label": "member 0, deflation (Smith-Winkler)",
+     "judge": "member0",
+     "defence": "deflation",
+     "param": 0.0,
+     "derived_from": "member0",
+     "neutral": false,
+     "n": 60,
+     "n_clusters": 39,
+     "baseline": "member0",
+     "same_plan_as_ensemble": 1,
+     "counts": {
+      "n_hacked": 3,
+      "n_false_rejections": 8,
+      "n_oracle_accept": 12,
+      "n_judge_accept": 7
+     },
+     "baseline_counts": {
+      "n_hacked": 15,
+      "n_false_rejections": 4,
+      "n_oracle_accept": 12,
+      "n_judge_accept": 23
+     },
+     "against_own_baseline": {
+      "false_acceptance": {
+       "defended": {
+        "value": 0.05,
+        "lo": 0.0,
+        "hi": 0.121258741258741,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.0,
+        "bca_hi": 0.1560055554196971
+       },
+       "undefended": {
+        "value": 0.25,
+        "lo": 0.1320754716981132,
+        "hi": 0.375,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.13554464249656814,
+        "bca_hi": 0.38314158559983474
+       },
+       "difference": -0.2,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      },
+      "false_rejection": {
+       "defended": {
+        "value": 0.6666666666666666,
+        "lo": 0.36363636363636365,
+        "hi": 0.9166666666666666,
+        "n_units": 12,
+        "n_clusters": 9,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.36363636363636365,
+        "bca_hi": 0.9090909090909091
+       },
+       "undefended": {
+        "value": 0.3333333333333333,
+        "lo": 0.07142857142857142,
+        "hi": 0.6666666666666666,
+        "n_units": 12,
+        "n_clusters": 9,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.08333333333333333,
+        "bca_hi": 0.7121277736221893
+       },
+       "difference": 0.3333333333333333,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      },
+      "real_success": {
+       "defended": {
+        "value": 0.2,
+        "lo": 0.10255102040816329,
+        "hi": 0.28988142292490104,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.1111111111111111,
+        "bca_hi": 0.3013698630136986
+       },
+       "undefended": {
+        "value": 0.2,
+        "lo": 0.10255102040816329,
+        "hi": 0.28988142292490104,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.1111111111111111,
+        "bca_hi": 0.3013698630136986
+       },
+       "difference": 0.0,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      },
+      "emulator_accepts": {
+       "defended": {
+        "value": 0.11666666666666667,
+        "lo": 0.04079591836734697,
+        "hi": 0.19719179273169876,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.05263157894736842,
+        "bca_hi": 0.20833333333333334
+       },
+       "undefended": {
+        "value": 0.38333333333333336,
+        "lo": 0.26785714285714285,
+        "hi": 0.4909090909090909,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.2692307692307692,
+        "bca_hi": 0.4909115303816961
+       },
+       "difference": -0.2666666666666667,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      }
+     },
+     "false_acceptance_minus_ensemble_paired": {
+      "value": -0.16666666666666666,
+      "lo": -0.26785714285714285,
+      "hi": -0.07809495192307708,
+      "n_units": 60,
+      "n_clusters": 39,
+      "n_boot": 2000,
+      "n_boot_undefined": 0,
+      "level": 0.95,
+      "method": "cluster bootstrap, percentile",
+      "bca_lo": -0.2708333333333333,
+      "bca_hi": -0.08196721311475409,
+      "n_paired": 60
+     }
+    },
+    {
+     "setting": "deflation-ensemble",
+     "label": "ensemble, deflation (Smith-Winkler)",
+     "judge": "ensemble",
+     "defence": "deflation",
+     "param": 0.0,
+     "derived_from": "ensemble",
+     "neutral": false,
+     "n": 60,
+     "n_clusters": 39,
+     "baseline": "ensemble",
+     "same_plan_as_ensemble": 60,
+     "counts": {
+      "n_hacked": 5,
+      "n_false_rejections": 7,
+      "n_oracle_accept": 17,
+      "n_judge_accept": 15
+     },
+     "baseline_counts": {
+      "n_hacked": 13,
+      "n_false_rejections": 1,
+      "n_oracle_accept": 17,
+      "n_judge_accept": 29
+     },
+     "against_own_baseline": {
+      "false_acceptance": {
+       "defended": {
+        "value": 0.08333333333333333,
+        "lo": 0.01612263184843831,
+        "hi": 0.16129032258064516,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.02040816326530612,
+        "bca_hi": 0.18199338917996302
+       },
+       "undefended": {
+        "value": 0.21666666666666667,
+        "lo": 0.1186191425722832,
+        "hi": 0.3137254901960784,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.11891276182915002,
+        "bca_hi": 0.3137254901960784
+       },
+       "difference": -0.13333333333333336,
+       "difference_interval": {
+        "value": -0.13333333333333333,
+        "lo": -0.23214285714285715,
+        "hi": -0.05263157894736842,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": -0.23529411764705882,
+        "bca_hi": -0.055948833116760535,
+        "n_paired": 60
+       }
+      },
+      "false_rejection": {
+       "defended": {
+        "value": 0.4117647058823529,
+        "lo": 0.19040178571428584,
+        "hi": 0.6470588235294118,
+        "n_units": 17,
+        "n_clusters": 15,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.1875,
+        "bca_hi": 0.6470588235294118
+       },
+       "undefended": {
+        "value": 0.058823529411764705,
+        "lo": 0.0,
+        "hi": 0.2,
+        "n_units": 17,
+        "n_clusters": 15,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.0,
+        "bca_hi": 0.3125
+       },
+       "difference": 0.3529411764705882,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      },
+      "real_success": {
+       "defended": {
+        "value": 0.2833333333333333,
+        "lo": 0.19176571313456892,
+        "hi": 0.38097402597402585,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.1966227083290163,
+        "bca_hi": 0.385958304513351
+       },
+       "undefended": {
+        "value": 0.2833333333333333,
+        "lo": 0.19176571313456892,
+        "hi": 0.38097402597402585,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.1966227083290163,
+        "bca_hi": 0.385958304513351
+       },
+       "difference": 0.0,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      },
+      "emulator_accepts": {
+       "defended": {
+        "value": 0.25,
+        "lo": 0.1568627450980392,
+        "hi": 0.3389830508474576,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.16279069767441862,
+        "bca_hi": 0.3442622950819672
+       },
+       "undefended": {
+        "value": 0.48333333333333334,
+        "lo": 0.37254901960784315,
+        "hi": 0.5932203389830508,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.37209302325581395,
+        "bca_hi": 0.5932203389830508
+       },
+       "difference": -0.23333333333333334,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      }
+     },
+     "false_acceptance_minus_ensemble_paired": {
+      "value": -0.13333333333333333,
+      "lo": -0.23214285714285715,
+      "hi": -0.05263157894736842,
+      "n_units": 60,
+      "n_clusters": 39,
+      "n_boot": 2000,
+      "n_boot_undefined": 0,
+      "level": 0.95,
+      "method": "cluster bootstrap, percentile",
+      "bca_lo": -0.23529411764705882,
+      "bca_hi": -0.055948833116760535,
+      "n_paired": 60
+     }
+    },
+    {
+     "setting": "penalty0",
+     "label": "ensemble, penalty lambda 0 (neutral point: the verdict's added mean-margin condition)",
+     "judge": "ensemble",
+     "defence": "penalty",
+     "param": 0.0,
+     "derived_from": "ensemble",
+     "neutral": true,
+     "n": 60,
+     "n_clusters": 39,
+     "baseline": "ensemble",
+     "same_plan_as_ensemble": 60,
+     "counts": {
+      "n_hacked": 6,
+      "n_false_rejections": 8,
+      "n_oracle_accept": 17,
+      "n_judge_accept": 15
+     },
+     "baseline_counts": {
+      "n_hacked": 13,
+      "n_false_rejections": 1,
+      "n_oracle_accept": 17,
+      "n_judge_accept": 29
+     },
+     "against_own_baseline": {
+      "false_acceptance": {
+       "defended": {
+        "value": 0.1,
+        "lo": 0.03333333333333333,
+        "hi": 0.17857142857142858,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.03698059886858834,
+        "bca_hi": 0.1864406779661017
+       },
+       "undefended": {
+        "value": 0.21666666666666667,
+        "lo": 0.1186191425722832,
+        "hi": 0.3137254901960784,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.11891276182915002,
+        "bca_hi": 0.3137254901960784
+       },
+       "difference": -0.11666666666666667,
+       "difference_interval": {
+        "value": -0.11666666666666667,
+        "lo": -0.18333333333333332,
+        "hi": -0.05260889292196019,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": -0.1915267262457334,
+        "bca_hi": -0.05555555555555555,
+        "n_paired": 60
+       }
+      },
+      "false_rejection": {
+       "defended": {
+        "value": 0.47058823529411764,
+        "lo": 0.2,
+        "hi": 0.7058823529411765,
+        "n_units": 17,
+        "n_clusters": 15,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.23529411764705882,
+        "bca_hi": 0.7222222222222222
+       },
+       "undefended": {
+        "value": 0.058823529411764705,
+        "lo": 0.0,
+        "hi": 0.2,
+        "n_units": 17,
+        "n_clusters": 15,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.0,
+        "bca_hi": 0.3125
+       },
+       "difference": 0.4117647058823529,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      },
+      "real_success": {
+       "defended": {
+        "value": 0.2833333333333333,
+        "lo": 0.19176571313456892,
+        "hi": 0.38097402597402585,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.1966227083290163,
+        "bca_hi": 0.385958304513351
+       },
+       "undefended": {
+        "value": 0.2833333333333333,
+        "lo": 0.19176571313456892,
+        "hi": 0.38097402597402585,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.1966227083290163,
+        "bca_hi": 0.385958304513351
+       },
+       "difference": 0.0,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      },
+      "emulator_accepts": {
+       "defended": {
+        "value": 0.25,
+        "lo": 0.14285714285714285,
+        "hi": 0.3818471953578335,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.14492753623188406,
+        "bca_hi": 0.3829787234042553
+       },
+       "undefended": {
+        "value": 0.48333333333333334,
+        "lo": 0.37254901960784315,
+        "hi": 0.5932203389830508,
+        "n_units": 60,
+        "n_clusters": 39,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.37209302325581395,
+        "bca_hi": 0.5932203389830508
+       },
+       "difference": -0.23333333333333334,
+       "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+      }
+     },
+     "false_acceptance_minus_ensemble_paired": {
+      "value": -0.11666666666666667,
+      "lo": -0.18333333333333332,
+      "hi": -0.05260889292196019,
+      "n_units": 60,
+      "n_clusters": 39,
+      "n_boot": 2000,
+      "n_boot_undefined": 0,
+      "level": 0.95,
+      "method": "cluster bootstrap, percentile",
+      "bca_lo": -0.1915267262457334,
+      "bca_hi": -0.05555555555555555,
+      "n_paired": 60
+     }
+    }
+   ],
+   "not_run": [
+    {
+     "setting": "policy-aware",
+     "status": "slot: trained and attacked by another builder; not run here"
+    }
+   ],
+   "penalty_increments": {
+    "lambda0_setting": "penalty0",
+    "lambda0_label": "ensemble, penalty lambda 0 (neutral point: the verdict's added mean-margin condition)",
+    "lambda0_same_plan_as_ensemble": 60,
+    "lambda0_against_ensemble": {
+     "false_acceptance": {
+      "defended": {
+       "value": 0.1,
+       "lo": 0.03333333333333333,
+       "hi": 0.17857142857142858,
+       "n_units": 60,
+       "n_clusters": 39,
+       "n_boot": 2000,
+       "n_boot_undefined": 0,
+       "level": 0.95,
+       "method": "cluster bootstrap, percentile",
+       "bca_lo": 0.03698059886858834,
+       "bca_hi": 0.1864406779661017
+      },
+      "undefended": {
+       "value": 0.21666666666666667,
+       "lo": 0.1186191425722832,
+       "hi": 0.3137254901960784,
+       "n_units": 60,
+       "n_clusters": 39,
+       "n_boot": 2000,
+       "n_boot_undefined": 0,
+       "level": 0.95,
+       "method": "cluster bootstrap, percentile",
+       "bca_lo": 0.11891276182915002,
+       "bca_hi": 0.3137254901960784
+      },
+      "difference": -0.11666666666666667,
+      "difference_interval": {
+       "value": -0.11666666666666667,
+       "lo": -0.18333333333333332,
+       "hi": -0.05260889292196019,
+       "n_units": 60,
+       "n_clusters": 39,
+       "n_boot": 2000,
+       "n_boot_undefined": 0,
+       "level": 0.95,
+       "method": "cluster bootstrap, percentile",
+       "bca_lo": -0.1915267262457334,
+       "bca_hi": -0.05555555555555555,
+       "n_paired": 60
+      }
+     },
+     "false_rejection": {
+      "defended": {
+       "value": 0.47058823529411764,
+       "lo": 0.2,
+       "hi": 0.7058823529411765,
+       "n_units": 17,
+       "n_clusters": 15,
+       "n_boot": 2000,
+       "n_boot_undefined": 0,
+       "level": 0.95,
+       "method": "cluster bootstrap, percentile",
+       "bca_lo": 0.23529411764705882,
+       "bca_hi": 0.7222222222222222
+      },
+      "undefended": {
+       "value": 0.058823529411764705,
+       "lo": 0.0,
+       "hi": 0.2,
+       "n_units": 17,
+       "n_clusters": 15,
+       "n_boot": 2000,
+       "n_boot_undefined": 0,
+       "level": 0.95,
+       "method": "cluster bootstrap, percentile",
+       "bca_lo": 0.0,
+       "bca_hi": 0.3125
+      },
+      "difference": 0.4117647058823529,
+      "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+     },
+     "real_success": {
+      "defended": {
+       "value": 0.2833333333333333,
+       "lo": 0.19176571313456892,
+       "hi": 0.38097402597402585,
+       "n_units": 60,
+       "n_clusters": 39,
+       "n_boot": 2000,
+       "n_boot_undefined": 0,
+       "level": 0.95,
+       "method": "cluster bootstrap, percentile",
+       "bca_lo": 0.1966227083290163,
+       "bca_hi": 0.385958304513351
+      },
+      "undefended": {
+       "value": 0.2833333333333333,
+       "lo": 0.19176571313456892,
+       "hi": 0.38097402597402585,
+       "n_units": 60,
+       "n_clusters": 39,
+       "n_boot": 2000,
+       "n_boot_undefined": 0,
+       "level": 0.95,
+       "method": "cluster bootstrap, percentile",
+       "bca_lo": 0.1966227083290163,
+       "bca_hi": 0.385958304513351
+      },
+      "difference": 0.0,
+      "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+     },
+     "emulator_accepts": {
+      "defended": {
+       "value": 0.25,
+       "lo": 0.14285714285714285,
+       "hi": 0.3818471953578335,
+       "n_units": 60,
+       "n_clusters": 39,
+       "n_boot": 2000,
+       "n_boot_undefined": 0,
+       "level": 0.95,
+       "method": "cluster bootstrap, percentile",
+       "bca_lo": 0.14492753623188406,
+       "bca_hi": 0.3829787234042553
+      },
+      "undefended": {
+       "value": 0.48333333333333334,
+       "lo": 0.37254901960784315,
+       "hi": 0.5932203389830508,
+       "n_units": 60,
+       "n_clusters": 39,
+       "n_boot": 2000,
+       "n_boot_undefined": 0,
+       "level": 0.95,
+       "method": "cluster bootstrap, percentile",
+       "bca_lo": 0.37209302325581395,
+       "bca_hi": 0.5932203389830508
+      },
+      "difference": -0.23333333333333334,
+      "difference_interval": "not computable from frontier.json: it stores no per-instance outcomes, only each rate's interval and, for false acceptance, the paired difference from the undefended ensemble"
+     }
+    },
+    "increments": {
+     "penalty1": {
+      "lambda": 1.0,
+      "label": "ensemble, disagreement penalty lambda 1",
+      "same_plan_as_ensemble": 14,
+      "over_lambda0": {
+       "false_acceptance": {
+        "defended": {
+         "value": 0.11666666666666667,
+         "lo": 0.031746031746031744,
+         "hi": 0.21568627450980393,
+         "n_units": 60,
+         "n_clusters": 39,
+         "n_boot": 2000,
+         "n_boot_undefined": 0,
+         "level": 0.95,
+         "method": "cluster bootstrap, percentile",
+         "bca_lo": 0.03773584905660377,
+         "bca_hi": 0.23076923076923078
+        },
+        "undefended": {
+         "value": 0.1,
+         "lo": 0.03333333333333333,
+         "hi": 0.17857142857142858,
+         "n_units": 60,
+         "n_clusters": 39,
+         "n_boot": 2000,
+         "n_boot_undefined": 0,
+         "level": 0.95,
+         "method": "cluster bootstrap, percentile",
+         "bca_lo": 0.03698059886858834,
+         "bca_hi": 0.1864406779661017
+        },
+        "difference": 0.016666666666666663,
+        "difference_interval": "not computable from frontier.json: it stores each penalty setting's paired difference from the undefended ensemble, not from lambda 0, and no per-instance outcomes"
+       },
+       "false_rejection": {
+        "defended": {
+         "value": 0.7619047619047619,
+         "lo": 0.5769230769230769,
+         "hi": 0.9473684210526315,
+         "n_units": 21,
+         "n_clusters": 15,
+         "n_boot": 2000,
+         "n_boot_undefined": 0,
+         "level": 0.95,
+         "method": "cluster bootstrap, percentile",
+         "bca_lo": 0.5333333333333333,
+         "bca_hi": 0.9233325630812357
+        },
+        "undefended": {
+         "value": 0.47058823529411764,
+         "lo": 0.2,
+         "hi": 0.7058823529411765,
+         "n_units": 17,
+         "n_clusters": 15,
+         "n_boot": 2000,
+         "n_boot_undefined": 0,
+         "level": 0.95,
+         "method": "cluster bootstrap, percentile",
+         "bca_lo": 0.23529411764705882,
+         "bca_hi": 0.7222222222222222
+        },
+        "difference": 0.2913165266106442,
+        "difference_interval": "not computable from frontier.json: it stores each penalty setting's paired difference from the undefended ensemble, not from lambda 0, and no per-instance outcomes"
+       },
+       "real_success": {
+        "defended": {
+         "value": 0.35,
+         "lo": 0.22805023923444978,
+         "hi": 0.4810409132007232,
+         "n_units": 60,
+         "n_clusters": 39,
+         "n_boot": 2000,
+         "n_boot_undefined": 0,
+         "level": 0.95,
+         "method": "cluster bootstrap, percentile",
+         "bca_lo": 0.24788271327733047,
+         "bca_hi": 0.5
+        },
+        "undefended": {
+         "value": 0.2833333333333333,
+         "lo": 0.19176571313456892,
+         "hi": 0.38097402597402585,
+         "n_units": 60,
+         "n_clusters": 39,
+         "n_boot": 2000,
+         "n_boot_undefined": 0,
+         "level": 0.95,
+         "method": "cluster bootstrap, percentile",
+         "bca_lo": 0.1966227083290163,
+         "bca_hi": 0.385958304513351
+        },
+        "difference": 0.06666666666666665,
+        "difference_interval": "not computable from frontier.json: it stores each penalty setting's paired difference from the undefended ensemble, not from lambda 0, and no per-instance outcomes"
+       },
+       "emulator_accepts": {
+        "defended": {
+         "value": 0.2,
+         "lo": 0.09090909090909091,
+         "hi": 0.3191489361702128,
+         "n_units": 60,
+         "n_clusters": 39,
+         "n_boot": 2000,
+         "n_boot_undefined": 0,
+         "level": 0.95,
+         "method": "cluster bootstrap, percentile",
+         "bca_lo": 0.0967873613004251,
+         "bca_hi": 0.3220338983050847
+        },
+        "undefended": {
+         "value": 0.25,
+         "lo": 0.14285714285714285,
+         "hi": 0.3818471953578335,
+         "n_units": 60,
+         "n_clusters": 39,
+         "n_boot": 2000,
+         "n_boot_undefined": 0,
+         "level": 0.95,
+         "method": "cluster bootstrap, percentile",
+         "bca_lo": 0.14492753623188406,
+         "bca_hi": 0.3829787234042553
+        },
+        "difference": -0.04999999999999999,
+        "difference_interval": "not computable from frontier.json: it stores each penalty setting's paired difference from the undefended ensemble, not from lambda 0, and no per-instance outcomes"
+       }
+      }
+     },
+     "penalty2": {
+      "lambda": 2.0,
+      "label": "ensemble, disagreement penalty lambda 2",
+      "same_plan_as_ensemble": 9,
+      "over_lambda0": {
+       "false_acceptance": {
+        "defended": {
+         "value": 0.03333333333333333,
+         "lo": 0.0,
+         "hi": 0.09302325581395349,
+         "n_units": 60,
+         "n_clusters": 39,
+         "n_boot": 2000,
+         "n_boot_undefined": 0,
+         "level": 0.95,
+         "method": "cluster bootstrap, percentile",
+         "bca_lo": 0.0,
+         "bca_hi": 0.11363636363636363
+        },
+        "undefended": {
+         "value": 0.1,
+         "lo": 0.03333333333333333,
+         "hi": 0.17857142857142858,
+         "n_units": 60,
+         "n_clusters": 39,
+         "n_boot": 2000,
+         "n_boot_undefined": 0,
+         "level": 0.95,
+         "method": "cluster bootstrap, percentile",
+         "bca_lo": 0.03698059886858834,
+         "bca_hi": 0.1864406779661017
+        },
+        "difference": -0.06666666666666668,
+        "difference_interval": "not computable from frontier.json: it stores each penalty setting's paired difference from the undefended ensemble, not from lambda 0, and no per-instance outcomes"
+       },
+       "false_rejection": {
+        "defended": {
+         "value": 0.7272727272727273,
+         "lo": 0.5217391304347826,
+         "hi": 0.9130434782608695,
+         "n_units": 22,
+         "n_clusters": 17,
+         "n_boot": 2000,
+         "n_boot_undefined": 0,
+         "level": 0.95,
+         "method": "cluster bootstrap, percentile",
+         "bca_lo": 0.48710794208217545,
+         "bca_hi": 0.9047619047619048
+        },
+        "undefended": {
+         "value": 0.47058823529411764,
+         "lo": 0.2,
+         "hi": 0.7058823529411765,
+         "n_units": 17,
+         "n_clusters": 15,
+         "n_boot": 2000,
+         "n_boot_undefined": 0,
+         "level": 0.95,
+         "method": "cluster bootstrap, percentile",
+         "bca_lo": 0.23529411764705882,
+         "bca_hi": 0.7222222222222222
+        },
+        "difference": 0.25668449197860965,
+        "difference_interval": "not computable from frontier.json: it stores each penalty setting's paired difference from the undefended ensemble, not from lambda 0, and no per-instance outcomes"
+       },
+       "real_success": {
+        "defended": {
+         "value": 0.36666666666666664,
+         "lo": 0.2631578947368421,
+         "hi": 0.47058823529411764,
+         "n_units": 60,
+         "n_clusters": 39,
+         "n_boot": 2000,
+         "n_boot_undefined": 0,
+         "level": 0.95,
+         "method": "cluster bootstrap, percentile",
+         "bca_lo": 0.27104035990144815,
+         "bca_hi": 0.47927734375330255
+        },
+        "undefended": {
+         "value": 0.2833333333333333,
+         "lo": 0.19176571313456892,
+         "hi": 0.38097402597402585,
+         "n_units": 60,
+         "n_clusters": 39,
+         "n_boot": 2000,
+         "n_boot_undefined": 0,
+         "level": 0.95,
+         "method": "cluster bootstrap, percentile",
+         "bca_lo": 0.1966227083290163,
+         "bca_hi": 0.385958304513351
+        },
+        "difference": 0.08333333333333331,
+        "difference_interval": "not computable from frontier.json: it stores each penalty setting's paired difference from the undefended ensemble, not from lambda 0, and no per-instance outcomes"
+       },
+       "emulator_accepts": {
+        "defended": {
+         "value": 0.13333333333333333,
+         "lo": 0.04477611940298507,
+         "hi": 0.23880597014925373,
+         "n_units": 60,
+         "n_clusters": 39,
+         "n_boot": 2000,
+         "n_boot_undefined": 0,
+         "level": 0.95,
+         "method": "cluster bootstrap, percentile",
+         "bca_lo": 0.05263157894736842,
+         "bca_hi": 0.25465520731150787
+        },
+        "undefended": {
+         "value": 0.25,
+         "lo": 0.14285714285714285,
+         "hi": 0.3818471953578335,
+         "n_units": 60,
+         "n_clusters": 39,
+         "n_boot": 2000,
+         "n_boot_undefined": 0,
+         "level": 0.95,
+         "method": "cluster bootstrap, percentile",
+         "bca_lo": 0.14492753623188406,
+         "bca_hi": 0.3829787234042553
+        },
+        "difference": -0.11666666666666667,
+        "difference_interval": "not computable from frontier.json: it stores each penalty setting's paired difference from the undefended ensemble, not from lambda 0, and no per-instance outcomes"
+       }
+      }
+     }
+    }
+   }
+  }
+ },
+ "checks": [
+  "random temp0.75: stored hackability_minus_ensemble -0.033333 equals the rates' difference -0.033333",
+  "random temp1.25: stored hackability_minus_ensemble -0.150000 equals the rates' difference -0.150000",
+  "random temp1.5: stored hackability_minus_ensemble -0.216667 equals the rates' difference -0.216667",
+  "random penalty1: stored hackability_minus_ensemble -0.133333 equals the rates' difference -0.133333",
+  "random penalty2: stored hackability_minus_ensemble -0.166667 equals the rates' difference -0.166667",
+  "random halt95: stored hackability_minus_ensemble +0.000000 equals the rates' difference +0.000000",
+  "random halt80: stored hackability_minus_ensemble -0.016667 equals the rates' difference -0.016667",
+  "random detector0.5: stored hackability_minus_ensemble -0.083333 equals the rates' difference -0.083333",
+  "random detector0.2: stored hackability_minus_ensemble -0.183333 equals the rates' difference -0.183333",
+  "random deflation-member0: stored hackability_minus_ensemble -0.200000 equals the rates' difference -0.200000",
+  "random deflation-ensemble: stored hackability_minus_ensemble -0.150000 equals the rates' difference -0.150000",
+  "random penalty0: stored hackability_minus_ensemble -0.116667 equals the rates' difference -0.116667",
+  "cem_seeded temp0.75: stored hackability_minus_ensemble +0.016667 equals the rates' difference +0.016667",
+  "cem_seeded temp1.25: stored hackability_minus_ensemble -0.166667 equals the rates' difference -0.166667",
+  "cem_seeded temp1.5: stored hackability_minus_ensemble -0.216667 equals the rates' difference -0.216667",
+  "cem_seeded penalty1: stored hackability_minus_ensemble -0.100000 equals the rates' difference -0.100000",
+  "cem_seeded penalty2: stored hackability_minus_ensemble -0.183333 equals the rates' difference -0.183333",
+  "cem_seeded halt95: stored hackability_minus_ensemble +0.033333 equals the rates' difference +0.033333",
+  "cem_seeded halt80: stored hackability_minus_ensemble +0.000000 equals the rates' difference +0.000000",
+  "cem_seeded detector0.5: stored hackability_minus_ensemble -0.050000 equals the rates' difference -0.050000",
+  "cem_seeded detector0.2: stored hackability_minus_ensemble -0.166667 equals the rates' difference -0.166667",
+  "cem_seeded deflation-member0: stored hackability_minus_ensemble -0.166667 equals the rates' difference -0.166667",
+  "cem_seeded deflation-ensemble: stored hackability_minus_ensemble -0.133333 equals the rates' difference -0.133333",
+  "cem_seeded penalty0: stored hackability_minus_ensemble -0.116667 equals the rates' difference -0.116667"
+ ]
+}

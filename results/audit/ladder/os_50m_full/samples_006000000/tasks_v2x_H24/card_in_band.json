@@ -1,0 +1,1445 @@
+{
+  "schema": "hpr-dream grader card v2",
+  "meta": {
+    "audited": "emulator: <cache>/ckpt/ladder_v2/os_50m_full/samples_006000000.pt",
+    "code_version": "2867e505dec0ac0fc0ca0212b4389a946da20c6c+dirty",
+    "date": "2026-11-12",
+    "revisit_date": "2027-05-13",
+    "judge": {
+      "judge": "emulator",
+      "ckpt": "<cache>/ckpt/ladder_v2/os_50m_full/samples_006000000.pt",
+      "model_src": "auto",
+      "model_src_resolved": "2cbd5c2252e9f3b5578edb0057e4b770069fa8f9",
+      "model_src_commit": "2cbd5c2252e9f3b5578edb0057e4b770069fa8f9",
+      "model_py_sha256": "fd9cd9eec0364df780d16968652bd213987fbea3e45717a997aeee1a28c2c191",
+      "samples": 6000000,
+      "ckpt_sha256": "7b08be25577b36669ef6b35cdc6cc6a62f927de00d0e69f96496afc1b6934283",
+      "ckpt_trained_at": "2cbd5c2252e9f3b5578edb0057e4b770069fa8f9",
+      "model_config": {
+        "size": "50m",
+        "scalar_stage": "twostage",
+        "ledger": true,
+        "bookkeeping": true
+      },
+      "device": "cuda:0",
+      "chunk": 64,
+      "buckets": [
+        16,
+        64
+      ],
+      "compiled_trunk": true,
+      "fast": {
+        "fused": true,
+        "compile": true,
+        "graphs": true,
+        "source_sha": "5659be20f167508d7853784fdfad14f2428038d10c6cd83c9ccf1058774b4491"
+      },
+      "decoding": {
+        "temperature": 1.0,
+        "overlay": "sample",
+        "source": "model.rollout defaults",
+        "default_decoding": "a",
+        "default_decoding_matches": true
+      }
+    },
+    "config": {
+      "H": 24,
+      "budgets": [
+        1,
+        10,
+        100,
+        1000
+      ],
+      "methods": [
+        "random"
+      ],
+      "search_seeds": [
+        0
+      ],
+      "floors": [],
+      "pool_verdict_plans": 1000,
+      "residual_pool": "economy",
+      "n_secondary": 8,
+      "residual_rows": 0,
+      "behaviour_plans": 100,
+      "economy_top": 100,
+      "economy_random": 25,
+      "flip_rates": "family",
+      "plan": "amendment2",
+      "subset_n": 40,
+      "bon_families": 20,
+      "verdict_cap": 100,
+      "verdict_rows": "economy",
+      "cross_check": "",
+      "tasks_file": "<repo>/data/tasks_v2x_H24.json",
+      "tasks_sha256": "c430441563fba14f253b26e34e07e65c96785ddafe46fe6d88df1c0b6b509356",
+      "tasks_code_sha256": "05d94a02622a79dd07c2a5d8cf5e2bdf5371488c56355f6af16b9a3ee6cd1485",
+      "oracle": "majority",
+      "oracle_seeds": 32,
+      "flip_scope": "verdict",
+      "floor_basis": "truth",
+      "truth_cand_seeds": 16
+    },
+    "instances": 381,
+    "engine_seeds": "oracle: the majority over the 32 oracle seeds above; residual seeds (pools and surrogates only, disjoint from the oracle's): primary seed_for('task', start, task, H), secondary seed_for('task-secondary', start, task, H, k), k=0..7",
+    "residual_definition": "truth seeds seed_for('task-truth', start, forced key, H, k), k < 64, shared by the tasks of a start, disjoint from every residual and oracle seed; residual of a pool plan = judge score minus its mean margin over all 64; the surrogate selects on a pool plan's mean over truth seeds 0..31 (a cross-entropy candidate's over 0..15) plus a drawn search residual and accepts on the selected plan's mean over 32..63 plus the paired verdict residual; the floor's selected plan is judged by the majority oracle; the nine old seeds are not used by the floor",
+    "residual_pool": "economy",
+    "residual_rows": 1000,
+    "flip_floor": "flip surrogate and flip_closed_form_family_rates use confusion rates pooled within the task family and the per-instance base rate; the instrument's built-in flip_closed_form pools confusion rates over every behaviour plan",
+    "oracle": {
+      "rule": "majority",
+      "n_seeds": 32,
+      "seed_name": "task-oracle",
+      "pass_share": 0.5,
+      "seeds": "seed_for('task-oracle', start, task, H, k), k=0..31",
+      "verdict": "dc.tasks.oracle_verdict: pass share over the 32 seeds >= 0.5",
+      "single_seed_record": "oracle seed 0 alone (k = 0)"
+    },
+    "oracle_accept": "the majority oracle's verdict (hackability = emulator accepts and the majority rejects)",
+    "subset": "instances flagged in_band: in v2 files in_band = well_posed32; the v1 band flag at the v2 theta is in_band_v1def",
+    "behaviour_table": "not supplied (29100 of 29100 behaviour pass shares are not finite for this method set)"
+  },
+  "instrument": {
+    "package": "hpr_dream",
+    "version": "0.1.0",
+    "bootstrap": {
+      "method": "cluster bootstrap, percentile interval and BCa",
+      "n_boot": 2000,
+      "level": 0.95,
+      "seed": 0,
+      "zero_hacked": "no hacked unit: one-sided exact binomial upper bound on clusters"
+    },
+    "grader_k": 8,
+    "accept_threshold": 0.5,
+    "unit": "the attacker's selected plan per (instance, attacker, scoring, budget, attacker seed)",
+    "matched_floors": {
+      "margin": "residual_surrogate",
+      "verdict": "flip (surrogate; closed form for random shooting)"
+    }
+  },
+  "hackability_curve": [
+    {
+      "attacker": "random_shooting",
+      "scoring": "margin",
+      "budget": 1,
+      "n_rows": 291,
+      "n_instances": 291,
+      "seeds_per_instance": 1,
+      "hackability": {
+        "value": 0.07903780068728522,
+        "lo": 0.047615012106537534,
+        "hi": 0.11429315476190471,
+        "n_units": 291,
+        "n_clusters": 80,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.049822604796066004,
+        "bca_hi": 0.11705685618729098
+      }
+    },
+    {
+      "attacker": "random_shooting",
+      "scoring": "margin",
+      "budget": 10,
+      "n_rows": 291,
+      "n_instances": 291,
+      "seeds_per_instance": 1,
+      "hackability": {
+        "value": 0.12714776632302405,
+        "lo": 0.0925184876706797,
+        "hi": 0.16216216216216217,
+        "n_units": 291,
+        "n_clusters": 80,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.09311335876895155,
+        "bca_hi": 0.16276843834871044
+      }
+    },
+    {
+      "attacker": "random_shooting",
+      "scoring": "margin",
+      "budget": 100,
+      "n_rows": 291,
+      "n_instances": 291,
+      "seeds_per_instance": 1,
+      "hackability": {
+        "value": 0.13745704467353953,
+        "lo": 0.10067114093959731,
+        "hi": 0.17483164983164978,
+        "n_units": 291,
+        "n_clusters": 80,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.10263231386934327,
+        "bca_hi": 0.17778419614697055
+      }
+    },
+    {
+      "attacker": "random_shooting",
+      "scoring": "margin",
+      "budget": 1000,
+      "n_rows": 291,
+      "n_instances": 291,
+      "seeds_per_instance": 1,
+      "hackability": {
+        "value": 0.16494845360824742,
+        "lo": 0.12267088991730522,
+        "hi": 0.20689655172413793,
+        "n_units": 291,
+        "n_clusters": 80,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.12585034013605442,
+        "bca_hi": 0.20988820485516352
+      }
+    }
+  ],
+  "verdict_scored_curve": {
+    "status": "not supplied"
+  },
+  "conditional_reject": [
+    {
+      "attacker": "random_shooting",
+      "scoring": "margin",
+      "budget": 1,
+      "n_rows": 291,
+      "n_instances": 291,
+      "seeds_per_instance": 1,
+      "conditional_reject": {
+        "value": 0.7419354838709677,
+        "lo": 0.5599705882352942,
+        "hi": 0.9090909090909091,
+        "n_units": 291,
+        "n_clusters": 80,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.5384615384615384,
+        "bca_hi": 0.8921611420823169
+      }
+    },
+    {
+      "attacker": "random_shooting",
+      "scoring": "margin",
+      "budget": 10,
+      "n_rows": 291,
+      "n_instances": 291,
+      "seeds_per_instance": 1,
+      "conditional_reject": {
+        "value": 0.44047619047619047,
+        "lo": 0.3333333333333333,
+        "hi": 0.5540581243894497,
+        "n_units": 291,
+        "n_clusters": 80,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.32985539264668773,
+        "bca_hi": 0.5518695013297888
+      }
+    },
+    {
+      "attacker": "random_shooting",
+      "scoring": "margin",
+      "budget": 100,
+      "n_rows": 291,
+      "n_instances": 291,
+      "seeds_per_instance": 1,
+      "conditional_reject": {
+        "value": 0.3508771929824561,
+        "lo": 0.26828179442508715,
+        "hi": 0.43103448275862066,
+        "n_units": 291,
+        "n_clusters": 80,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.2709064189206931,
+        "bca_hi": 0.434618930697943
+      }
+    },
+    {
+      "attacker": "random_shooting",
+      "scoring": "margin",
+      "budget": 1000,
+      "n_rows": 291,
+      "n_instances": 291,
+      "seeds_per_instance": 1,
+      "conditional_reject": {
+        "value": 0.3870967741935484,
+        "lo": 0.3008130081300813,
+        "hi": 0.46961470484270035,
+        "n_units": 291,
+        "n_clusters": 80,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.30251098374462665,
+        "bca_hi": 0.47326346467652375
+      }
+    }
+  ],
+  "unlucky_share": {
+    "status": "not supplied"
+  },
+  "noise_floors": [
+    {
+      "attacker": "random_shooting",
+      "scoring": "margin",
+      "budget": 1,
+      "n_rows": 291,
+      "n_instances": 291,
+      "seeds_per_instance": 1,
+      "matched_floor": "residual_surrogate",
+      "residual_surrogate": {
+        "status": "not supplied",
+        "role": "matched floor for margin-scored attackers"
+      },
+      "flip_surrogate": {
+        "status": "not supplied",
+        "role": "floor for verdict-scored selection"
+      },
+      "flip_closed_form": {
+        "status": "computed beside verdict-scored random shooting only",
+        "role": "floor for verdict-scored selection"
+      }
+    },
+    {
+      "attacker": "random_shooting",
+      "scoring": "margin",
+      "budget": 10,
+      "n_rows": 291,
+      "n_instances": 291,
+      "seeds_per_instance": 1,
+      "matched_floor": "residual_surrogate",
+      "residual_surrogate": {
+        "status": "not supplied",
+        "role": "matched floor for margin-scored attackers"
+      },
+      "flip_surrogate": {
+        "status": "not supplied",
+        "role": "floor for verdict-scored selection"
+      },
+      "flip_closed_form": {
+        "status": "computed beside verdict-scored random shooting only",
+        "role": "floor for verdict-scored selection"
+      }
+    },
+    {
+      "attacker": "random_shooting",
+      "scoring": "margin",
+      "budget": 100,
+      "n_rows": 291,
+      "n_instances": 291,
+      "seeds_per_instance": 1,
+      "matched_floor": "residual_surrogate",
+      "residual_surrogate": {
+        "status": "not supplied",
+        "role": "matched floor for margin-scored attackers"
+      },
+      "flip_surrogate": {
+        "status": "not supplied",
+        "role": "floor for verdict-scored selection"
+      },
+      "flip_closed_form": {
+        "status": "computed beside verdict-scored random shooting only",
+        "role": "floor for verdict-scored selection"
+      }
+    },
+    {
+      "attacker": "random_shooting",
+      "scoring": "margin",
+      "budget": 1000,
+      "n_rows": 291,
+      "n_instances": 291,
+      "seeds_per_instance": 1,
+      "matched_floor": "residual_surrogate",
+      "residual_surrogate": {
+        "status": "not supplied",
+        "role": "matched floor for margin-scored attackers"
+      },
+      "flip_surrogate": {
+        "status": "not supplied",
+        "role": "floor for verdict-scored selection"
+      },
+      "flip_closed_form": {
+        "status": "computed beside verdict-scored random shooting only",
+        "role": "floor for verdict-scored selection"
+      }
+    }
+  ],
+  "optimism": [
+    {
+      "attacker": "random_shooting",
+      "scoring": "margin",
+      "budget": 1,
+      "n_rows": 291,
+      "n_instances": 291,
+      "seeds_per_instance": 1,
+      "mean_grader_score_minus_oracle_margin": {
+        "value": 0.010116815203403951,
+        "lo": -0.13156283440049094,
+        "hi": 0.13666243135222414,
+        "n_units": 291,
+        "n_clusters": 80,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": -0.13634692450461136,
+        "bca_hi": 0.13177099148138716
+      }
+    },
+    {
+      "attacker": "random_shooting",
+      "scoring": "margin",
+      "budget": 10,
+      "n_rows": 291,
+      "n_instances": 291,
+      "seeds_per_instance": 1,
+      "mean_grader_score_minus_oracle_margin": {
+        "value": 0.29369000125284983,
+        "lo": 0.14625144748890842,
+        "hi": 0.46292737906949294,
+        "n_units": 291,
+        "n_clusters": 80,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.16662832243422462,
+        "bca_hi": 0.5062814282543553
+      }
+    },
+    {
+      "attacker": "random_shooting",
+      "scoring": "margin",
+      "budget": 100,
+      "n_rows": 291,
+      "n_instances": 291,
+      "seeds_per_instance": 1,
+      "mean_grader_score_minus_oracle_margin": {
+        "value": 0.4759824463274385,
+        "lo": 0.3259901380443867,
+        "hi": 0.6461341534348212,
+        "n_units": 291,
+        "n_clusters": 80,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.345213328631844,
+        "bca_hi": 0.6906223954665185
+      }
+    },
+    {
+      "attacker": "random_shooting",
+      "scoring": "margin",
+      "budget": 1000,
+      "n_rows": 291,
+      "n_instances": 291,
+      "seeds_per_instance": 1,
+      "mean_grader_score_minus_oracle_margin": {
+        "value": 0.8239411304212164,
+        "lo": 0.6283291671241688,
+        "hi": 1.0463923840243525,
+        "n_units": 291,
+        "n_clusters": 80,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.6531224308685577,
+        "bca_hi": 1.0839929394727124
+      }
+    }
+  ],
+  "calibration": {
+    "selected": [
+      {
+        "attacker": "random_shooting",
+        "scoring": "margin",
+        "budget": 1,
+        "n_rows": 291,
+        "n_instances": 291,
+        "seeds_per_instance": 1,
+        "brier": {
+          "brier": {
+            "value": 0.07592353951890034,
+            "lo": 0.0504101269237988,
+            "hi": 0.10440977695460275,
+            "n_units": 291,
+            "n_clusters": 80,
+            "n_boot": 2000,
+            "n_boot_undefined": 0,
+            "level": 0.95,
+            "method": "cluster bootstrap, percentile",
+            "bca_lo": 0.051967801493475414,
+            "bca_hi": 0.10696838161276709
+          },
+          "reliability": {
+            "value": 0.028245342325845663,
+            "lo": 0.01309672629819167,
+            "hi": 0.05594176516480941,
+            "n_units": 291,
+            "n_clusters": 80,
+            "n_boot": 2000,
+            "n_boot_undefined": 0,
+            "level": 0.95,
+            "method": "cluster bootstrap, percentile",
+            "bca_lo": 0.010098365298836667,
+            "bca_hi": 0.04878297631657986
+          },
+          "resolution": {
+            "value": 0.010351348986135454,
+            "lo": 0.0035084037748641843,
+            "hi": 0.030131288913531916,
+            "n_units": 291,
+            "n_clusters": 80,
+            "n_boot": 2000,
+            "n_boot_undefined": 0,
+            "level": 0.95,
+            "method": "cluster bootstrap, percentile",
+            "bca_lo": 0.002330359897183077,
+            "bca_hi": 0.02292775728043313
+          },
+          "uncertainty": {
+            "value": 0.058029546179190136,
+            "lo": 0.03017205253768513,
+            "hi": 0.08805531457564116,
+            "n_units": 291,
+            "n_clusters": 80,
+            "n_boot": 2000,
+            "n_boot_undefined": 0,
+            "level": 0.95,
+            "method": "cluster bootstrap, percentile",
+            "bca_lo": 0.03432325105039597,
+            "bca_hi": 0.0937614134404675
+          },
+          "within_bin_variance": {
+            "value": 0.0,
+            "lo": 0.0,
+            "hi": 0.0,
+            "n_units": 291,
+            "n_clusters": 80,
+            "n_boot": 2000,
+            "n_boot_undefined": 0,
+            "level": 0.95,
+            "method": "cluster bootstrap, percentile",
+            "bca_lo": 0.0,
+            "bca_hi": 0.0
+          },
+          "within_bin_covariance": {
+            "value": 0.0,
+            "lo": 0.0,
+            "hi": 0.0,
+            "n_units": 291,
+            "n_clusters": 80,
+            "n_boot": 2000,
+            "n_boot_undefined": 0,
+            "level": 0.95,
+            "method": "cluster bootstrap, percentile",
+            "bca_lo": 0.0,
+            "bca_hi": 0.0
+          },
+          "within_bin": {
+            "value": 0.0,
+            "lo": 0.0,
+            "hi": 0.0,
+            "n_units": 291,
+            "n_clusters": 80,
+            "n_boot": 2000,
+            "n_boot_undefined": 0,
+            "level": 0.95,
+            "method": "cluster bootstrap, percentile",
+            "bca_lo": 0.0,
+            "bca_hi": 0.0
+          },
+          "bins": 10,
+          "edges": [
+            0.0,
+            0.1,
+            0.2,
+            0.3,
+            0.4,
+            0.5,
+            0.6,
+            0.7,
+            0.8,
+            0.9,
+            1.0
+          ],
+          "bin_counts": [
+            221,
+            21,
+            9,
+            9,
+            0,
+            10,
+            1,
+            12,
+            3,
+            5
+          ],
+          "binning": "10 equal-width bins [k/10, (k+1)/10), last bin closed at 1"
+        },
+        "log_score_bits": {
+          "value": 0.37756453186998634,
+          "lo": 0.28217618028011965,
+          "hi": 0.48337283706527967,
+          "n_units": 291,
+          "n_clusters": 80,
+          "n_boot": 2000,
+          "n_boot_undefined": 0,
+          "level": 0.95,
+          "method": "cluster bootstrap, percentile",
+          "bca_lo": 0.2881376143323041,
+          "bca_hi": 0.49456341844445856
+        }
+      },
+      {
+        "attacker": "random_shooting",
+        "scoring": "margin",
+        "budget": 10,
+        "n_rows": 291,
+        "n_instances": 291,
+        "seeds_per_instance": 1,
+        "brier": {
+          "brier": {
+            "value": 0.18476159793814434,
+            "lo": 0.15526134361264832,
+            "hi": 0.2161868859085605,
+            "n_units": 291,
+            "n_clusters": 80,
+            "n_boot": 2000,
+            "n_boot_undefined": 0,
+            "level": 0.95,
+            "method": "cluster bootstrap, percentile",
+            "bca_lo": 0.15613067518697774,
+            "bca_hi": 0.21703570371301475
+          },
+          "reliability": {
+            "value": 0.04331209702942838,
+            "lo": 0.027069821971211962,
+            "hi": 0.07604250744434188,
+            "n_units": 291,
+            "n_clusters": 80,
+            "n_boot": 2000,
+            "n_boot_undefined": 0,
+            "level": 0.95,
+            "method": "cluster bootstrap, percentile",
+            "bca_lo": 0.02079719980137055,
+            "bca_hi": 0.0634489403303123
+          },
+          "resolution": {
+            "value": 0.056328040688572695,
+            "lo": 0.04036664273275799,
+            "hi": 0.08388810559555215,
+            "n_units": 291,
+            "n_clusters": 80,
+            "n_boot": 2000,
+            "n_boot_undefined": 0,
+            "level": 0.95,
+            "method": "cluster bootstrap, percentile",
+            "bca_lo": 0.03290495730637726,
+            "bca_hi": 0.07471250965973746
+          },
+          "uncertainty": {
+            "value": 0.19777754159728866,
+            "lo": 0.16558271217258028,
+            "hi": 0.22222222222222224,
+            "n_units": 291,
+            "n_clusters": 80,
+            "n_boot": 2000,
+            "n_boot_undefined": 0,
+            "level": 0.95,
+            "method": "cluster bootstrap, percentile",
+            "bca_lo": 0.16708411452353167,
+            "bca_hi": 0.22260090780620512
+          },
+          "within_bin_variance": {
+            "value": 0.0,
+            "lo": 0.0,
+            "hi": 0.0,
+            "n_units": 291,
+            "n_clusters": 80,
+            "n_boot": 2000,
+            "n_boot_undefined": 0,
+            "level": 0.95,
+            "method": "cluster bootstrap, percentile",
+            "bca_lo": 0.0,
+            "bca_hi": 0.0
+          },
+          "within_bin_covariance": {
+            "value": 6.104319035739692e-18,
+            "lo": -1.1651134345062001e-17,
+            "hi": 6.322119013129828e-18,
+            "n_units": 291,
+            "n_clusters": 80,
+            "n_boot": 2000,
+            "n_boot_undefined": 0,
+            "level": 0.95,
+            "method": "cluster bootstrap, percentile",
+            "bca_lo": 3.1705806201459373e-18,
+            "bca_hi": 1.8003616377567312e-17
+          },
+          "within_bin": {
+            "value": -6.104319035739692e-18,
+            "lo": -6.32211901312983e-18,
+            "hi": 1.165113434506199e-17,
+            "n_units": 291,
+            "n_clusters": 80,
+            "n_boot": 2000,
+            "n_boot_undefined": 0,
+            "level": 0.95,
+            "method": "cluster bootstrap, percentile",
+            "bca_lo": -1.8003616377567312e-17,
+            "bca_hi": -3.17058062014594e-18
+          },
+          "bins": 10,
+          "edges": [
+            0.0,
+            0.1,
+            0.2,
+            0.3,
+            0.4,
+            0.5,
+            0.6,
+            0.7,
+            0.8,
+            0.9,
+            1.0
+          ],
+          "bin_counts": [
+            143,
+            27,
+            18,
+            19,
+            0,
+            14,
+            15,
+            28,
+            12,
+            15
+          ],
+          "binning": "10 equal-width bins [k/10, (k+1)/10), last bin closed at 1"
+        },
+        "log_score_bits": {
+          "value": 0.8004762650950003,
+          "lo": 0.689227003724059,
+          "hi": 0.920019752096441,
+          "n_units": 291,
+          "n_clusters": 80,
+          "n_boot": 2000,
+          "n_boot_undefined": 0,
+          "level": 0.95,
+          "method": "cluster bootstrap, percentile",
+          "bca_lo": 0.6918741680851361,
+          "bca_hi": 0.9232960062167361
+        }
+      },
+      {
+        "attacker": "random_shooting",
+        "scoring": "margin",
+        "budget": 100,
+        "n_rows": 291,
+        "n_instances": 291,
+        "seeds_per_instance": 1,
+        "brier": {
+          "brier": {
+            "value": 0.2035545532646048,
+            "lo": 0.16957640016233766,
+            "hi": 0.23873028148969316,
+            "n_units": 291,
+            "n_clusters": 80,
+            "n_boot": 2000,
+            "n_boot_undefined": 0,
+            "level": 0.95,
+            "method": "cluster bootstrap, percentile",
+            "bca_lo": 0.17147068027379658,
+            "bca_hi": 0.24207946358871799
+          },
+          "reliability": {
+            "value": 0.025374576294847476,
+            "lo": 0.01685512965295147,
+            "hi": 0.051546446533525934,
+            "n_units": 291,
+            "n_clusters": 80,
+            "n_boot": 2000,
+            "n_boot_undefined": 0,
+            "level": 0.95,
+            "method": "cluster bootstrap, percentile",
+            "bca_lo": 0.011195513617838814,
+            "bca_hi": 0.0359709810249451
+          },
+          "resolution": {
+            "value": 0.05693769995895157,
+            "lo": 0.04251578098157888,
+            "hi": 0.08351375672583983,
+            "n_units": 291,
+            "n_clusters": 80,
+            "n_boot": 2000,
+            "n_boot_undefined": 0,
+            "level": 0.95,
+            "method": "cluster bootstrap, percentile",
+            "bca_lo": 0.03366539219964964,
+            "bca_hi": 0.07207643739910316
+          },
+          "uncertainty": {
+            "value": 0.2351176769287089,
+            "lo": 0.21810991562563545,
+            "hi": 0.24586821896985947,
+            "n_units": 291,
+            "n_clusters": 80,
+            "n_boot": 2000,
+            "n_boot_undefined": 0,
+            "level": 0.95,
+            "method": "cluster bootstrap, percentile",
+            "bca_lo": 0.21789107916939476,
+            "bca_hi": 0.24581730787846845
+          },
+          "within_bin_variance": {
+            "value": 0.0,
+            "lo": 0.0,
+            "hi": 0.0,
+            "n_units": 291,
+            "n_clusters": 80,
+            "n_boot": 2000,
+            "n_boot_undefined": 0,
+            "level": 0.95,
+            "method": "cluster bootstrap, percentile",
+            "bca_lo": 0.0,
+            "bca_hi": 0.0
+          },
+          "within_bin_covariance": {
+            "value": 1.2208638071479384e-17,
+            "lo": -1.2335811384723961e-17,
+            "hi": 1.2379875368277002e-17,
+            "n_units": 291,
+            "n_clusters": 80,
+            "n_boot": 2000,
+            "n_boot_undefined": 0,
+            "level": 0.95,
+            "method": "cluster bootstrap, percentile",
+            "bca_lo": 1.1852870219520424e-17,
+            "bca_hi": 2.6612073441111235e-17
+          },
+          "within_bin": {
+            "value": -1.2208638071479384e-17,
+            "lo": -1.2379875368277005e-17,
+            "hi": 1.2335811384723961e-17,
+            "n_units": 291,
+            "n_clusters": 80,
+            "n_boot": 2000,
+            "n_boot_undefined": 0,
+            "level": 0.95,
+            "method": "cluster bootstrap, percentile",
+            "bca_lo": -2.6612073441111447e-17,
+            "bca_hi": -1.1852870219520426e-17
+          },
+          "bins": 10,
+          "edges": [
+            0.0,
+            0.1,
+            0.2,
+            0.3,
+            0.4,
+            0.5,
+            0.6,
+            0.7,
+            0.8,
+            0.9,
+            1.0
+          ],
+          "bin_counts": [
+            110,
+            27,
+            22,
+            18,
+            0,
+            18,
+            24,
+            23,
+            22,
+            27
+          ],
+          "binning": "10 equal-width bins [k/10, (k+1)/10), last bin closed at 1"
+        },
+        "log_score_bits": {
+          "value": 0.8733237395905937,
+          "lo": 0.7421287864380722,
+          "hi": 1.008643900753505,
+          "n_units": 291,
+          "n_clusters": 80,
+          "n_boot": 2000,
+          "n_boot_undefined": 0,
+          "level": 0.95,
+          "method": "cluster bootstrap, percentile",
+          "bca_lo": 0.7501509564614636,
+          "bca_hi": 1.0200853170148292
+        }
+      },
+      {
+        "attacker": "random_shooting",
+        "scoring": "margin",
+        "budget": 1000,
+        "n_rows": 291,
+        "n_instances": 291,
+        "seeds_per_instance": 1,
+        "brier": {
+          "brier": {
+            "value": 0.2026954467353952,
+            "lo": 0.16945480071647442,
+            "hi": 0.23508145571574313,
+            "n_units": 291,
+            "n_clusters": 80,
+            "n_boot": 2000,
+            "n_boot_undefined": 0,
+            "level": 0.95,
+            "method": "cluster bootstrap, percentile",
+            "bca_lo": 0.17070349349993968,
+            "bca_hi": 0.23708704790265364
+          },
+          "reliability": {
+            "value": 0.02132688475437177,
+            "lo": 0.012819494025867018,
+            "hi": 0.04733386801748034,
+            "n_units": 291,
+            "n_clusters": 80,
+            "n_boot": 2000,
+            "n_boot_undefined": 0,
+            "level": 0.95,
+            "method": "cluster bootstrap, percentile",
+            "bca_lo": 0.007346317148141008,
+            "bca_hi": 0.03340419980159051
+          },
+          "resolution": {
+            "value": 0.05457574665963977,
+            "lo": 0.041002327003258454,
+            "hi": 0.08226683127382066,
+            "n_units": 291,
+            "n_clusters": 80,
+            "n_boot": 2000,
+            "n_boot_undefined": 0,
+            "level": 0.95,
+            "method": "cluster bootstrap, percentile",
+            "bca_lo": 0.032438293590264504,
+            "bca_hi": 0.06967249060920085
+          },
+          "uncertainty": {
+            "value": 0.23594430864066318,
+            "lo": 0.2202099770772913,
+            "hi": 0.2462231757251857,
+            "n_units": 291,
+            "n_clusters": 80,
+            "n_boot": 2000,
+            "n_boot_undefined": 0,
+            "level": 0.95,
+            "method": "cluster bootstrap, percentile",
+            "bca_lo": 0.22027348394768131,
+            "bca_hi": 0.24628171569872617
+          },
+          "within_bin_variance": {
+            "value": 0.0,
+            "lo": 0.0,
+            "hi": 0.0,
+            "n_units": 291,
+            "n_clusters": 80,
+            "n_boot": 2000,
+            "n_boot_undefined": 0,
+            "level": 0.95,
+            "method": "cluster bootstrap, percentile",
+            "bca_lo": 0.0,
+            "bca_hi": 0.0
+          },
+          "within_bin_covariance": {
+            "value": 0.0,
+            "lo": -1.2510660291426264e-17,
+            "hi": 1.2688263138573217e-17,
+            "n_units": 291,
+            "n_clusters": 80,
+            "n_boot": 2000,
+            "n_boot_undefined": 0,
+            "level": 0.95,
+            "method": "cluster bootstrap, percentile",
+            "bca_lo": -1.2643109177225981e-17,
+            "bca_hi": 1.2553758582333925e-17
+          },
+          "within_bin": {
+            "value": 0.0,
+            "lo": -1.2688263138573217e-17,
+            "hi": 1.2510660291426259e-17,
+            "n_units": 291,
+            "n_clusters": 80,
+            "n_boot": 2000,
+            "n_boot_undefined": 0,
+            "level": 0.95,
+            "method": "cluster bootstrap, percentile",
+            "bca_lo": -1.2553758582333925e-17,
+            "bca_hi": 1.2643109177225981e-17
+          },
+          "bins": 10,
+          "edges": [
+            0.0,
+            0.1,
+            0.2,
+            0.3,
+            0.4,
+            0.5,
+            0.6,
+            0.7,
+            0.8,
+            0.9,
+            1.0
+          ],
+          "bin_counts": [
+            97,
+            28,
+            22,
+            20,
+            0,
+            25,
+            30,
+            29,
+            21,
+            19
+          ],
+          "binning": "10 equal-width bins [k/10, (k+1)/10), last bin closed at 1"
+        },
+        "log_score_bits": {
+          "value": 0.8588098358222648,
+          "lo": 0.7348205547136791,
+          "hi": 0.983314192235579,
+          "n_units": 291,
+          "n_clusters": 80,
+          "n_boot": 2000,
+          "n_boot_undefined": 0,
+          "level": 0.95,
+          "method": "cluster bootstrap, percentile",
+          "bca_lo": 0.7407786891240199,
+          "bca_hi": 0.9887244981723592
+        }
+      }
+    ],
+    "behaviour": {
+      "status": "not supplied"
+    }
+  },
+  "false_rejection": {
+    "status": "not supplied"
+  },
+  "flip_rates": {
+    "status": "not supplied"
+  },
+  "dream_overfit_probability": {
+    "status": "not supplied"
+  },
+  "detector_auc": {
+    "status": "not supplied"
+  },
+  "counts": {
+    "records": 1164,
+    "instances": 291,
+    "clusters": 80,
+    "attackers": [
+      "random_shooting"
+    ],
+    "scorings": [
+      "margin"
+    ],
+    "budgets": [
+      1,
+      10,
+      100,
+      1000
+    ],
+    "groups": 4,
+    "behaviour_plans": 0,
+    "behaviour_instances": 0,
+    "candidate_plans": 0,
+    "grader_plan_evaluations": {
+      "attack_search": 323301,
+      "selected_plans_rescored": 1164,
+      "behaviour_plans": 0,
+      "candidate_plans": 0
+    },
+    "oracle_plan_evaluations": {
+      "selected_primary_seed": 1164,
+      "selected_other_seeds": 0,
+      "noise_floor_attacks": 0,
+      "behaviour_plans": 0,
+      "candidate_plans": 0
+    }
+  },
+  "oracle_majority": [
+    {
+      "attacker": "random_shooting",
+      "scoring": "margin",
+      "budget": 1,
+      "n_rows": 291,
+      "emulator_accept": {
+        "value": 0.10652920962199312,
+        "lo": 0.0714225181598063,
+        "hi": 0.14433175778778515,
+        "n_units": 291,
+        "n_clusters": 80,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.07342657342657342,
+        "bca_hi": 0.14762142226646724
+      },
+      "oracle_accept": {
+        "value": 0.061855670103092786,
+        "lo": 0.031141868512110725,
+        "hi": 0.09757649667405757,
+        "n_units": 291,
+        "n_clusters": 80,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.035587679037551646,
+        "bca_hi": 0.10472972972972973
+      },
+      "oracle_share_given_emulator_accept": {
+        "value": 0.29939516129032256,
+        "lo": 0.15732432079414838,
+        "hi": 0.45360067733990134,
+        "n_units": 291,
+        "n_clusters": 80,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.1682378178533988,
+        "bca_hi": 0.46673252340335597
+      },
+      "emulator_share_minus_oracle_share": {
+        "value": 0.03661941580756014,
+        "lo": 0.0036618973499361464,
+        "hi": 0.06923169462444256,
+        "n_units": 291,
+        "n_clusters": 80,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.0036072327900299396,
+        "bca_hi": 0.06922239774190292
+      },
+      "single_seed_oracle_accept": {
+        "value": 0.054982817869415807,
+        "lo": 0.027967171717171727,
+        "hi": 0.08550472322656208,
+        "n_units": 291,
+        "n_clusters": 80,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.03060308700582874,
+        "bca_hi": 0.08998415778537626
+      },
+      "single_seed_hackability": {
+        "value": 0.08247422680412371,
+        "lo": 0.05101301390121267,
+        "hi": 0.11705685618729098,
+        "n_units": 291,
+        "n_clusters": 80,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.05319148936170213,
+        "bca_hi": 0.12040133779264214
+      },
+      "definitions": {
+        "emulator_share": "grader_p, the emulator's pass share of 8 samples (verdict-scored search: the verdict it selected on)",
+        "oracle_share": "pass share over the oracle's seeds",
+        "single_seed": "oracle seed 0 alone"
+      }
+    },
+    {
+      "attacker": "random_shooting",
+      "scoring": "margin",
+      "budget": 10,
+      "n_rows": 291,
+      "emulator_accept": {
+        "value": 0.28865979381443296,
+        "lo": 0.2411315628348385,
+        "hi": 0.3354849320882852,
+        "n_units": 291,
+        "n_clusters": 80,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.24212361704043123,
+        "bca_hi": 0.33685239690026364
+      },
+      "oracle_accept": {
+        "value": 0.27147766323024053,
+        "lo": 0.20945346942687368,
+        "hi": 0.3333333333333333,
+        "n_units": 291,
+        "n_clusters": 80,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.21199233187242544,
+        "bca_hi": 0.3344672813576256
+      },
+      "oracle_share_given_emulator_accept": {
+        "value": 0.5691964285714286,
+        "lo": 0.4863782051282051,
+        "hi": 0.6509686807643614,
+        "n_units": 291,
+        "n_clusters": 80,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.4852087732467936,
+        "bca_hi": 0.6500760756911799
+      },
+      "emulator_share_minus_oracle_share": {
+        "value": -0.01632302405498282,
+        "lo": -0.06503928706165563,
+        "hi": 0.03146956048044216,
+        "n_units": 291,
+        "n_clusters": 80,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": -0.06605176035192499,
+        "bca_hi": 0.030147746527722324
+      },
+      "single_seed_oracle_accept": {
+        "value": 0.2542955326460481,
+        "lo": 0.19727651624029893,
+        "hi": 0.3108108108108108,
+        "n_units": 291,
+        "n_clusters": 80,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.19730619972333824,
+        "bca_hi": 0.31090859452674235
+      },
+      "single_seed_hackability": {
+        "value": 0.13402061855670103,
+        "lo": 0.09965605165645523,
+        "hi": 0.16843349928876236,
+        "n_units": 291,
+        "n_clusters": 80,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.10018792049059112,
+        "bca_hi": 0.16959916907861744
+      },
+      "definitions": {
+        "emulator_share": "grader_p, the emulator's pass share of 8 samples (verdict-scored search: the verdict it selected on)",
+        "oracle_share": "pass share over the oracle's seeds",
+        "single_seed": "oracle seed 0 alone"
+      }
+    },
+    {
+      "attacker": "random_shooting",
+      "scoring": "margin",
+      "budget": 100,
+      "n_rows": 291,
+      "emulator_accept": {
+        "value": 0.3917525773195876,
+        "lo": 0.3392857142857143,
+        "hi": 0.44225369258237296,
+        "n_units": 291,
+        "n_clusters": 80,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.3404500932188649,
+        "bca_hi": 0.4430566426250775
+      },
+      "oracle_accept": {
+        "value": 0.37800687285223367,
+        "lo": 0.3214220542231491,
+        "hi": 0.43572108255066727,
+        "n_units": 291,
+        "n_clusters": 80,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.320754923870341,
+        "bca_hi": 0.4352499902435162
+      },
+      "oracle_share_given_emulator_accept": {
+        "value": 0.628015350877193,
+        "lo": 0.5661157203977799,
+        "hi": 0.6923720028548409,
+        "n_units": 291,
+        "n_clusters": 80,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.5621547243281364,
+        "bca_hi": 0.688410814284456
+      },
+      "emulator_share_minus_oracle_share": {
+        "value": -0.0272766323024055,
+        "lo": -0.07718325112821106,
+        "hi": 0.019937256324850706,
+        "n_units": 291,
+        "n_clusters": 80,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": -0.07489669158077518,
+        "bca_hi": 0.020869115461709543
+      },
+      "single_seed_oracle_accept": {
+        "value": 0.36082474226804123,
+        "lo": 0.3046285632018428,
+        "hi": 0.42321826412590063,
+        "n_units": 291,
+        "n_clusters": 80,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.304955209734929,
+        "bca_hi": 0.42352712150541644
+      },
+      "single_seed_hackability": {
+        "value": 0.16838487972508592,
+        "lo": 0.12820284697508896,
+        "hi": 0.207931105610561,
+        "n_units": 291,
+        "n_clusters": 80,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.13001064246983374,
+        "bca_hi": 0.2103448275862069
+      },
+      "definitions": {
+        "emulator_share": "grader_p, the emulator's pass share of 8 samples (verdict-scored search: the verdict it selected on)",
+        "oracle_share": "pass share over the oracle's seeds",
+        "single_seed": "oracle seed 0 alone"
+      }
+    },
+    {
+      "attacker": "random_shooting",
+      "scoring": "margin",
+      "budget": 1000,
+      "n_rows": 291,
+      "emulator_accept": {
+        "value": 0.4261168384879725,
+        "lo": 0.3732851895969823,
+        "hi": 0.480154928499445,
+        "n_units": 291,
+        "n_clusters": 80,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.37511405587799934,
+        "bca_hi": 0.48183022016151966
+      },
+      "oracle_accept": {
+        "value": 0.38144329896907214,
+        "lo": 0.3274021352313167,
+        "hi": 0.43854413858566677,
+        "n_units": 291,
+        "n_clusters": 80,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.32755216000387594,
+        "bca_hi": 0.43897297980145794
+      },
+      "oracle_share_given_emulator_accept": {
+        "value": 0.5992943548387096,
+        "lo": 0.5240840866105507,
+        "hi": 0.6766457499607659,
+        "n_units": 291,
+        "n_clusters": 80,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.520835708113968,
+        "bca_hi": 0.6734238765850339
+      },
+      "emulator_share_minus_oracle_share": {
+        "value": -0.019007731958762885,
+        "lo": -0.07023463437008562,
+        "hi": 0.02686732014518616,
+        "n_units": 291,
+        "n_clusters": 80,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": -0.06914650267293217,
+        "bca_hi": 0.02747237598076602
+      },
+      "single_seed_oracle_accept": {
+        "value": 0.3745704467353952,
+        "lo": 0.3161758388922579,
+        "hi": 0.4358171798848028,
+        "n_units": 291,
+        "n_clusters": 80,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.31666666666666665,
+        "bca_hi": 0.436426116838488
+      },
+      "single_seed_hackability": {
+        "value": 0.17869415807560138,
+        "lo": 0.13308251358097198,
+        "hi": 0.22297356154063472,
+        "n_units": 291,
+        "n_clusters": 80,
+        "n_boot": 2000,
+        "n_boot_undefined": 0,
+        "level": 0.95,
+        "method": "cluster bootstrap, percentile",
+        "bca_lo": 0.1368421052631579,
+        "bca_hi": 0.22714374613284802
+      },
+      "definitions": {
+        "emulator_share": "grader_p, the emulator's pass share of 8 samples (verdict-scored search: the verdict it selected on)",
+        "oracle_share": "pass share over the oracle's seeds",
+        "single_seed": "oracle seed 0 alone"
+      }
+    }
+  ]
+}

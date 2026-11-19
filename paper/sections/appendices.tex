@@ -1,0 +1,225 @@
+\section{Simulator Architecture, Model Ladder, and Experimental Protocols}\label{app:repro}
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=\textwidth]{figures/fig_anatomy.pdf}
+\caption{\textbf{Internal monthly execution anatomy of the Micropolis C++ engine.} Constants shown are verified programmatically against the simulator source tree before rendering. \textbf{a}, Each monthly step applies the policy instruments, executes four simulation cycles of sixteen deterministic phases at speed \ProtoSpeed{} (ordered sequentially from phase zero to phase fifteen; even cycles update R/C/I demand valves, global DFS power routing, and pollution/land-value fields; each cycle scans one eighth of the \WorldW{}-by-\WorldH{} map West-to-East and updates transport decay, crime, population density, fire coverage, and stochastic disasters; monthly census totals update each four-cycle month and annual taxes settle at forty-eight-cycle intervals), and reads the resulting state. \textbf{b}, Power distribution uses a budgeted depth-first flood-fill over conductive tiles starting from active coal and nuclear plants pushed onto the scan stack; once plant tile budgets or stack pointers run out, downstream zones lose power (illustrated across three procedural micro-sprite stages). \textbf{c}, Non-local temporal coupling over a \Horizon-month plan, where construction outlays deduct immediately each month from reserves, R/C/I demand valves refresh on sixteen-month census horizons, and annual tax receipts minus service budgets settle once a year.}
+\label{fig:anatomy}
+\end{figure}
+
+\subsection{Exact Simulator and Deterministic Replay}\label{app:engine}
+
+Micropolis couples cellular-automaton spatial updates to global resource constraints spanning budgeted depth-first power routing, annual fiscal accounting, and census-driven R/C/I demand valves (Figure~\ref{fig:anatomy}). We drive the C++ core exclusively through clean episode resets that load a starting city file, set the disasters flag, read the initial observation, seed the internal PRNG once, and apply each month's tax rate, three service funding ratios, ordered spatial tool calls, and any scheduled task event before stepping four city-time units at speed \ProtoSpeed{} (one pass per tick, easy game level, auto-budget and auto-bulldoze active). Three upstream non-determinism bugs were patched and documented in the C++ source tree (an uninitialised callback pointer, heap-allocated sprite name strings, and wall-clock PRNG reseeding on map loads). Genuine simulator mechanics (including traversal-order power allocation and branch dropping when the DFS stack fills) are preserved untouched so world models face the true dynamics.
+
+Across all \OracleCities{} bundled cities stepped for \OracleMonths{} months with stochastic disasters enabled, full-state hashes match identically at each month across fresh processes, previously dirtied simulator instances, and two independent host architectures. The structured state exposed to the world model comprises the \WorldW{}-by-\WorldH{} tile-code grid, native-resolution spatial overlays, twenty municipal scalars, and a carry-over bookkeeping ledger of \LedgerEntries{} entries plus two auxiliary maps. Restoring this observation alongside PRNG and active-sprite state reproduces the subsequent twelve months bit-for-bit across \SuffExact{} of \SuffTransitions{} test transitions. Because active rail, seaport, airport, and disaster sprites are omitted from the world-model input, zero of \SuffSpriteFree{} sprite-free transitions differ at month one whereas \SuffNoSprites{} of \SuffTransitions{} transitions differ overall (\SuffRngShift{} shifting the shared PRNG stream as vehicles tick, while month-one powered-zone counts and liquid funds still match exactly in \SuffPowMatch{} and \SuffFundsMatch{} transitions), introducing mild partial observability from the world model's perspective. Evaluating our primary \SizeM{} checkpoint required \MainJudgeHours{} single-GPU hours (\MainJudgeMonthSteps{} neural month-steps) plus \MainEngineHours{} CPU hours for \MainEngineReplays{} exact engine replays (\MainEngineCityMonths{} city-months; full compute accounting in Table~\ref{tab:compute}).
+
+\begin{table}[tbp]
+\caption{Study compute accounting in H200-equivalent GPU hours, weighted by published throughput ratios relative to an NVIDIA H200 (\CompLeftOutHours{} rented card-hours across \CompLeftOutPods{} pods lacking published ratios are omitted). Local GPU time sums training, fidelity, and audit worker logs (splitting shared-GPU intervals across active lanes; \CompUnfinished{} early incomplete jobs, local RL reference runs, and threshold calibration replays predate worker logging). Cloud GPU time covers \CompRentPods{} closed pod sessions, including world-model rollouts for \LedgerRented{} of \LedgerRuns{} PPO runs; category sub-rows exceed ``All cloud sessions'' because multi-role pods executed workloads across more than one category. CPU time sums worker-seconds across \CompEngineAudits{} audit runs (\CompEngineRemoteShare{} on a secondary host) plus closed-loop replanning wall-hours\ifCompReplanEmuRead{} (three shards across two local GPUs)\fi.}
+\label{tab:compute}
+\centering\scriptsize\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lr@{}}
+\toprule
+Local GPU workloads & H200-equivalent hours \\
+\midrule
+World-model training (\CompModels{} runs) & \CompEqTrain{} \\
+Trajectory-fidelity evaluation & \CompEqFid{} \\
+Benchmark audits, \HeldOutFamilies-city core & \CompEqForty{} \\
+Benchmark audits, \XCities-city expansion split & \CompEqEighty{} \\
+Seeded adaptive searches & \CompEqSeed{} \\
+Total logged local GPU compute & \CompEqLocalOne{} \\
+\midrule
+Cloud GPU workloads & H200-equivalent hours \\
+\midrule
+All cloud sessions & \CompEqRentOne{} \\
+In-imagination PPO training & \CompEqRentRl{} \\
+Audit evaluation pods (\CompRentEvalOk{} of \CompRentEvalN{} completed) & \CompEqRentEval{} \\
+Extended world-model training & \CompEqRentTrain{} \\
+Unreturned / aborted sessions (\CompRentNonePods{} pods) & \CompEqRentNone{} \\
+\midrule
+CPU and wall-clock workloads & Hours \\
+\midrule
+Engine replay pool across audits (process-hours) & \CompEnginePH{} \\
+Replanning, exact-simulator controls (\CompReplanPerfN{} instances, wall-hours) & \CompReplanPerfHours{} \\
+\ifCompReplanEmuRead Replanning, world-model runs (\CompReplanEmuN{} instances, wall-hours) & \CompReplanEmuHours{} \\\fi
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Dataset Construction and Held-Out City Splits}\label{app:data}
+
+Initial cities derive from \FamiliesTotal{} base cities across \StartFiles{} map files combining canonical Micropolis maps with procedurally generated terrains matured by scripted urban builders. Sixty cities (\TrainFamilies{} cities across \TrainStarts{} start files, up to four growth stages each) form the training environment pool. Our \AllCities{} held-out evaluation cities (each contributing a single starting map) are partitioned into the \HeldOutFamilies-city core benchmark (populations \PopMin{} to \PopMax{}) and the \XCities-city expansion split (populations \XPopMin{} to \XPopMax{}), generated from disjoint terrain seeds using the identical builder and threshold-calibration pipeline (\XInstances{} of \XInstancesPlanned{} candidate instances retained, \XWellPosed{} well posed; exact-simulator random-shooting false acceptance across \Bp{0}--\Bp{3} reads \ReplRandOneEightyPerfHack{}, \ReplRandTenEightyPerfHack{}, \ReplRandHundEightyPerfHack{}, and \ReplRandThouEightyPerfHack{} on the expansion split vs.\ \ReplRandOneFortyPerfHack{}, \ReplRandTenFortyPerfHack{}, \ReplRandHundFortyPerfHack{}, and \ReplRandThouFortyPerfHack{} on the core benchmark, with engine-side CEM passing \XTreasCemPass{} of \XTreasCount{} vs.\ \TreasCemPass{} of \TreasCount{} \emph{treasury} cities).
+
+Monthly actions combine fiscal levers with spatial macros (zoned blocks, linear road/rail/wire segments, civic plants, parks, and bulldozing). Training trajectories draw from \BuilderStyles{} scripted builder archetypes, random spatial editors, passive months, fiscal sweeps, and infrastructure shocks (severed power lines, demolished plants, tax spikes, forced disasters), with stochastic disasters enabled on \DisasterTraj{} trajectories across \TrajHorizons{}-month rollouts. Full-scale models train on \TrainTransitions{} transitions (\TrainTrajectories{} trajectories) and small-data models on a stratified \SmallTransitions{}-transition subset; re-verifying \VerifyTrajectories{} archived trajectories (\VerifyTrain{} from training) yielded \VerifyMismatches{} state mismatches.
+
+\subsection{World-Model Architecture and Training}\label{app:emulator}
+
+Each world model pairs a patchified ConvNeXt U-Net \citep{liu2022convnext,ronneberger2015unet} over the \WorldW{}-by-\WorldH{} grid (conditioned on municipal scalars, month index, action encoding, and a \ZDim-dimensional Gaussian latent inferred by a learned posterior during training) with a secondary MLP that predicts scalar bookkeeping updates from map-derived census counts. Per tile, the spatial decoder outputs a binary change gate, a conditional categorical distribution over all \NCodes{} tile codes on changed cells, Bernoulli flag and power bits, and zero-inflated discretised-logistic distributions for spatial overlays; bounded engine quantities use censored likelihoods so rollouts require no post-hoc clipping. Deterministic identities (tax rate, city time, total population) are computed analytically. Compiled fast-path inference accelerates \SizeM{} rollouts on a single GPU from \FastFiftyBefore{} to \FastFiftyAfter{} month-steps per second at unit sampling temperature.
+
+Tables~\ref{tab:hyper-sizes} and~\ref{tab:hyper-runs} list architectural dimensions and run-level configurations with checkpoint SHA-256 digests. All \HpRuns{} training runs use batch size \HpBatch{}, AdamW ($\beta =$ \HpBetas{}, weight decay \HpWd{}), linear warm-up over \HpWarmup{} of steps followed by cosine decay to \HpMinLr{} of peak learning rate, gradient clipping at \HpClip{}, EMA decay \HpEma{}, linear KL annealing over \HpKl{} of training (\HpZ{}-dimensional latent), component loss weights \HpLossWeights{}, a \HpBudgetW{}-fold scalar weight on annual tax-settlement months, and a \HpTableLr{}-fold learning-rate multiplier on changed-tile lookup tables, while the bookkeeping MLP performs \HpBkUpdates{} updates of batch \HpBkBatch{} per trunk step from learning rate \HpBkLr{}. One-step variational models train for \HpSamplesOs{} examples at peak rate \HpLrOs{}; pushforward runs initialise from their budget-matched one-step parent and train for \HpSamplesSf{} examples at \HpLrSf{} over \HpSfK{}-month windows, teacher-forcing \HpSfTf{} of steps and otherwise unrolling stop-gradient posterior-mode predictions before evaluating the one-step ELBO against the true engine state (distinct from differentiable sequence-level self-forcing; \citealp{huang2025selfforcing}). Two additional seeds of the \SizeM{} full-data configuration under each objective support our \DefMembers-member ensemble (\TestRuns{} total runs). Model weights are withheld pending clarity on GPL derivative-work status for neural networks trained on simulator outputs; exact SHA-256 digests are archived instead.
+
+\begin{table}[tbp]
+\caption{ConvNeXt U-Net + bookkeeping world-model dimensions across our three parameter scales, extracted directly from run configurations.}
+\label{tab:hyper-sizes}
+\centering\scriptsize\setlength{\tabcolsep}{4pt}
+\input{tables/hyper_sizes.tex}
+\end{table}
+
+\begin{table}[tbp]
+\caption{Complete world-model training manifest covering objective, parameter scale, dataset split and transition count, random seed, training examples, peak learning rate, gradient-accumulation micro-batch, pushforward parent checkpoint, and truncated SHA-256 digests at mid-training and full budget (the final row reports the coverage-retrained model of Section~\ref{sec:coverage}).}
+\label{tab:hyper-runs}
+\centering\scriptsize\setlength{\tabcolsep}{3.5pt}
+\input{tables/hyper_runs.tex}
+\end{table}
+
+\subsection{Task Predicates and Threshold Calibration}\label{app:tasks}
+
+Formal task predicates over \Horizon-month trajectories span five families, where (i) \emph{grow} requires final population $\ge \theta$ with treasury never negative; (ii) \emph{solvent} requires final population $\ge \theta$ with treasury never below half its initial value; (iii) \emph{treasury} requires second-year annual tax revenue $\ge \theta$, treasury never negative, and monthly tax rate never exceeding its initial value; (iv) \emph{recover} requires final population $\ge \theta$ times pre-quake population after a forced earthquake at month one; and (v) \emph{power} requires final zone count $\ge \theta$, at least \PowerFrac{} per cent of zones powered at month \Horizon{}, and at most one net power plant added. Placing $\theta$ at a fixed quantile of passive behaviour trajectories would allow trivial constant-budget no-build plans to pass on individual seeds in \ConstPassGrow{} of \emph{grow} cities (where \RollA-month population error is \TestMainPop{} vs.\ engine seed spread \TestFloorPop{}). Instead, we calibrate $\theta$ on the \OracleSeeds{} oracle seeds midway between the highest majority score among the top \BestConstK{} of \ConstantPlans{} constant no-build policies and the best trajectory found across behaviour pools, budget-optimised builder pools, closed-loop scripted builders, and engine-side CEM (\ThresholdReplays{} engine replays; \ThresholdCityMonths{} million city-months; Table~\ref{tab:tasks}).
+
+\begin{table}[tbp]
+\caption{Core benchmark task instances at the \Horizon-month horizon alongside \OracleSeeds-seed oracle pass rates for unoptimised behaviour-mix plans and closed-loop scripted builders under optimal constant budgets.}
+\label{tab:tasks}
+\centering\small
+\begin{tabular}{@{}lrrcc@{}}
+\toprule
+Task & Instances & Well posed & Behaviour mix & Scripted builders \\
+\midrule
+grow & \GrowCount & \GrowWellPosed & \GrowBaseBeh & \GrowBaseBld \\
+solvent & \SolvCount & \SolvWellPosed & \SolvBaseBeh & \SolvBaseBld \\
+treasury & \TreasCount & \TreasWellPosed & \TreasBaseBeh & \TreasBaseBld \\
+recover & \RecovCount & \RecovWellPosed & \RecovBaseBeh & \RecovBaseBld \\
+power & \PowerCount & \PowerWellPosed & \PowerBaseBeh & \PowerBaseBld \\
+\midrule
+all & \Instances & \WellPosed & & \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Exact-Simulator Reference and Statistical Inference}\label{app:stats}
+
+Pairing each world-model search with an identical run inside the exact-simulator reference on fresh seeds ensures all excess false-acceptance and ground-truth shortfall estimates are matched by instance (when oracle seeds themselves are substituted as a sanity check, false acceptance is identically zero across all \IdentityGroupsZero{} of \IdentityGroupsZero{} search-by-budget cells). In addition to random shooting and adaptive CEM across all core instances, Table~\ref{tab:main} reports best-of-$N$ over closed-loop scripted builders across twenty core cities (\BonInstances{} instances). Uncertainty is estimated via \CILevel{} per cent cluster bootstraps (\BootResamples{} resamples across main search audits, and twenty thousand resamples for both nominal and Bonferroni-adjusted \PcCorrLevel{} per cent BCa intervals in counterfactual subsystem patching) clustering by held-out city (\MainClusters{} clusters on the core benchmark), using BCa limits by default and exact one-sided cluster-binomial bounds when zero events occur. \RlIntervalSentence{} Cross-model Spearman correlations in Section~\ref{sec:across} cluster-resample checkpoints with percentile limits.
+
+\subsection{Counterfactual Subsystem Patching Protocol}\label{app:patching}
+
+To test causal subsystem attribution on the primary model's \PtRecords{} exploited plan records (\PtPlans{} unique plans comprising \PtNRand{} from margin-ranked random shooting, \PtNVerd{} from verdict-ranked shooting, \PtNBon{} from best-of-$N$, and \PtNCem{} from unseeded CEM), we replay each plan on \PatchSeeds{} oracle seeds and splice the $k$-th engine trajectory's state for one subsystem into the $k$-th neural rollout at the end of each month (channel masks in Appendix~\ref{app:other}; empty masks reproduce unpatched rollouts bit-for-bit, full masks reproduce exact engine replays). Because predicates directly read treasury or powered-zone scalars in several tasks, we also verify indirect-only pairs; on the \DecRecords{} random-shooting exploits at $B ={}$\Bp{3}, raw power patching flips \DecPower{} \ci{\DecPowerCI}, union flip rates across any global (\DecAnyGlobal{}, indirect \DecAnyGlobalInd{}) and any local (\DecAnyLocal{}, indirect \DecAnyLocalInd{}) subsystem closely track independent-redraw expectations (\PcPredGlobalInd{} and \PcPredLocal{} given the \PcRedraw{} unpatched redraw flip rate), and \DecLocalAboveN{} local rules exceed \MechLocalBar{} raw flip share (\DecLocalAbove{}). For spatial fire and zone-growth patches, we apply a \emph{symmetric} cell mask (overwriting cells containing a fire or zone tile in \emph{either} the engine or the neural rollout) because one-sided fire insertion alone spuriously overturns \PcTaOneSided{} of true \emph{recover} acceptances; an indirect overlay-only control that patches solely the eighth-resolution fire-coverage map without overwriting burning tile codes flips \PcFireOvK{} of \PcFireOvN{} exploited \emph{recover} records (\PcFireOv{} \ci{\PcFireOvCI} vs.\ \PcFireOvNone{} on unpatched redraws, and \PcFireOvTaK{} of \PcTaN{}, \PcFireOvTa{}, on true acceptances), demonstrating that the symmetric fire effect operates via full-resolution burning-tile propagation rather than coarse fire-coverage map drift. In Figure~\ref{fig:env}'s case study (selected by maximum pass-share discrepancy, breaking ties by worst oracle margin), the audit passed \FigOneAuditPass{} of \FigOneK{} rollouts; upon CPU redraw \FigOneEmuPass{} pass, \FigOneEmuLose{} lose the demolished plant at month \FigOneDropMonth{} while \FigOneEmuLosePass{} keep zones lit and pass, and across \FigOnePatchK{} patched rollouts power-grid patching drops passes from \FigOnePatchNone{} to \FigOnePatchPower{} whereas all other subsystems leave at least \FigOnePatchOtherMin{} passing. Table~\ref{tab:patch} reports all paired control contrasts.
+
+\begin{table}[tbp]
+\caption{Counterfactual subsystem patching paired against random state-perturbation controls across all \PtRecords{} exploited plan records, showing paired flip-rate excess over tensor-size-matched (\emph{Size}) and altered-entry-matched (\emph{Change}) controls with Bonferroni-corrected \PcCorrLevel{} per cent BCa intervals (twenty thousand city-cluster bootstrap resamples) across \PcComparisons{} comparisons, pooled and split between post-earthquake \emph{recover} and the remaining four task families.}
+\label{tab:patch}
+\centering\scriptsize\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lllllll@{}}
+\toprule
+ & \multicolumn{2}{c}{All records} & \multicolumn{2}{c}{\emph{recover}} & \multicolumn{2}{c}{Other four families} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(l){6-7}
+Patch & Size & Change & Size & Change & Size & Change \\
+\midrule
+power & \PcPowerSizeAll{} & \PcPowerChgAll{} & \PcPowerSizeRecov{} & \PcPowerChgRecov{} & \PcPowerSizeOther{} & \PcPowerChgOther{} \\
+ & \PcPowerSizeAllCI{} & \PcPowerChgAllCI{} & \PcPowerSizeRecovCI{} & \PcPowerChgRecovCI{} & \PcPowerSizeOtherCI{} & \PcPowerChgOtherCI{} \\[1pt]
+treasury & \PcTreasurySizeAll{} & \PcTreasuryChgAll{} & \PcTreasurySizeRecov{} & \PcTreasuryChgRecov{} & \PcTreasurySizeOther{} & \PcTreasuryChgOther{} \\
+ & \PcTreasurySizeAllCI{} & \PcTreasuryChgAllCI{} & \PcTreasurySizeRecovCI{} & \PcTreasuryChgRecovCI{} & \PcTreasurySizeOtherCI{} & \PcTreasuryChgOtherCI{} \\[1pt]
+demand valves & \PcValvesSizeAll{} & \PcValvesChgAll{} & \PcValvesSizeRecov{} & \PcValvesChgRecov{} & \PcValvesSizeOther{} & \PcValvesChgOther{} \\
+ & \PcValvesSizeAllCI{} & \PcValvesChgAllCI{} & \PcValvesSizeRecovCI{} & \PcValvesChgRecovCI{} & \PcValvesSizeOtherCI{} & \PcValvesChgOtherCI{} \\[1pt]
+zone growth & \PcZoneGrowthSizeAll{} & \PcZoneGrowthChgAll{} & \PcZoneGrowthSizeRecov{} & \PcZoneGrowthChgRecov{} & \PcZoneGrowthSizeOther{} & \PcZoneGrowthChgOther{} \\
+ & \PcZoneGrowthSizeAllCI{} & \PcZoneGrowthChgAllCI{} & \PcZoneGrowthSizeRecovCI{} & \PcZoneGrowthChgRecovCI{} & \PcZoneGrowthSizeOtherCI{} & \PcZoneGrowthChgOtherCI{} \\[1pt]
+pollution & \PcPollutionSizeAll{} & \PcPollutionChgAll{} & \PcPollutionSizeRecov{} & \PcPollutionChgRecov{} & \PcPollutionSizeOther{} & \PcPollutionChgOther{} \\
+ & \PcPollutionSizeAllCI{} & \PcPollutionChgAllCI{} & \PcPollutionSizeRecovCI{} & \PcPollutionChgRecovCI{} & \PcPollutionSizeOtherCI{} & \PcPollutionChgOtherCI{} \\[1pt]
+traffic & \PcTrafficSizeAll{} & \PcTrafficChgAll{} & \PcTrafficSizeRecov{} & \PcTrafficChgRecov{} & \PcTrafficSizeOther{} & \PcTrafficChgOther{} \\
+ & \PcTrafficSizeAllCI{} & \PcTrafficChgAllCI{} & \PcTrafficSizeRecovCI{} & \PcTrafficChgRecovCI{} & \PcTrafficSizeOtherCI{} & \PcTrafficChgOtherCI{} \\[1pt]
+land value & \PcLandValueSizeAll{} & \PcLandValueChgAll{} & \PcLandValueSizeRecov{} & \PcLandValueChgRecov{} & \PcLandValueSizeOther{} & \PcLandValueChgOther{} \\
+ & \PcLandValueSizeAllCI{} & \PcLandValueChgAllCI{} & \PcLandValueSizeRecovCI{} & \PcLandValueChgRecovCI{} & \PcLandValueSizeOtherCI{} & \PcLandValueChgOtherCI{} \\[1pt]
+crime & \PcCrimeSizeAll{} & \PcCrimeChgAll{} & \PcCrimeSizeRecov{} & \PcCrimeChgRecov{} & \PcCrimeSizeOther{} & \PcCrimeChgOther{} \\
+ & \PcCrimeSizeAllCI{} & \PcCrimeChgAllCI{} & \PcCrimeSizeRecovCI{} & \PcCrimeChgRecovCI{} & \PcCrimeSizeOtherCI{} & \PcCrimeChgOtherCI{} \\[1pt]
+fire & \PcFireSizeAll{} & \PcFireChgAll{} & \PcFireSizeRecov{} & \PcFireChgRecov{} & \PcFireSizeOther{} & \PcFireChgOther{} \\
+ & \PcFireSizeAllCI{} & \PcFireChgAllCI{} & \PcFireSizeRecovCI{} & \PcFireChgRecovCI{} & \PcFireSizeOtherCI{} & \PcFireChgOtherCI{} \\[1pt]
+\bottomrule
+\end{tabular}
+\end{table}
+
+\input{sections/app_protocols.tex}
+
+\section{Extended Empirical Results, Spatial Error Maps, and Ablations}\label{app:results}
+
+\input{sections/app_results.tex}
+
+\subsection{Complete Benchmark Reference Tables}
+
+Tables~\ref{tab:main}--\ref{tab:rl} provide the complete numerical records underlying Sections~\ref{sec:setting}--\ref{sec:coverage}, covering primary-model scaling across optimisers and budgets (Table~\ref{tab:main}), task-family breakdowns at $B ={}$\Bp{3} (Table~\ref{tab:family}), cross-ladder search curves across all \Ladder{} checkpoints (Table~\ref{tab:curves}), short-horizon fidelity (Table~\ref{tab:test}), \Horizon-month rollout drift and held-out ELBO (Table~\ref{tab:horizon}), threshold sensitivity on \emph{recover} (Table~\ref{tab:threshold}), and per-checkpoint PPO results (Table~\ref{tab:rl}).
+
+\begin{table}[tbp]
+\caption{Primary \SizeM{} world model paired against the exact-simulator reference across all \MainInstances{} core instances and the \WellPosed{} well-posed subset. ``False acceptance'' denotes selections accepted by the model and rejected by the \OracleSeeds-seed oracle; ``Exact ref.'' denotes the identical optimiser inside the exact-simulator reference, with the paired difference beside it; ``Truly passing'' gives ground-truth oracle pass share (model / exact reference); and ``False rej.'' gives the share of truly passing selections rejected by the judge (model / exact reference). Best-of-$N$ runs on twenty cities (\BonInstances{} instances). Bottom rows evaluate initial trajectories from \RlMonths{}-step PPO policies under the identical \KVerdict-sample verdict rule.}
+\label{tab:main}
+\centering\scriptsize\setlength{\tabcolsep}{3.5pt}
+\input{tables/main_reference.tex}
+\end{table}
+
+\begin{table}[tbp]
+\caption{Task-family breakdown on the primary \SizeM{} checkpoint at $B ={}$\Bp{3} across all core instances and well-posed instances.}
+\label{tab:family}
+\centering\scriptsize\setlength{\tabcolsep}{3.5pt}
+\input{tables/family_thou.tex}
+\end{table}
+
+\ifAcrossDone
+\begin{table}[tbp]
+\caption{Cross-model search audit across all \Ladder{} world-model checkpoints, reporting random shooting across all \AllCities{} cities ($B ={}$\Bp{1} to \Bp{3}) and adaptive CEM at $B ={}$\Bp{3} on the \HeldOutFamilies-city core benchmark\ifAcAdSet{} across \AcAdSetName{}\fi, pooled across the five task families.}
+\label{tab:curves}
+\centering\scriptsize\setlength{\tabcolsep}{3.5pt}
+\input{tables/ladder_curves.tex}
+\end{table}
+\fi
+
+\begin{table}[tbp]
+\caption{Short-horizon trajectory fidelity across all \TestRuns{} completed training runs on the held-out test split (\TestTransitions{} transitions, \TestPlans{} trajectories), reporting one-month structural (and raw) changed-tile F1, \RollA-month changed-since-start structural F1, and median relative population and treasury errors. Non-zero seeds denote the additional \SizeM{} ensemble runs. \HorizonTableNote{}}
+\label{tab:test}
+\centering\scriptsize\setlength{\tabcolsep}{4pt}
+\input{tables/ladder_test.tex}
+\end{table}
+
+\begin{table}[tbp]
+\caption{Long-horizon rollout drift at the \Horizon-month task horizon and held-out variational log-likelihood (ELBO in nats/transition on the development split at mid-training and full budget) across all final checkpoints and the coverage-retrained model.}
+\label{tab:horizon}
+\centering\scriptsize\setlength{\tabcolsep}{3.5pt}
+\input{tables/ladder_horizon.tex}
+\end{table}
+
+\begin{table}[tbp]
+\caption{Target-threshold sensitivity on \emph{recover} for random shooting at $B ={}$\Bp{3} on the primary checkpoint, re-evaluated exactly at thresholds set one quarter, one half, and three quarters of the way between the best constant no-build plan ($c$) and the engine-search ceiling ($e$).}
+\label{tab:threshold}
+\centering\scriptsize\setlength{\tabcolsep}{3.5pt}
+\input{tables/threshold_recover.tex}
+\end{table}
+
+\begin{table}[tbp]
+\caption{In-imagination PPO performance across all \RlCkptsDone{} world-model checkpoints after \RlMonths{} imagined steps (means over five task families and three seeds per cell, with engine-trained PPO reference optimism gap \RlEngGap{} \ci{\RlEngGapCI}).}
+\label{tab:rl}
+\centering\scriptsize\setlength{\tabcolsep}{4pt}
+\input{tables/rl_checkpoints.tex}
+\end{table}
+
+\subsection{Additional Modeling, Search, and Controller Ablations}\label{app:ablations}
+
+\emph{Pushforward rollout fine-tuning versus one-step variational training.} Fine-tuning final one-step models on stop-gradient posterior-mode rollouts slightly lowers one-month structural changed-tile F1 in \SfLowerOne{} of \SfPairs{} parent-child pairs and \RollA-month changed-since-start F1 in \SfLowerTwelve{} of \SfPairs{} pairs (primary lineage shifts from \TestMainFTwelve{} to \SfMainFTwelve{}), because in a stochastic cellular automaton whose own cross-seed changed-tile F1 is \TestFloorFOne{}, pairing a rolled-out model state against a single archived engine state injects transition variance; both model families remain in our \Ladder-checkpoint ladder.
+
+\emph{Unseeded column-independent CEM versus seeded elite-mutation CEM.} Standard unseeded CEM \citep{deboer2005cem}, which resamples all \PlanColumns{} action columns independently from fitted marginals at each generation, disrupts multi-month spatial coordination, so even inside the exact-simulator reference at $B ={}$\Bp{3}, unseeded CEM achieves only \PerfCemThouOrAcc{} ground-truth success versus \PerfRandThouOrAcc{} for random shooting (with the primary world model accepting \CemThouJudgeAcc{} of its own unseeded selections), motivating our logged-plan-seeded elite-mutation CEM in Section~\ref{sec:pressure}.
+
+\emph{Shuffled-residual noise surrogates.} Replacing the world model with a synthetic surrogate that adds shuffled empirical model residuals to ground-truth margins (passing exact-simulator calibration across all \AcceptVolGroups{} of \AcceptVolGroups{} budget cells in volatility-matched form) yields \RandThouVolFloor{} false acceptance under \Bp{3} random shooting (\RandThouPlainFloor{} unweighted), exceeding the actual neural model's \RandThouHack{} because smooth state-dependent model biases preserve local plan rankings better than i.i.d.\ residual draws.
+
+\emph{Internal accounting drift as an unsupervised anomaly signal.} Checking whether imagined trajectories violate exact municipal budget conservation by more than \BreachShare{} per cent of initial funds shows breach rates rising across random-shooting budgets (\TrRandOne{}, \TrRandTen{}, \TrRandHund{}, and \TrRandThou{} from \Bp{0} to \Bp{3} among accepted plans, vs.\ \TrRandThouRej{} on rejected plans and \TrBeh{} on unoptimised logged plans), yet separates false acceptances (\TrSplitWrong{}) from true acceptances (\TrSplitRight{}, difference \TrSplitDiff{} \ci{\TrSplitDiffCI}, rejected \TrSplitRej{}) too weakly to serve as a standalone filter.
+
+\emph{Behaviour-cloned warm-starting and hysteresis-free replanning.} Warm-starting PPO spatial heads from scripted builders improved engine-side returns on \emph{power} (\RlHybridDiffPower{} \ci{\RlHybridDiffPowerCI}) and \emph{solvent} (\RlHybridDiffSolv{} \ci{\RlHybridDiffSolvCI}) with neutral effects elsewhere, so we report uniform from-scratch PPO throughout. Similarly, inside the exact simulator, naive monthly replanners without switching hysteresis (either redrawing fresh proposals each month without retaining the incumbent, passing \RpVOneReplan{} vs.\ \RpVOneOpen{} of \RpVOneN{} overall and \RpVOnePowerReplan{} vs.\ \RpVOnePowerOpen{} of \RpVOnePowerN{} on \emph{power}, or pooling the incumbent without a standard-error switching margin, passing \RpVTwoReplan{} vs.\ \RpVTwoOpen{} of \RpVTwoN{} overall, \RpVTwoGrowReplan{} vs.\ \RpVTwoGrowOpen{} of \RpVTwoGrowN{} on \emph{grow}, and \RpVTwoRecovReplan{} vs.\ \RpVTwoRecovOpen{} of \RpVTwoRecovN{} on \emph{recover}) thrash between incompatible spatial build plans, motivating the \RpSwitchSe{}-standard-error hysteresis gate used in Section~\ref{sec:replan}.
+
+\section{Domain-General Audit Library and Continuous-Control Check}\label{app:external}
+
+\input{sections/app_instrument.tex}
+
+To verify that \hpd{} operates cleanly out-of-the-box on external latent-space world models we did not train, we audited two publicly released single-task TD-MPC2 checkpoints \citep{hansen2024tdmpc2,tdmpc2checkpoints} on DeepMind Control Suite tasks \citep{tunyasuvunakool2020dmcontrol}. Here the world model comprises TD-MPC2's learned encoder, latent transition dynamics, and reward head, while the oracle replays continuous action sequences from exactly restored MuJoCo physics states (numerical state-restoration tolerance \ExtOracleTolerance{}). Across \ExtStarts{} initial states per task, thresholds over \ExtHorizon-step open-loop trajectories are calibrated so \ExtAccLo{}--\ExtAccHi{} of correlated random behaviour plans pass; because MuJoCo replay is deterministic, the exact-simulator false-acceptance floor is identically zero. Because TD-MPC2 trains on short \ExtMppiHorizon-step rollouts bootstrapped with terminal value estimates rather than open-loop \ExtHorizon-step sums, unrolling its latent reward head open loop over \ExtHorizon{} steps induces a strong upward return bias of \WalkerResid{} to \CheetahResid{} logged-plan standard deviations, falsely accepting \CheetahFp{} (\emph{cheetah-run}) and \WalkerFp{} (\emph{walker-walk}) of failing behaviour plans. Consequently, open-loop shooting actually lowers unconditional false acceptance from \CheetahRandOneHack{} and \WalkerRandOneHack{} at $B ={}$\Bp{0} to \CheetahRandThouHack{} \ci{\CheetahRandThouHackCI} and \WalkerRandThouHack{} \ci{\WalkerRandThouHackCI} at $B ={}$\Bp{3} as genuinely higher-return trajectories are selected (running TD-MPC2's native MPPI planner open loop with \CheetahMppiB{} rollouts yields \CheetahMppiHack{} and \WalkerMppiHack{} false acceptance; \emph{hopper-hop} was excluded because \HopperZeroStarts{} of \ExtStarts{} starts yielded identically zero behaviour return). We treat this purely as an external software validation rather than a claim about model-predictive control when TD-MPC2 is run closed loop at its native \ExtMppiHorizon-step horizon.
+
+\paragraph{Code, data, and licensing.}
+\hpd{} is released under the Apache-2.0 licence. The Micropolis C++ engine modifications, Python replay bindings, data generator, task harness, and evaluation scripts link against MicropolisCore and are released under GPL-3.0 with Electronic Arts' additional terms, with all modifications explicitly marked. Complete JSON/CSV result records, calibrated task definitions, figure scripts, and paper sources reproducing all numbers and graphics in this work are released under CC BY 4.0 via hyperprior.net. As noted in Appendix~\ref{app:emulator}, neural network checkpoints (documented by SHA-256 digest) and trained RL policies are not distributed.
+
+\section{Extended Related Work}\label{app:morerelated}
+
+\paragraph{Offline model-based optimisation and surrogate exploitation.}
+Optimising static designs against learned reward surrogates produces severe out-of-distribution overestimation in offline model-based optimisation (MBO), motivating conservative conditioning, autofocused retraining, and adversarial regularisation across Design-Bench \citep{brookes2019cbas,fannjiang2020autofocused,kumar2020mins,trabucco2021coms,trabucco2022designbench}. Our setting extends static surrogate optimisation to autoregressive \Horizon-step stochastic dynamics where spatial actions compound nonlinearly and exact simulator replay benchmarks excess error over regressional Goodhart selection noise \citep{manheim2018goodhart,bailey2017pbo,ma2026selectiontax,bastani2026winners,eshwar2026proofcarrying} induced by structural dynamics errors \citep{pan2022misspecification,skalse2022gaming,jakobi1995noise,koos2013transferability}. In reward-model scaling for language and control agents, proxy-gold gaps grow predictably with KL divergence and optimisation budget \citep{gao2023scaling,frick2024ppe,kim2025rethinking,wen2025rethinking}.
+
+\paragraph{Uncertainty regularisation, rollout fidelity, and generative game engines.}
+Ensemble disagreement penalties \citep{kurutach2018metrpo,chua2018pets,yu2020mopo}, absorbing OOD halts \citep{kidambi2020morel}, value conservatism \citep{yu2021combo,rigter2022rambo}, and multi-step hallucinated or pushforward training \citep{talvitie2014regularization,talvitie2017selfcorrecting,venkatraman2015dad,brandstetter2022mpnpde} aim to bound rollout exploitation, though empirical correlations between ensemble variance and true dynamics error are often weak \citep{lu2022revisiting}. Recent preprints and benchmarks document reward inflation and dream-reality gaps in robotic and game world models \citep{jiang2026wovr,zhou2026wovrplus,khassanov2026lies,kieto2026moba,bhamidipaty2026renew,amd2026learningtofail,xu2026curewm,yang2026mirabench,reka2026worldmodelgym,kong2026tif,guzel2026prowl,odyssey2026prowl1} alongside off-policy world-model evaluation on fixed policy sets \citep{fu2021dope,zhang2021autoregressive} and interventional rollout debugging \citep{yao2026rolloutfaith,rahmani2026debugging,zhu2026dualfrontier,vakalis2026intervention}. Finally, our testbed builds on Micropolis RL environments \citep{earle2020gymcity} and complements neural game and strategy simulators spanning Atari, Doom, platformers, StarCraft~II, and turn-based strategy \citep{kaiser2020simple,micheli2023iris,alonso2024diamond,valevski2025gamengen,bruce2024genie,synnaeve2018defogger,egorov2022mamba,bamford2020nge,dyer2024interventionally,zhang2024marie,zhang2026starwm,li2026civworldbench}.

@@ -1,0 +1,14 @@
+judge emulator; 40 instances in 40 clusters; flip rates on 5000 behaviour plans: fp 0.331, fn 0.396
+method (scoring)       B     n  hackability [BCa]      judge acc  eng acc  unlucky  residual floor [BCa]          excess over residual [BCa]   flip floor [BCa]          excess over flip [BCa]   emu steps/row  eng months/row
+cem (margin)             1    40  0.275 [0.150,0.425]       0.475    0.300    0.000  0.125 [0.050,0.250]    0.150 [0.000,0.300]       0.225 [0.100,0.375]    0.050 [-0.100,0.200]                240             240
+cem (margin)            10    40  0.300 [0.175,0.475]       0.450    0.175    0.083  0.475 [0.325,0.625]    -0.175 [-0.400,0.050]     0.725 [0.550,0.850]    -0.425 [-0.600,-0.225]              672             546
+cem (margin)           100    40  0.300 [0.175,0.450]       0.450    0.200    0.000  0.600 [0.450,0.750]    -0.300 [-0.500,-0.050]    0.800 [0.657,0.900]    -0.500 [-0.675,-0.300]            4,992           4,416
+cem (margin)          1000    40  0.350 [0.225,0.500]       0.575    0.325    0.000  0.525 [0.375,0.675]    -0.175 [-0.400,0.050]     0.725 [0.550,0.850]    -0.375 [-0.550,-0.175]           48,192          43,416
+random (margin)          1    40  0.175 [0.075,0.325]       0.450    0.300    0.143  0.150 [0.075,0.275]    0.025 [-0.100,0.169]      0.300 [0.175,0.450]    -0.125 [-0.300,0.025]               240             240
+random (margin)         10    40  0.250 [0.125,0.400]       0.625    0.575    0.300  0.325 [0.200,0.475]    -0.075 [-0.250,0.100]     0.425 [0.275,0.582]    -0.175 [-0.375,0.000]               672             423
+random (margin)        100    40  0.125 [0.050,0.250]       0.725    0.775    0.200  0.425 [0.275,0.575]    -0.300 [-0.475,-0.125]    0.675 [0.525,0.800]    -0.550 [-0.700,-0.375]            4,992           2,172
+random (margin)       1000    40  0.150 [0.050,0.300]       0.700    0.725    0.000  0.325 [0.200,0.475]    -0.175 [-0.350,0.000]     0.675 [0.525,0.800]    -0.525 [-0.725,-0.300]           48,192          17,645
+costs: judge 5,074,560 month-steps in 3322 s (1,528/s), padding 147,840; engine 1,712,592 city-months replayed in 291 s (5,878/s, workers [4]); per instance phase 1 83.3 s, phase 2 7.2 s; design month-steps match counter: True
+wall clock per instance (s): cem 44.4, random 32.2, pool statistics 13.9
+projection, 200 instances, this_run_methods cem,random at B [1, 10, 100, 1000]: judge 15,580,800 month-steps = 2.83 h; engine 11,816,400 city-months = 0.56 h
+projection, 200 instances, all_four_methods cem,random,best_of_n,random_verdict at B [1, 10, 100, 1000]: judge 34,320,000 month-steps = 6.24 h; engine 14,082,000 city-months = 0.67 h

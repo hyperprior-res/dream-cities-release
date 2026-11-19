@@ -1,0 +1,747 @@
+{
+ "generated_utc": "2026-11-12T13:00:42Z",
+ "command": "PYTHONPATH=hpr-dream:code .venv/bin/python code/scripts/fidelity_horizon.py",
+ "definitions": {
+  "overlay_ratio": "rollouts.h24.<half|eighth>.<overlay>.ratio_sample: mean over plans, K = 8 samples and cells of |sample - true| / mean over plans and cells of |start - true|; engine: the same with one other engine seed (K = 1)",
+  "open_loop_scalar_mae": "rollouts.by_subset.open_loop.h24.scalars.<name>: mean over open-loop plans (and K samples) of |x - true|; copy: |start - true|",
+  "median_rel_12m": "rollouts.h12.median_rel_<pop|funds>: median over plans and samples of |x - true| / max(|true|, 1)",
+  "bar": "0.1 (protocol (ii) and (iii))",
+  "elbo": "onestep.loglik_nats_per_transition.elbo, nats per transition, higher is better"
+ },
+ "inputs": {
+  "results/fidelity/ladder/os_15m_small/dev/floor_rollouts_s1.json": "802c13fe38ab67c1831cf98de14042a750477bc5f00ef3ea1338db447ee3f2b3",
+  "results/fidelity/ladder/os_15m_small/test/floor_rollouts_s1.json": "f60bca25a2bd0a438e170b2e4d783add53158232a13612b0f32fe2307b4dd048",
+  "results/fidelity/ladder/os_15m_small/test/os_15m_small_samples_006000000_dec-a.json": "a5aff064a3b3725e99bb4dc9c14f18ea443f0252ba6065cb41f79fa1faa728db",
+  "results/fidelity/ladder/os_15m_small/dev/os_15m_small_samples_003000064_dec-a.json": "d092cd6a4e195f25e8a865eca91ec0dd247bf5230064bf7a1bac29cdf44a226d",
+  "results/fidelity/ladder/os_15m_small/dev/os_15m_small_samples_006000000_dec-a.json": "a56fed042dff0755a45b6e0ea0a2c07ec91a8c3cff76eb8273a8bc2e9c796cbb",
+  "results/fidelity/ladder/sf_15m_small/dev/floor_rollouts_s1.json": "802c13fe38ab67c1831cf98de14042a750477bc5f00ef3ea1338db447ee3f2b3",
+  "results/fidelity/ladder/sf_15m_small/test/floor_rollouts_s1.json": "f60bca25a2bd0a438e170b2e4d783add53158232a13612b0f32fe2307b4dd048",
+  "results/fidelity/ladder/sf_15m_small/test/sf_15m_small_samples_001500032_dec-a.json": "70de140b6de7f02d36d7c6c1c0a83ebef86dfdfb71cbb35d198dfa49e379179f",
+  "results/fidelity/ladder/sf_15m_small/dev/sf_15m_small_samples_000750080_dec-a.json": "e4db57cca7f73b39b44a569b11cf9422af13e4352a015b0ed0b0b2dfbcdf2381",
+  "results/fidelity/ladder/sf_15m_small/dev/sf_15m_small_samples_001500032_dec-a.json": "74e30e26fe365cf9e2e2a700ef73fe90907e663985ef895932db7c155a5229a1",
+  "results/fidelity/ladder/os_15m_full/dev/floor_rollouts_s1.json": "802c13fe38ab67c1831cf98de14042a750477bc5f00ef3ea1338db447ee3f2b3",
+  "results/fidelity/ladder/os_15m_full/test/floor_rollouts_s1.json": "f60bca25a2bd0a438e170b2e4d783add53158232a13612b0f32fe2307b4dd048",
+  "results/fidelity/ladder/os_15m_full/test/os_15m_full_samples_006000000_dec-a.json": "bb7ee8f5c750d0e4491fa62adfecd88ec5769ec7233998c455a7c4e2b170714c",
+  "results/fidelity/ladder/os_15m_full/dev/os_15m_full_samples_003000064_dec-a.json": "d8d25c5fe0bf44b599c6cf326189eca9567f852c13bd43900d34d9368005a7cf",
+  "results/fidelity/ladder/os_15m_full/dev/os_15m_full_samples_006000000_dec-a.json": "d007598c77ef5766a9f8bf8234eb64b5e8b42c89c7c38b35013a0007e5e95003",
+  "results/fidelity/ladder/sf_15m_full/dev/floor_rollouts_s1.json": "802c13fe38ab67c1831cf98de14042a750477bc5f00ef3ea1338db447ee3f2b3",
+  "results/fidelity/ladder/sf_15m_full/test/floor_rollouts_s1.json": "f60bca25a2bd0a438e170b2e4d783add53158232a13612b0f32fe2307b4dd048",
+  "results/fidelity/ladder/sf_15m_full/test/sf_15m_full_samples_001500032_dec-a.json": "c22e6e09f6310eec29c9810d16c3fdf6f3591d687e4fceaae705ceb3533c585e",
+  "results/fidelity/ladder/sf_15m_full/dev/sf_15m_full_samples_000750080_dec-a.json": "1cbee77d05b826bb7f82d80bb39357d84db7f8733c921b1bd1afafdfe4396e48",
+  "results/fidelity/ladder/sf_15m_full/dev/sf_15m_full_samples_001500032_dec-a.json": "b1bcde451154dd0d11922e7206ea989d31b0b5137658324720cd140d4f76e59e",
+  "results/fidelity/ladder/os_50m_small/dev/floor_rollouts_s1.json": "802c13fe38ab67c1831cf98de14042a750477bc5f00ef3ea1338db447ee3f2b3",
+  "results/fidelity/ladder/os_50m_small/test/floor_rollouts_s1.json": "f60bca25a2bd0a438e170b2e4d783add53158232a13612b0f32fe2307b4dd048",
+  "results/fidelity/ladder/os_50m_small/test/os_50m_small_samples_006000000_dec-a.json": "2748edf4b2555d837d38bd0485d6f492d7098c9c49cf68dc9fe3bf790a0cc927",
+  "results/fidelity/ladder/os_50m_small/dev/os_50m_small_samples_003000064_dec-a.json": "262207f7da1641668a710410dcb56b9dd2808511d32d1570abd62bb9b7fd383b",
+  "results/fidelity/ladder/os_50m_small/dev/os_50m_small_samples_006000000_dec-a.json": "960ba9e69c79464edb4aee337866d24180d9b9d5755e17b2594511d121b889c5",
+  "results/fidelity/ladder/sf_50m_small/dev/floor_rollouts_s1.json": "802c13fe38ab67c1831cf98de14042a750477bc5f00ef3ea1338db447ee3f2b3",
+  "results/fidelity/ladder/sf_50m_small/test/floor_rollouts_s1.json": "f60bca25a2bd0a438e170b2e4d783add53158232a13612b0f32fe2307b4dd048",
+  "results/fidelity/ladder/sf_50m_small/test/sf_50m_small_samples_001500032_dec-a.json": "09c22a583e68ffa1e00554c59d484f4bc0443b5b564d50866db43fb322ea8f32",
+  "results/fidelity/ladder/sf_50m_small/dev/sf_50m_small_samples_000750080_dec-a.json": "af9dd731fcb9ca6d8a44b1058d97dafeffe3ead74f5515d2671e061e505ba273",
+  "results/fidelity/ladder/sf_50m_small/dev/sf_50m_small_samples_001500032_dec-a.json": "33381a43059b5c42fba2af55aa0ec4db88ed8659c679cd1d7a1cbf011e20866a",
+  "results/fidelity/ladder/os_50m_full/dev/floor_rollouts_s1.json": "802c13fe38ab67c1831cf98de14042a750477bc5f00ef3ea1338db447ee3f2b3",
+  "results/fidelity/ladder/os_50m_full/test/floor_rollouts_s1.json": "f60bca25a2bd0a438e170b2e4d783add53158232a13612b0f32fe2307b4dd048",
+  "results/fidelity/ladder/os_50m_full/test/os_50m_full_samples_006000000_dec-a.json": "a1bc162c1352ba33f17bf52a976411a7bd4e97a5ecdd60a2c56641e885e7f9e8",
+  "results/fidelity/ladder/os_50m_full/dev/os_50m_full_samples_003000064_dec-a.json": "56be1024bd464734149227e6a43c1181de8bc1298844bf7e301a9ed9d21681ba",
+  "results/fidelity/ladder/os_50m_full/dev/os_50m_full_samples_006000000_dec-a.json": "5b5e6ddb4ca48f7d7c9496c25661df3194060c4ccc2f8dea3f995f5436391bde",
+  "results/fidelity/ladder/os_50m_full/dev/os_50m_full_samples_001200000_dec-a.json": "9536f4bc0d3cb29faaf764e59c6911807b8792d80d2170ce0729f7101bd6601f",
+  "results/fidelity/ladder/os_50m_full/dev/os_50m_full_samples_002400000_dec-a.json": "b11a48d3d60c9a3a9fd57ac8cebeb36f31a19287d5236322ec6efeca5c9881c2",
+  "results/fidelity/ladder/os_50m_full/dev/os_50m_full_samples_003600000_dec-a.json": "f0328667737cf9359985eb10d66e5f290e03b827fb54f207a8424da22fb2a9da",
+  "results/fidelity/ladder/os_50m_full/dev/os_50m_full_samples_004800000_dec-a.json": "5405f3f86580e5ac2893470d7f62afc7f38069ca835a01f6ef761d55bcc37464",
+  "results/fidelity/ladder/sf_50m_full/dev/floor_rollouts_s1.json": "802c13fe38ab67c1831cf98de14042a750477bc5f00ef3ea1338db447ee3f2b3",
+  "results/fidelity/ladder/sf_50m_full/test/floor_rollouts_s1.json": "f60bca25a2bd0a438e170b2e4d783add53158232a13612b0f32fe2307b4dd048",
+  "results/fidelity/ladder/sf_50m_full/test/sf_50m_full_samples_001500032_dec-a.json": "868ec066e98a3b58a64f78b66348caf23d189042d931988387f9222b466d892d",
+  "results/fidelity/ladder/sf_50m_full/dev/sf_50m_full_samples_000750080_dec-a.json": "40c208b3e0137be826f9603281457f9b617e465ba1265f994e93699c22adaf07",
+  "results/fidelity/ladder/sf_50m_full/dev/sf_50m_full_samples_001500032_dec-a.json": "3a8353c5bed2435d36d5c4ebd8b9cda6ef93d356ad458772e3959a547e48d6cc",
+  "results/fidelity/ladder/os_100m_small/dev/floor_rollouts_s1.json": "802c13fe38ab67c1831cf98de14042a750477bc5f00ef3ea1338db447ee3f2b3",
+  "results/fidelity/ladder/os_100m_small/test/floor_rollouts_s1.json": "f60bca25a2bd0a438e170b2e4d783add53158232a13612b0f32fe2307b4dd048",
+  "results/fidelity/ladder/os_100m_small/test/os_100m_small_samples_006000000_dec-a.json": "4c4e2376d8994c194e8773f33721438e77dea14b574d0f45f6e1cadc006f7d3b",
+  "results/fidelity/ladder/os_100m_small/dev/os_100m_small_samples_003000064_dec-a.json": "5efb5075180d7ffe3aa42dbce2810a5f29ad2171e2bf468f0e38f0da1308c8d2",
+  "results/fidelity/ladder/os_100m_small/dev/os_100m_small_samples_006000000_dec-a.json": "d93f6c8820ead9d791925aea0941618f49a2ce44a5754f98296b3902f45935df",
+  "results/fidelity/ladder/sf_100m_small/dev/floor_rollouts_s1.json": "802c13fe38ab67c1831cf98de14042a750477bc5f00ef3ea1338db447ee3f2b3",
+  "results/fidelity/ladder/sf_100m_small/test/floor_rollouts_s1.json": "f60bca25a2bd0a438e170b2e4d783add53158232a13612b0f32fe2307b4dd048",
+  "results/fidelity/ladder/sf_100m_small/test/sf_100m_small_samples_001500032_dec-a.json": "8aabea79bdaa8327f25e4ef1792872811eed6aa0feb35988e71655ce6c77bba5",
+  "results/fidelity/ladder/sf_100m_small/dev/sf_100m_small_samples_000750080_dec-a.json": "9a9e2de3653ec5d42fdddcd6eb8e1bdce31e0f8921888c8bb5971dc6a39e1ed7",
+  "results/fidelity/ladder/sf_100m_small/dev/sf_100m_small_samples_001500032_dec-a.json": "8b21d3b9a79ca19891757b9ea96fa65d6251ab3a74bf12119d621195ea550c10",
+  "results/fidelity/ladder/os_100m_full/dev/floor_rollouts_s1.json": "802c13fe38ab67c1831cf98de14042a750477bc5f00ef3ea1338db447ee3f2b3",
+  "results/fidelity/ladder/os_100m_full/test/floor_rollouts_s1.json": "f60bca25a2bd0a438e170b2e4d783add53158232a13612b0f32fe2307b4dd048",
+  "results/fidelity/ladder/os_100m_full/test/os_100m_full_samples_006000000_dec-a.json": "62d435daf8516c0ea6850186a9fe7439eb5f880a98ecbe3957cb6322724e773b",
+  "results/fidelity/ladder/os_100m_full/dev/os_100m_full_samples_003000064_dec-a.json": "1186fdeddfc4e73adcf1bdab0c816904683bdc6cc9c3370fd6bb540bf27298ee",
+  "results/fidelity/ladder/os_100m_full/dev/os_100m_full_samples_006000000_dec-a.json": "10eec093169dcc2b3c19288c3663050f8e94d95f5927b13bf8c5c0747924a4a4",
+  "results/fidelity/ladder/sf_100m_full/dev/floor_rollouts_s1.json": "802c13fe38ab67c1831cf98de14042a750477bc5f00ef3ea1338db447ee3f2b3",
+  "results/fidelity/ladder/sf_100m_full/test/floor_rollouts_s1.json": "f60bca25a2bd0a438e170b2e4d783add53158232a13612b0f32fe2307b4dd048",
+  "results/fidelity/ladder/sf_100m_full/test/sf_100m_full_samples_001500032_dec-a.json": "3c02160813acb917b5cb3460491ebc082d94013643041925c983cc9a8f332ed1",
+  "results/fidelity/ladder/sf_100m_full/dev/sf_100m_full_samples_000750080_dec-a.json": "7ecd7262991c74eb9ee56ae3fe1a7074bcc0fa3779b17009aa2a09e4227ec963",
+  "results/fidelity/ladder/sf_100m_full/dev/sf_100m_full_samples_001500032_dec-a.json": "bfa98cd956ae126fd767062034447ff3458db2d7bf96ef33c7f0daa4f47048ce",
+  "results/fidelity/ladder/os_50m_full_s1/dev/floor_rollouts_s1.json": "802c13fe38ab67c1831cf98de14042a750477bc5f00ef3ea1338db447ee3f2b3",
+  "results/fidelity/ladder/os_50m_full_s1/test/floor_rollouts_s1.json": "f60bca25a2bd0a438e170b2e4d783add53158232a13612b0f32fe2307b4dd048",
+  "results/fidelity/ladder/os_50m_full_s1/test/os_50m_full_s1_samples_006000000_dec-a.json": "626641306fa278b59227f2490f51a107c0a402bf29c3b50f9839ec234834b984",
+  "results/fidelity/ladder/os_50m_full_s1/dev/os_50m_full_s1_samples_003000064_dec-a.json": "98d35628e579f0a81a455464ca11e7d68f31baedf7660d6c954fae4402ac5deb",
+  "results/fidelity/ladder/os_50m_full_s1/dev/os_50m_full_s1_samples_006000000_dec-a.json": "5954cc2049fd72b77c339c7980927d97ab83071d1ec4ba6488bed344cad7d0d6",
+  "results/fidelity/ladder/sf_50m_full_s1/dev/floor_rollouts_s1.json": "802c13fe38ab67c1831cf98de14042a750477bc5f00ef3ea1338db447ee3f2b3",
+  "results/fidelity/ladder/sf_50m_full_s1/test/floor_rollouts_s1.json": "f60bca25a2bd0a438e170b2e4d783add53158232a13612b0f32fe2307b4dd048",
+  "results/fidelity/ladder/sf_50m_full_s1/test/sf_50m_full_s1_samples_001500032_dec-a.json": "9a8d714679bf395266ad521e9d154face89ec04071f268600bc808f97cc84c36",
+  "results/fidelity/ladder/sf_50m_full_s1/dev/sf_50m_full_s1_samples_000750080_dec-a.json": "4ed6056de609ad0bc6dacc9e64a035c2cb74148e41de1c3b0c492a08bc4bb396",
+  "results/fidelity/ladder/sf_50m_full_s1/dev/sf_50m_full_s1_samples_001500032_dec-a.json": "560dfce9883b7f550df080de12133751489651a15b65c3e775da304620fffb2f",
+  "results/fidelity/ladder/os_50m_full_s2/dev/floor_rollouts_s1.json": "802c13fe38ab67c1831cf98de14042a750477bc5f00ef3ea1338db447ee3f2b3",
+  "results/fidelity/ladder/os_50m_full_s2/test/floor_rollouts_s1.json": "f60bca25a2bd0a438e170b2e4d783add53158232a13612b0f32fe2307b4dd048",
+  "results/fidelity/ladder/os_50m_full_s2/test/os_50m_full_s2_samples_006000000_dec-a.json": "fcf1d4fc64c1ca5dc3d3a08e23a0aee1f00d10374412804091afa8ac2648f118",
+  "results/fidelity/ladder/os_50m_full_s2/dev/os_50m_full_s2_samples_003000064_dec-a.json": "0be0762d83e623e995d6c9b0e907276a3b71655a17bbf54012aa9b16da2380b1",
+  "results/fidelity/ladder/os_50m_full_s2/dev/os_50m_full_s2_samples_006000000_dec-a.json": "264565784eb4c459428ab0d490318936cb01221fbac1fcf34f3df03a2143a7b1",
+  "results/fidelity/ladder/sf_50m_full_s2/dev/floor_rollouts_s1.json": "802c13fe38ab67c1831cf98de14042a750477bc5f00ef3ea1338db447ee3f2b3",
+  "results/fidelity/ladder/sf_50m_full_s2/test/floor_rollouts_s1.json": "f60bca25a2bd0a438e170b2e4d783add53158232a13612b0f32fe2307b4dd048",
+  "results/fidelity/ladder/sf_50m_full_s2/test/sf_50m_full_s2_samples_001500032_dec-a.json": "2bdcef0553532ad56bd3d6f070f38df899d7563796d795b37bf0ff7898e956cb",
+  "results/fidelity/ladder/sf_50m_full_s2/dev/sf_50m_full_s2_samples_000750080_dec-a.json": "258c0fc8e62deab439c2c420153bc895595363fd25680ed665d880bfc49821cc",
+  "results/fidelity/ladder/sf_50m_full_s2/dev/sf_50m_full_s2_samples_001500032_dec-a.json": "fbb5b05cb0d8003d95649af3047803cd988fbc6fa9bc8ed729a58e92862a3f78",
+  "results/fidelity/ladder/os_50m_cov/dev/floor_rollouts_s1.json": "21e9a01e53322f613a7a0da3bdb19500a2c3b7be573c9a7a8130f3a3c620a665",
+  "results/fidelity/ladder/os_50m_cov/test/floor_rollouts_s1.json": "f2ea16740766f71de60e1b3b2653f888aae147013c80c157d2f569908e6ab951",
+  "results/fidelity/ladder/os_50m_cov/test/os_50m_cov_samples_006000000_dec-a.json": "fbdea94cb94487e74fbd86fdcd885a071d9ecf5551b8e70019f91d2d89c0b365",
+  "results/fidelity/ladder/os_50m_cov/dev/os_50m_cov_samples_003000064_dec-a.json": "32b2b5bbe2071434bab8749193536d0d4921c8bde02233f6b7d15938ccf8804f",
+  "results/fidelity/ladder/os_50m_cov/dev/os_50m_cov_samples_006000000_dec-a.json": "cdf923ecd66faf1be649c11c6f239a12eb301bd6229c89c8be6a3d174a41d4af",
+  "results/fidelity/ladder/os_50m_cov/dev/os_50m_cov_samples_001200000_dec-a.json": "fef13cb508477921feba32c5f6f93bfb3140d45398662a4f17be4c2b5209603b",
+  "results/fidelity/ladder/os_50m_cov/dev/os_50m_cov_samples_002400000_dec-a.json": "63c6bc3657d9b5521831ac1997171154cc82b4f55de77a0effc6ef54844a3d07",
+  "results/fidelity/ladder/os_50m_cov/dev/os_50m_cov_samples_003600000_dec-a.json": "2f7d886dd25f3aa0441069e9d49c0da7a413aa94c311b8f848bc600cbe84880f",
+  "results/fidelity/ladder/os_50m_cov/dev/os_50m_cov_samples_004800000_dec-a.json": "90d90b34bc751828ba0390aff8598c45622e963e9d29b353b327f262d7ec2e14",
+  "results/fidelity/ladder/os_50m_cov/dev/selection.json": "054c3eecf402880769fea85450641e26a4da3bc3715f469d2b0154773cce9fdc",
+  "results/fidelity/ladder/os_50m_full/dev/selection.json": "b89c8b84fed8a9cee6d07edacd910366c36fc70a7a5bf4697f9c7b6b61c15b86",
+  "results/fidelity/ladder/os_50m_cov/test/selection.json": "63cdb67a7acc9e97b92f6777acadb3f19c153f819850bc1144f28798a81274b0",
+  "results/fidelity/ladder/os_50m_full/test/selection.json": "a4c6e6a1182ca3e6846539933061b5f8618ef257b55f432e6f88926088cd7d21"
+ },
+ "runs": {
+  "os_15m_small": {
+   "run": "os_15m_small",
+   "role": "ladder run",
+   "final_samples": 6000000,
+   "half_samples": 3000064,
+   "dev": {
+    "3000064": {
+     "elbo": -2947.7580397777556,
+     "selection_key": "f5d737081dd2e7ae",
+     "n_transitions": 2000
+    },
+    "6000000": {
+     "elbo": -3061.4360108094215,
+     "selection_key": "f5d737081dd2e7ae",
+     "n_transitions": 2000
+    }
+   },
+   "test": {
+    "6000000": {
+     "elbo": -3013.264494161129,
+     "selection_key": "a57bd947882a5d0e",
+     "n_transitions": 2000
+    }
+   },
+   "half_vs_final_dev": {
+    "half": -2947.7580397777556,
+    "final": -3061.4360108094215,
+    "final_minus_half": -113.67797103166595,
+    "per_cent_of_half": -3.8564213716888593,
+    "final_below_half": true,
+    "best_stored_checkpoint_samples": 3000064,
+    "n_stored_checkpoints": 2,
+    "n_transitions": 2000
+   }
+  },
+  "sf_15m_small": {
+   "run": "sf_15m_small",
+   "role": "ladder run",
+   "final_samples": 1500032,
+   "half_samples": 750080,
+   "dev": {
+    "750080": {
+     "elbo": -2999.604069622517,
+     "selection_key": "f5d737081dd2e7ae",
+     "n_transitions": 2000
+    },
+    "1500032": {
+     "elbo": -3063.160610182762,
+     "selection_key": "f5d737081dd2e7ae",
+     "n_transitions": 2000
+    }
+   },
+   "test": {
+    "1500032": {
+     "elbo": -3009.6486780338287,
+     "selection_key": "a57bd947882a5d0e",
+     "n_transitions": 2000
+    }
+   },
+   "half_vs_final_dev": {
+    "half": -2999.604069622517,
+    "final": -3063.160610182762,
+    "final_minus_half": -63.55654056024514,
+    "per_cent_of_half": -2.1188309885258745,
+    "final_below_half": true,
+    "best_stored_checkpoint_samples": 750080,
+    "n_stored_checkpoints": 2,
+    "n_transitions": 2000
+   }
+  },
+  "os_15m_full": {
+   "run": "os_15m_full",
+   "role": "ladder run",
+   "final_samples": 6000000,
+   "half_samples": 3000064,
+   "dev": {
+    "3000064": {
+     "elbo": -2927.9636095457076,
+     "selection_key": "f5d737081dd2e7ae",
+     "n_transitions": 2000
+    },
+    "6000000": {
+     "elbo": -2779.0776167969702,
+     "selection_key": "f5d737081dd2e7ae",
+     "n_transitions": 2000
+    }
+   },
+   "test": {
+    "6000000": {
+     "elbo": -2723.698791306734,
+     "selection_key": "a57bd947882a5d0e",
+     "n_transitions": 2000
+    }
+   },
+   "half_vs_final_dev": {
+    "half": -2927.9636095457076,
+    "final": -2779.0776167969702,
+    "final_minus_half": 148.8859927487374,
+    "per_cent_of_half": 5.084967322112245,
+    "final_below_half": false,
+    "best_stored_checkpoint_samples": 6000000,
+    "n_stored_checkpoints": 2,
+    "n_transitions": 2000
+   }
+  },
+  "sf_15m_full": {
+   "run": "sf_15m_full",
+   "role": "ladder run",
+   "final_samples": 1500032,
+   "half_samples": 750080,
+   "dev": {
+    "750080": {
+     "elbo": -2842.988428039551,
+     "selection_key": "f5d737081dd2e7ae",
+     "n_transitions": 2000
+    },
+    "1500032": {
+     "elbo": -2821.680827450752,
+     "selection_key": "f5d737081dd2e7ae",
+     "n_transitions": 2000
+    }
+   },
+   "test": {
+    "1500032": {
+     "elbo": -2762.378203578949,
+     "selection_key": "a57bd947882a5d0e",
+     "n_transitions": 2000
+    }
+   },
+   "half_vs_final_dev": {
+    "half": -2842.988428039551,
+    "final": -2821.680827450752,
+    "final_minus_half": 21.307600588798778,
+    "per_cent_of_half": 0.7494789770738508,
+    "final_below_half": false,
+    "best_stored_checkpoint_samples": 1500032,
+    "n_stored_checkpoints": 2,
+    "n_transitions": 2000
+   }
+  },
+  "os_50m_small": {
+   "run": "os_50m_small",
+   "role": "ladder run",
+   "final_samples": 6000000,
+   "half_samples": 3000064,
+   "dev": {
+    "3000064": {
+     "elbo": -2951.768848807335,
+     "selection_key": "f5d737081dd2e7ae",
+     "n_transitions": 2000
+    },
+    "6000000": {
+     "elbo": -3414.193673608303,
+     "selection_key": "f5d737081dd2e7ae",
+     "n_transitions": 2000
+    }
+   },
+   "test": {
+    "6000000": {
+     "elbo": -3376.8810210831166,
+     "selection_key": "a57bd947882a5d0e",
+     "n_transitions": 2000
+    }
+   },
+   "half_vs_final_dev": {
+    "half": -2951.768848807335,
+    "final": -3414.193673608303,
+    "final_minus_half": -462.42482480096805,
+    "per_cent_of_half": -15.666024288717974,
+    "final_below_half": true,
+    "best_stored_checkpoint_samples": 3000064,
+    "n_stored_checkpoints": 2,
+    "n_transitions": 2000
+   }
+  },
+  "sf_50m_small": {
+   "run": "sf_50m_small",
+   "role": "ladder run",
+   "final_samples": 1500032,
+   "half_samples": 750080,
+   "dev": {
+    "750080": {
+     "elbo": -3159.416739129543,
+     "selection_key": "f5d737081dd2e7ae",
+     "n_transitions": 2000
+    },
+    "1500032": {
+     "elbo": -3316.4305774822237,
+     "selection_key": "f5d737081dd2e7ae",
+     "n_transitions": 2000
+    }
+   },
+   "test": {
+    "1500032": {
+     "elbo": -3272.120678203821,
+     "selection_key": "a57bd947882a5d0e",
+     "n_transitions": 2000
+    }
+   },
+   "half_vs_final_dev": {
+    "half": -3159.416739129543,
+    "final": -3316.4305774822237,
+    "final_minus_half": -157.01383835268052,
+    "per_cent_of_half": -4.9697096431773575,
+    "final_below_half": true,
+    "best_stored_checkpoint_samples": 750080,
+    "n_stored_checkpoints": 2,
+    "n_transitions": 2000
+   }
+  },
+  "os_50m_full": {
+   "run": "os_50m_full",
+   "role": "ladder run",
+   "final_samples": 6000000,
+   "half_samples": 3000064,
+   "dev": {
+    "1200000": {
+     "elbo": -3032.5189406528475,
+     "selection_key": "f5d737081dd2e7ae",
+     "n_transitions": 2000
+    },
+    "2400000": {
+     "elbo": -2825.629256587982,
+     "selection_key": "f5d737081dd2e7ae",
+     "n_transitions": 2000
+    },
+    "3000064": {
+     "elbo": -2771.2333528194426,
+     "selection_key": "f5d737081dd2e7ae",
+     "n_transitions": 2000
+    },
+    "3600000": {
+     "elbo": -2737.056703361511,
+     "selection_key": "f5d737081dd2e7ae",
+     "n_transitions": 2000
+    },
+    "4800000": {
+     "elbo": -2688.4152071862222,
+     "selection_key": "f5d737081dd2e7ae",
+     "n_transitions": 2000
+    },
+    "6000000": {
+     "elbo": -2664.226177784443,
+     "selection_key": "f5d737081dd2e7ae",
+     "n_transitions": 2000
+    }
+   },
+   "test": {
+    "6000000": {
+     "elbo": -2610.379136974573,
+     "selection_key": "a57bd947882a5d0e",
+     "n_transitions": 2000
+    }
+   },
+   "half_vs_final_dev": {
+    "half": -2771.2333528194426,
+    "final": -2664.226177784443,
+    "final_minus_half": 107.00717503499982,
+    "per_cent_of_half": 3.8613556280322303,
+    "final_below_half": false,
+    "best_stored_checkpoint_samples": 6000000,
+    "n_stored_checkpoints": 6,
+    "n_transitions": 2000
+   }
+  },
+  "sf_50m_full": {
+   "run": "sf_50m_full",
+   "role": "ladder run",
+   "final_samples": 1500032,
+   "half_samples": 750080,
+   "dev": {
+    "750080": {
+     "elbo": -2719.2893958158493,
+     "selection_key": "f5d737081dd2e7ae",
+     "n_transitions": 2000
+    },
+    "1500032": {
+     "elbo": -2700.986819595337,
+     "selection_key": "f5d737081dd2e7ae",
+     "n_transitions": 2000
+    }
+   },
+   "test": {
+    "1500032": {
+     "elbo": -2648.4701132559776,
+     "selection_key": "a57bd947882a5d0e",
+     "n_transitions": 2000
+    }
+   },
+   "half_vs_final_dev": {
+    "half": -2719.2893958158493,
+    "final": -2700.986819595337,
+    "final_minus_half": 18.302576220512492,
+    "per_cent_of_half": 0.6730646708171087,
+    "final_below_half": false,
+    "best_stored_checkpoint_samples": 1500032,
+    "n_stored_checkpoints": 2,
+    "n_transitions": 2000
+   }
+  },
+  "os_100m_small": {
+   "run": "os_100m_small",
+   "role": "ladder run",
+   "final_samples": 6000000,
+   "half_samples": 3000064,
+   "dev": {
+    "3000064": {
+     "elbo": -2905.255463058472,
+     "selection_key": "f5d737081dd2e7ae",
+     "n_transitions": 2000
+    },
+    "6000000": {
+     "elbo": -3664.8284014339447,
+     "selection_key": "f5d737081dd2e7ae",
+     "n_transitions": 2000
+    }
+   },
+   "test": {
+    "6000000": {
+     "elbo": -3613.736739247322,
+     "selection_key": "a57bd947882a5d0e",
+     "n_transitions": 2000
+    }
+   },
+   "half_vs_final_dev": {
+    "half": -2905.255463058472,
+    "final": -3664.8284014339447,
+    "final_minus_half": -759.5729383754729,
+    "per_cent_of_half": -26.144789951649962,
+    "final_below_half": true,
+    "best_stored_checkpoint_samples": 3000064,
+    "n_stored_checkpoints": 2,
+    "n_transitions": 2000
+   }
+  },
+  "sf_100m_small": {
+   "run": "sf_100m_small",
+   "role": "ladder run",
+   "final_samples": 1500032,
+   "half_samples": 750080,
+   "dev": {
+    "750080": {
+     "elbo": -3280.1912315473555,
+     "selection_key": "f5d737081dd2e7ae",
+     "n_transitions": 2000
+    },
+    "1500032": {
+     "elbo": -3513.6379178142547,
+     "selection_key": "f5d737081dd2e7ae",
+     "n_transitions": 2000
+    }
+   },
+   "test": {
+    "1500032": {
+     "elbo": -3457.9279888677597,
+     "selection_key": "a57bd947882a5d0e",
+     "n_transitions": 2000
+    }
+   },
+   "half_vs_final_dev": {
+    "half": -3280.1912315473555,
+    "final": -3513.6379178142547,
+    "final_minus_half": -233.44668626689918,
+    "per_cent_of_half": -7.11686209089633,
+    "final_below_half": true,
+    "best_stored_checkpoint_samples": 750080,
+    "n_stored_checkpoints": 2,
+    "n_transitions": 2000
+   }
+  },
+  "os_100m_full": {
+   "run": "os_100m_full",
+   "role": "ladder run",
+   "final_samples": 6000000,
+   "half_samples": 3000064,
+   "dev": {
+    "3000064": {
+     "elbo": -2704.962824781418,
+     "selection_key": "f5d737081dd2e7ae",
+     "n_transitions": 2000
+    },
+    "6000000": {
+     "elbo": -2574.3760022826195,
+     "selection_key": "f5d737081dd2e7ae",
+     "n_transitions": 2000
+    }
+   },
+   "test": {
+    "6000000": {
+     "elbo": -2525.3537902851103,
+     "selection_key": "a57bd947882a5d0e",
+     "n_transitions": 2000
+    }
+   },
+   "half_vs_final_dev": {
+    "half": -2704.962824781418,
+    "final": -2574.3760022826195,
+    "final_minus_half": 130.58682249879848,
+    "per_cent_of_half": 4.827675312297533,
+    "final_below_half": false,
+    "best_stored_checkpoint_samples": 6000000,
+    "n_stored_checkpoints": 2,
+    "n_transitions": 2000
+   }
+  },
+  "sf_100m_full": {
+   "run": "sf_100m_full",
+   "role": "ladder run",
+   "final_samples": 1500032,
+   "half_samples": 750080,
+   "dev": {
+    "750080": {
+     "elbo": -2626.491126824379,
+     "selection_key": "f5d737081dd2e7ae",
+     "n_transitions": 2000
+    },
+    "1500032": {
+     "elbo": -2604.226399564743,
+     "selection_key": "f5d737081dd2e7ae",
+     "n_transitions": 2000
+    }
+   },
+   "test": {
+    "1500032": {
+     "elbo": -2551.9603847341536,
+     "selection_key": "a57bd947882a5d0e",
+     "n_transitions": 2000
+    }
+   },
+   "half_vs_final_dev": {
+    "half": -2626.491126824379,
+    "final": -2604.226399564743,
+    "final_minus_half": 22.264727259635947,
+    "per_cent_of_half": 0.8476985523478863,
+    "final_below_half": false,
+    "best_stored_checkpoint_samples": 1500032,
+    "n_stored_checkpoints": 2,
+    "n_transitions": 2000
+   }
+  },
+  "os_50m_full_s1": {
+   "run": "os_50m_full_s1",
+   "role": "ladder run",
+   "final_samples": 6000000,
+   "half_samples": 3000064,
+   "dev": {
+    "3000064": {
+     "elbo": -2780.04596566391,
+     "selection_key": "f5d737081dd2e7ae",
+     "n_transitions": 2000
+    },
+    "6000000": {
+     "elbo": -2661.9128381862643,
+     "selection_key": "f5d737081dd2e7ae",
+     "n_transitions": 2000
+    }
+   },
+   "test": {
+    "6000000": {
+     "elbo": -2607.1692246072294,
+     "selection_key": "a57bd947882a5d0e",
+     "n_transitions": 2000
+    }
+   },
+   "half_vs_final_dev": {
+    "half": -2780.04596566391,
+    "final": -2661.9128381862643,
+    "final_minus_half": 118.13312747764576,
+    "per_cent_of_half": 4.249322814683536,
+    "final_below_half": false,
+    "best_stored_checkpoint_samples": 6000000,
+    "n_stored_checkpoints": 2,
+    "n_transitions": 2000
+   }
+  },
+  "sf_50m_full_s1": {
+   "run": "sf_50m_full_s1",
+   "role": "ladder run",
+   "final_samples": 1500032,
+   "half_samples": 750080,
+   "dev": {
+    "750080": {
+     "elbo": -2717.9105919456483,
+     "selection_key": "f5d737081dd2e7ae",
+     "n_transitions": 2000
+    },
+    "1500032": {
+     "elbo": -2700.143484835625,
+     "selection_key": "f5d737081dd2e7ae",
+     "n_transitions": 2000
+    }
+   },
+   "test": {
+    "1500032": {
+     "elbo": -2643.80392603302,
+     "selection_key": "a57bd947882a5d0e",
+     "n_transitions": 2000
+    }
+   },
+   "half_vs_final_dev": {
+    "half": -2717.9105919456483,
+    "final": -2700.143484835625,
+    "final_minus_half": 17.767107110023517,
+    "per_cent_of_half": 0.6537046201105801,
+    "final_below_half": false,
+    "best_stored_checkpoint_samples": 1500032,
+    "n_stored_checkpoints": 2,
+    "n_transitions": 2000
+   }
+  },
+  "os_50m_full_s2": {
+   "run": "os_50m_full_s2",
+   "role": "ladder run",
+   "final_samples": 6000000,
+   "half_samples": 3000064,
+   "dev": {
+    "3000064": {
+     "elbo": -2771.822768233776,
+     "selection_key": "f5d737081dd2e7ae",
+     "n_transitions": 2000
+    },
+    "6000000": {
+     "elbo": -2665.9433293662073,
+     "selection_key": "f5d737081dd2e7ae",
+     "n_transitions": 2000
+    }
+   },
+   "test": {
+    "6000000": {
+     "elbo": -2619.300066447973,
+     "selection_key": "a57bd947882a5d0e",
+     "n_transitions": 2000
+    }
+   },
+   "half_vs_final_dev": {
+    "half": -2771.822768233776,
+    "final": -2665.9433293662073,
+    "final_minus_half": 105.87943886756875,
+    "per_cent_of_half": 3.8198488042233607,
+    "final_below_half": false,
+    "best_stored_checkpoint_samples": 6000000,
+    "n_stored_checkpoints": 2,
+    "n_transitions": 2000
+   }
+  },
+  "sf_50m_full_s2": {
+   "run": "sf_50m_full_s2",
+   "role": "ladder run",
+   "final_samples": 1500032,
+   "half_samples": 750080,
+   "dev": {
+    "750080": {
+     "elbo": -2725.4183253021242,
+     "selection_key": "f5d737081dd2e7ae",
+     "n_transitions": 2000
+    },
+    "1500032": {
+     "elbo": -2704.380730143547,
+     "selection_key": "f5d737081dd2e7ae",
+     "n_transitions": 2000
+    }
+   },
+   "test": {
+    "1500032": {
+     "elbo": -2657.369504491091,
+     "selection_key": "a57bd947882a5d0e",
+     "n_transitions": 2000
+    }
+   },
+   "half_vs_final_dev": {
+    "half": -2725.4183253021242,
+    "final": -2704.380730143547,
+    "final_minus_half": 21.037595158577005,
+    "per_cent_of_half": 0.7719033428104985,
+    "final_below_half": false,
+    "best_stored_checkpoint_samples": 1500032,
+    "n_stored_checkpoints": 2,
+    "n_transitions": 2000
+   }
+  },
+  "os_50m_cov": {
+   "run": "os_50m_cov",
+   "role": "beside: the coverage model (its own selections)",
+   "final_samples": 6000000,
+   "half_samples": 3000064,
+   "dev": {
+    "1200000": {
+     "elbo": -3075.519010573864,
+     "selection_key": "8477bf32c75b0a4a",
+     "n_transitions": 2000
+    },
+    "2400000": {
+     "elbo": -2853.88442357254,
+     "selection_key": "8477bf32c75b0a4a",
+     "n_transitions": 2000
+    },
+    "3000064": {
+     "elbo": -2786.3677266907694,
+     "selection_key": "8477bf32c75b0a4a",
+     "n_transitions": 2000
+    },
+    "3600000": {
+     "elbo": -2738.1682972221374,
+     "selection_key": "8477bf32c75b0a4a",
+     "n_transitions": 2000
+    },
+    "4800000": {
+     "elbo": -2685.9151916007995,
+     "selection_key": "8477bf32c75b0a4a",
+     "n_transitions": 2000
+    },
+    "6000000": {
+     "elbo": -2663.9367236385347,
+     "selection_key": "8477bf32c75b0a4a",
+     "n_transitions": 2000
+    }
+   },
+   "test": {
+    "6000000": {
+     "elbo": -2617.019681171179,
+     "selection_key": "41fa87fa081a5666",
+     "n_transitions": 2000
+    }
+   },
+   "half_vs_final_dev": {
+    "half": -2786.3677266907694,
+    "final": -2663.9367236385347,
+    "final_minus_half": 122.4310030522347,
+    "per_cent_of_half": 4.3939284064863875,
+    "final_below_half": false,
+    "best_stored_checkpoint_samples": 6000000,
+    "n_stored_checkpoints": 6,
+    "n_transitions": 2000
+   }
+  }
+ }
+}

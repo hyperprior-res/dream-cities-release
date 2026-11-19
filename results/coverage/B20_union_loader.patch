@@ -1,0 +1,180 @@
+--- a/code/dc/data.py	2026-11-11 14:44:37.314750622 +0000
++++ b/code/dc/data.py	2026-11-11 14:47:03.831288168 +0000
+@@ -759,11 +759,141 @@
+     if name == "train_small":
+         idx, meta = load_index(root / "train_small.npz")
+         return TrajStore(root / meta.get("store", "train_full")), idx
+-    st = TrajStore(root / name)
++    st = open_store(root / name)
+     return st, np.arange(st.n_trans, dtype=np.int64)
+ 
+ 
+ # --------------------------------------------------------------------------------------------
++# unions of stores (read-only)
++# --------------------------------------------------------------------------------------------
++UNION_FILE = "union.json"
++
++
++def open_store(path) -> "TrajStore":
++    """A store directory, or a union of stores (a directory holding ``union.json``)."""
++    return UnionStore(path) if (Path(path) / UNION_FILE).exists() else TrajStore(path)
++
++
++class _Concat:
++    """Row-wise concatenation of arrays, read by an integer, a slice or an integer array."""
++
++    def __init__(self, parts):
++        self.parts = list(parts)
++        self.off = np.concatenate([[0], np.cumsum([len(a) for a in self.parts])]).astype(np.int64)
++        self.shape = (int(self.off[-1]),) + tuple(self.parts[0].shape[1:])
++        self.dtype = self.parts[0].dtype
++
++    def __len__(self) -> int:
++        return self.shape[0]
++
++    def __getitem__(self, key):
++        if isinstance(key, slice):
++            key = np.arange(*key.indices(len(self)), dtype=np.int64)
++        k = np.asarray(key, dtype=np.int64)
++        flat = k.reshape(-1)
++        if flat.size and (flat.min() < 0 or flat.max() >= len(self)):
++            raise IndexError("row outside the union")
++        part = np.searchsorted(self.off, flat, side="right") - 1
++        out = np.empty((flat.size,) + self.shape[1:], dtype=self.dtype)
++        for i in np.unique(part):
++            m = part == i
++            out[m] = self.parts[int(i)][flat[m] - self.off[int(i)]]
++        return out.reshape(k.shape + self.shape[1:])
++
++    def __array__(self, dtype=None, copy=None):
++        a = self[:]
++        return a if dtype is None else a.astype(dtype)
++
++
++class UnionStore(TrajStore):
++    """Complete stores read as one (``make_union``): the trajectories, observation rows and transitions of part p
++    follow those of parts 0..p-1; starts, families and labels are the parts' tables merged (indices remapped).
++    Each part's manifest must still have the sha256 recorded when the union was made."""
++
++    def __init__(self, path):
++        self.path = Path(path)
++        u = _read_json(self.path / UNION_FILE)
++        self.manifest = _read_json(self.path / "manifest.json")
++        self.config = {"union": u}
++        self.parts = [TrajStore(resolve_path(q)) for q in u["parts"]]
++        for st, want in zip(self.parts, u["manifest_sha256"]):
++            if not st.complete or sha256_file(st.path / "manifest.json") != want:
++                raise RuntimeError(f"{st.path} is not complete or changed since the union was made")
++        starts, families, labels, recs = [], [], [], []
++        key = {}
++        n_obs = n_trans = n_traj = 0
++        for st in self.parts:
++            fmap = []
++            for f in st.families:
++                if f not in families:
++                    families.append(f)
++                fmap.append(families.index(f))
++            smap = []
++            for s in st.starts:
++                k = (s["start_id"], s["sha256"], s["path"], s["split"])
++                if k not in key:
++                    key[k] = len(starts)
++                    starts.append(dict(s, family_idx=families.index(s["family_id"])))
++                smap.append(key[k])
++            lmap = []
++            for l in st.labels:
++                if l not in labels:
++                    labels.append(l)
++                lmap.append(labels.index(l))
++            r = st.traj.copy()
++            if len(r):
++                r["start_idx"] = np.asarray(smap, np.int64)[r["start_idx"]]
++                r["family_idx"] = np.asarray(fmap, np.int64)[r["family_idx"]]
++                r["label_idx"] = np.asarray(lmap, np.int64)[r["label_idx"]]
++                r["traj_id"] += n_traj
++                r["first_obs"] += n_obs
++                r["first_trans"] += n_trans
++            recs.append(r)
++            n_traj, n_obs, n_trans = n_traj + st.n_traj, n_obs + st.n_obs, n_trans + st.n_trans
++        rec = np.concatenate(recs)
++        check_records(rec)
++        self.traj, self.starts, self.families, self.labels = rec, starts, families, labels
++        self.n_traj, self.n_obs, self.n_trans = n_traj, n_obs, n_trans
++        self.complete = self.manifest is not None and self.manifest.get("status") == "complete"
++        self._first_trans = rec["first_trans"].astype(np.int64)
++        self._first_obs = rec["first_obs"].astype(np.int64)
++        self._H = rec["H"].astype(np.int64)
++        self._mm = None
++
++    @property
++    def has_ledger(self) -> bool:
++        return all(st.has_ledger for st in self.parts)
++
++    def _maps(self) -> Dict[str, Any]:
++        if self._mm is None:
++            maps = [st._maps() for st in self.parts]
++            self._mm = {k: _Concat([m[k] for m in maps]) for k in maps[0] if all(k in m for m in maps)}
++        return self._mm
++
++
++def make_union(path, parts: Sequence, name: Optional[str] = None) -> UnionStore:
++    """Write a union directory over complete stores ``parts`` (in that order) and open it."""
++    path = Path(path)
++    if (path / UNION_FILE).exists():
++        raise FileExistsError(f"{path} already holds a union")
++    sts = [TrajStore(resolve_path(_rel_or_abs(q))) for q in parts]
++    if not all(st.complete for st in sts):
++        raise RuntimeError("every part of a union must be a complete store")
++    path.mkdir(parents=True, exist_ok=True)
++    shas = [sha256_file(st.path / "manifest.json") for st in sts]
++    u = {"name": name or path.name, "parts": [_rel_or_abs(st.path) for st in sts], "manifest_sha256": shas}
++    _atomic_write_json(path / UNION_FILE, u)
++    man = {"store_format": "dc-union-1", "status": "complete", "name": u["name"],
++           "counts": {"trajectories": int(sum(st.n_traj for st in sts)), "observations": int(sum(st.n_obs for st in sts)),
++                      "transitions": int(sum(st.n_trans for st in sts)), "city_months": int(sum(st.n_trans for st in sts))},
++           "parts": [{"path": p, "manifest_sha256": h, "counts": st.manifest["counts"]} for p, h, st in zip(u["parts"], shas, sts)],
++           "union_sha256": sha256_file(path / UNION_FILE),
++           "finalised_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())}
++    _atomic_write_json(path / "manifest.json", man)
++    return UnionStore(path)
++
++
++# --------------------------------------------------------------------------------------------
+ # parallel generation driver
+ # --------------------------------------------------------------------------------------------
+ class _GenCtx:
+@@ -1573,7 +1703,7 @@
+ 
+     def __getitem__(self, ids):
+         if self._st is None:
+-            self._st = TrajStore(self.path)
++            self._st = open_store(self.path)
+         if self.raster_fn is None or self.scalars_fn is None:
+             rf, sf, sbf = _default_grammar()
+             if self.scalars_fn is None:
+--- a/code/dc/train.py	2026-11-11 14:44:37.315750646 +0000
++++ b/code/dc/train.py	2026-11-11 14:47:03.832288193 +0000
+@@ -681,7 +681,13 @@
+     def from_cache(store, index: np.ndarray, device, seed: int = 0, cache: Path = BOOK_CACHE) -> "BookData":
+         from .engine import SC_TIME
+         from .model import BK_CENSUS, LEARNED_LEDGER, STAGE3_SCALARS, spend_cost_per_tile
+-        z = np.load(cache / "train_full.npz")
++        if hasattr(store, "parts"):     # a union of stores: the parts' caches, concatenated in part order
++            src = [str(cache / f"{p.path.name}.npz") for p in store.parts]
++            zs = [np.load(f) for f in src]
++            z = {k: np.concatenate([q[k] for q in zs]) for k in ("sc0", "sc1", "lg0", "lg1", "nxt", "cost", "act")}
++        else:
++            src = str(cache / "train_full.npz")
++            z = np.load(src)
+         idx = np.asarray(index, dtype=np.int64)
+         if len(z["cost"]) != store.n_trans:
+             raise ValueError("bookkeeping cache does not match the store")
+@@ -692,7 +698,7 @@
+         d = np.concatenate([sc1[:, list(STAGE3_SCALARS)] - sc0[:, list(STAGE3_SCALARS)],
+                             lg1[:, list(LEARNED_LEDGER)] - lg0[:, list(LEARNED_LEDGER)]], axis=1)
+         t = lambda a, dt: torch.tensor(np.ascontiguousarray(a), dtype=dt, device=device)
+-        info = {"source": str(cache / "train_full.npz"), "rows": int(len(idx)),
++        info = {"source": src, "rows": int(len(idx)),
+                 "index_sha256": hashlib.sha256(idx.tobytes()).hexdigest()}
+         return BookData(t(raw, torch.float32), t(z["act"][idx], torch.float32), t(sc0[:, SC_TIME], torch.float64),
+                         t(d, torch.float32), info, seed)

@@ -1,0 +1,163 @@
+{
+ "comment": "The brief's 16 runs. Model: SIZES (two-stage scalars, level histograms 32, ledger). Saved at half and at the end (TrainConfig.save_fracs). One-step: AdamW 8e-4, warm-up 3%, cosine to 5%, batch 128. Self-forcing: 4-month windows, half teacher-forced, peak lr 2e-4, from the base run's final checkpoint.",
+ "defaults": {
+  "batch_size": 128,
+  "budget_weight": 6.0,
+  "table_lr_mult": 10.0,
+  "workers": 6
+ },
+ "runs": [
+  {
+   "name": "os_15m_small",
+   "size": "15m",
+   "index": "train_small",
+   "mode": "onestep",
+   "samples": 6000000,
+   "seed": 0,
+   "lr": 0.0008
+  },
+  {
+   "name": "os_15m_full",
+   "size": "15m",
+   "index": "train_full",
+   "mode": "onestep",
+   "samples": 6000000,
+   "seed": 0,
+   "lr": 0.0008
+  },
+  {
+   "name": "os_50m_small",
+   "size": "50m",
+   "index": "train_small",
+   "mode": "onestep",
+   "samples": 6000000,
+   "seed": 0,
+   "lr": 0.0008
+  },
+  {
+   "name": "os_50m_full",
+   "size": "50m",
+   "index": "train_full",
+   "mode": "onestep",
+   "samples": 6000000,
+   "seed": 0,
+   "lr": 0.0008
+  },
+  {
+   "name": "os_100m_small",
+   "size": "100m",
+   "index": "train_small",
+   "mode": "onestep",
+   "samples": 6000000,
+   "seed": 0,
+   "lr": 0.0008
+  },
+  {
+   "name": "os_100m_full",
+   "size": "100m",
+   "index": "train_full",
+   "mode": "onestep",
+   "samples": 6000000,
+   "seed": 0,
+   "lr": 0.0008
+  },
+  {
+   "name": "sf_15m_small",
+   "size": "15m",
+   "index": "train_small",
+   "mode": "selfforce",
+   "samples": 1500000,
+   "seed": 0,
+   "lr": 0.0002,
+   "init_from": "os_15m_small"
+  },
+  {
+   "name": "sf_15m_full",
+   "size": "15m",
+   "index": "train_full",
+   "mode": "selfforce",
+   "samples": 1500000,
+   "seed": 0,
+   "lr": 0.0002,
+   "init_from": "os_15m_full"
+  },
+  {
+   "name": "sf_50m_small",
+   "size": "50m",
+   "index": "train_small",
+   "mode": "selfforce",
+   "samples": 1500000,
+   "seed": 0,
+   "lr": 0.0002,
+   "init_from": "os_50m_small"
+  },
+  {
+   "name": "sf_50m_full",
+   "size": "50m",
+   "index": "train_full",
+   "mode": "selfforce",
+   "samples": 1500000,
+   "seed": 0,
+   "lr": 0.0002,
+   "init_from": "os_50m_full"
+  },
+  {
+   "name": "sf_100m_small",
+   "size": "100m",
+   "index": "train_small",
+   "mode": "selfforce",
+   "samples": 1500000,
+   "seed": 0,
+   "lr": 0.0002,
+   "init_from": "os_100m_small"
+  },
+  {
+   "name": "sf_100m_full",
+   "size": "100m",
+   "index": "train_full",
+   "mode": "selfforce",
+   "samples": 1500000,
+   "seed": 0,
+   "lr": 0.0002,
+   "init_from": "os_100m_full"
+  },
+  {
+   "name": "os_50m_full_s1",
+   "size": "50m",
+   "index": "train_full",
+   "mode": "onestep",
+   "samples": 6000000,
+   "seed": 1,
+   "lr": 0.0008
+  },
+  {
+   "name": "os_50m_full_s2",
+   "size": "50m",
+   "index": "train_full",
+   "mode": "onestep",
+   "samples": 6000000,
+   "seed": 2,
+   "lr": 0.0008
+  },
+  {
+   "name": "sf_50m_full_s1",
+   "size": "50m",
+   "index": "train_full",
+   "mode": "selfforce",
+   "samples": 1500000,
+   "seed": 1,
+   "lr": 0.0002,
+   "init_from": "os_50m_full_s1"
+  },
+  {
+   "name": "sf_50m_full_s2",
+   "size": "50m",
+   "index": "train_full",
+   "mode": "selfforce",
+   "samples": 1500000,
+   "seed": 2,
+   "lr": 0.0002,
+   "init_from": "os_50m_full_s2"
+  }
+ ]
+}

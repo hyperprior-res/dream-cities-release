@@ -1,0 +1,2589 @@
+{
+ "summary": {
+  "instances_in_this_invocation_phase_files": 40,
+  "judge": {
+   "judge": "engine-identity",
+   "seeds": "oracle seeds seed_for('task-oracle', start, task, H, k), k < 32: per plan the seed whose task margin is the ceil(n/2)-th largest (lower index on ties)",
+   "oracle": {
+    "rule": "majority",
+    "n_seeds": 32
+   },
+   "tasks_sha256": "2c35286cf5fa61858c94d83716884f092b7afff228828bc4f2d7b05b9e2c76e5"
+  },
+  "judge_month_steps_computed": 21429888,
+  "judge_padded_month_steps": 0,
+  "judge_seconds": 1961.804067850113,
+  "judge_month_steps_per_s": 10923.561812920709,
+  "engine_replays": 2779510,
+  "engine_replays_remote": 1902667,
+  "engine_city_months_replayed": 66708240,
+  "engine_seconds": 2099.608423233032,
+  "engine_city_months_per_s": 31771.75289537127,
+  "engine_workers": [
+   12
+  ],
+  "seconds_phase1_per_instance_mean": 49.573078685998915,
+  "seconds_phase2_per_instance_mean": 6.877973091602326,
+  "seconds_per_instance_by_step_mean": {
+   "attack_best_of_n_s0": 0.0005256056785583497,
+   "attack_cem_s0": 24.496730571985246,
+   "attack_random_s0": 0.0005890190601348877,
+   "attack_random_verdict_s0": 0.0005103468894958497,
+   "builder_scores": 10.168699860572815,
+   "engine_selected": 0.06299567818641663,
+   "floors_best_of_n_s0": 0.2668038964271545,
+   "floors_cem_s0": 5.740861415863037,
+   "floors_random_s0": 0.8643923461437225,
+   "pool_engine": 0.24475756287574768,
+   "pool_verdicts": 0.4564058005809784,
+   "proposals": 14.121271669864655,
+   "verdict_selected": 0.007718682289123535
+  },
+  "note": "computed from the per-instance phase files: counts and seconds of the invocation that computed each instance (a resumed run keeps the original instances' costs; shared per-start samples computed by a killed invocation and reused are in no phase file); engine replays are disk-cache misses",
+  "wall_seconds_per_instance_by_method": {
+   "cem": 30.255270577967167,
+   "random": 15.004441972076894,
+   "best_of_n": 10.453707952797412,
+   "random_verdict": 0.4745947375893593
+  },
+  "wall_seconds_per_instance_pool_statistics": 0.24475756287574768,
+  "oracle_distinct_replays_per_instance_mean": 65094.6,
+  "judge_month_steps_design_this_run": 21429888,
+  "judge_month_steps_design_matches_counter": true,
+  "projection_full": {
+   "this_run_methods": {
+    "methods": [
+     "cem",
+     "random",
+     "best_of_n",
+     "random_verdict"
+    ],
+    "budgets": [
+     1,
+     10,
+     100,
+     1000
+    ],
+    "pool_verdict_plans": 1000,
+    "judge_month_steps": 46885200,
+    "instances": 193,
+    "judge_formula": "per (start, forced events) 480,000 x 75 + per instance 56,400 x 193",
+    "engine_city_months_oracle_side_no_cache": 301518187,
+    "engine_formula": "this run's mean distinct oracle-side replays per instance x 24 x 193",
+    "engine_hours_at_measured_rate": 2.636148287940449
+   }
+  },
+  "engine_majority": {
+   "this_run_by_purpose": {
+    "behaviour table, oracle seeds": 144256,
+    "floors best_of_n: nine seeds": 227448,
+    "floors best_of_n: oracle seeds": 4448,
+    "floors cem: nine seeds": 399960,
+    "floors cem: oracle seeds": 5120,
+    "floors random: nine seeds": 268992,
+    "floors random: oracle seeds": 1045120,
+    "pool rows, nine seeds": 496440,
+    "selected plans, nine seeds": 1440,
+    "selected plans, oracle seeds": 10560
+   },
+   "this_run_total": 2603784,
+   "full_checkpoint": {
+    "by_flip_scope": {
+     "verdict": {
+      "per_checkpoint": {
+       "real selected plans, oracle + nine seeds (upper bound)": 2518056,
+       "residual floors' CEM candidates, nine seeds": 55914408,
+       "residual floors' selected plans, oracle seeds (upper bound)": 2147328
+      },
+      "shared": {
+       "pool rows, nine seeds (behaviour 1,000 per instance; builders 1,000 on best-of-n instances; upper bound)": 63072000,
+       "behaviour plans up to the largest verdict-scored budget, oracle seeds (upper bound)": 42470400
+      },
+      "per_checkpoint_city_months": 60579792,
+      "shared_city_months": 105542400,
+      "hours_per_checkpoint_at_reference_rate": 0.48879872116287515,
+      "hours_shared_once_at_reference_rate": 0.851587442698064
+     },
+     "all": {
+      "per_checkpoint": {
+       "real selected plans, oracle + nine seeds (upper bound)": 2518056,
+       "residual floors' CEM candidates, nine seeds": 55914408,
+       "residual floors' selected plans, oracle seeds (upper bound)": 2147328,
+       "flip floor's CEM candidates and floors' CEM selections, oracle seeds": 165862656,
+       "flip floor's selected CEM plans, nine seeds (diagnostic)": 166752
+      },
+      "shared": {
+       "pool rows, nine seeds (behaviour 1,000 per instance; builders 1,000 on best-of-n instances; upper bound)": 63072000,
+       "behaviour plans 1..1,000, oracle seeds (upper bound)": 148224000,
+       "builder plans 1..1,000 on best-of-n instances, oracle seeds (upper bound)": 76032000
+      },
+      "per_checkpoint_city_months": 226609200,
+      "shared_city_months": 287328000,
+      "hours_per_checkpoint_at_reference_rate": 1.8284362409785462,
+      "hours_shared_once_at_reference_rate": 2.318356572671735
+     }
+    },
+    "this_run_flip_scope": "verdict",
+    "basis": {
+     "instances": 193,
+     "rows": 2559,
+     "cem_instances": 193,
+     "cross_check_instances": 40,
+     "best_of_n_instances": 99,
+     "oracle_seeds": 32,
+     "cem_distinct_candidates_per_residual_grader": 1111.0,
+     "cem_distinct_oracle_evals_per_instance": 1119.0,
+     "cem_counts": "measured on this run's instances; flip floor's upper bound"
+    },
+    "rate_reference": {
+     "file": "results/audit/engine_reference/r3_A_instance/costs.json",
+     "city_months_per_s": 34426.68581449244,
+     "workers": "16 local + 22 host-b (that run's configuration)"
+    }
+   }
+  },
+  "wall_seconds_this_invocation": 2262.0562019348145
+ },
+ "per_instance": [
+  {
+   "instance": "ho-g-00-v0|grow|H24",
+   "phase1": {
+    "seconds": 11.202439308166504,
+    "timing": {
+     "proposals": 0.47602415084838867,
+     "pool_engine": 0.1955585479736328,
+     "pool_verdicts": 0.42130112648010254,
+     "builder_scores": 0.6340961456298828,
+     "attack_cem_s0": 9.412604808807373,
+     "attack_random_s0": 0.0004999637603759766,
+     "attack_best_of_n_s0": 0.00045800209045410156,
+     "attack_random_verdict_s0": 0.0004534721374511719,
+     "verdict_selected": 0.00981450080871582,
+     "engine_selected": 0.03553271293640137
+    },
+    "judge_month_steps": 536208,
+    "judge_padded_month_steps": 0,
+    "judge_seconds": 10.817728757858276,
+    "judge_calls": 17,
+    "engine_requests": 186688,
+    "engine_cache_hits": 167479,
+    "engine_replays": 19209,
+    "engine_replays_remote": 13514,
+    "engine_city_months_replayed": 461016,
+    "engine_seconds": 8.974202156066895,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 11938,
+    "shared_month_steps_computed": 480000,
+    "oracle_distinct_replays_by_purpose": {
+     "pool rows, nine seeds": 8190,
+     "behaviour table, oracle seeds": 3424,
+     "selected plans, nine seeds": 36,
+     "selected plans, oracle seeds": 288
+    }
+   },
+   "phase2": {
+    "seconds": 5.867147207260132,
+    "timing": {
+     "floors_best_of_n_s0": 0.2490675449371338,
+     "floors_cem_s0": 4.711609125137329,
+     "floors_random_s0": 0.9013979434967041
+    },
+    "engine_requests": 41405,
+    "engine_cache_hits": 34141,
+    "engine_replays": 7264,
+    "engine_replays_remote": 5164,
+    "engine_city_months_replayed": 174336,
+    "engine_seconds": 4.381418466567993,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 40749,
+    "oracle_distinct_replays_by_purpose": {
+     "floors best_of_n: nine seeds": 2961,
+     "floors best_of_n: oracle seeds": 128,
+     "floors cem: nine seeds": 9999,
+     "floors cem: oracle seeds": 128,
+     "floors random: nine seeds": 5229,
+     "floors random: oracle seeds": 22304
+    }
+   }
+  },
+  {
+   "instance": "ho-g-05-v0|grow|H24",
+   "phase1": {
+    "seconds": 10.449825525283813,
+    "timing": {
+     "proposals": 0.43118739128112793,
+     "pool_engine": 0.17060542106628418,
+     "pool_verdicts": 0.386491060256958,
+     "builder_scores": 0.5641570091247559,
+     "attack_cem_s0": 8.847404956817627,
+     "attack_random_s0": 0.0006418228149414062,
+     "attack_best_of_n_s0": 0.0005903244018554688,
+     "attack_random_verdict_s0": 0.0005986690521240234,
+     "verdict_selected": 0.0063037872314453125,
+     "engine_selected": 0.0312197208404541
+    },
+    "judge_month_steps": 535440,
+    "judge_padded_month_steps": 0,
+    "judge_seconds": 10.10216760635376,
+    "judge_calls": 17,
+    "engine_requests": 186560,
+    "engine_cache_hits": 167351,
+    "engine_replays": 19209,
+    "engine_replays_remote": 14201,
+    "engine_city_months_replayed": 461016,
+    "engine_seconds": 8.335282802581787,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 11552,
+    "shared_month_steps_computed": 480000,
+    "oracle_distinct_replays_by_purpose": {
+     "pool rows, nine seeds": 7740,
+     "behaviour table, oracle seeds": 3520,
+     "selected plans, nine seeds": 36,
+     "selected plans, oracle seeds": 256
+    }
+   },
+   "phase2": {
+    "seconds": 5.323271751403809,
+    "timing": {
+     "floors_best_of_n_s0": 0.2176351547241211,
+     "floors_cem_s0": 4.348980903625488,
+     "floors_random_s0": 0.7511107921600342
+    },
+    "engine_requests": 41147,
+    "engine_cache_hits": 33208,
+    "engine_replays": 7939,
+    "engine_replays_remote": 5850,
+    "engine_city_months_replayed": 190536,
+    "engine_seconds": 4.015884160995483,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 40491,
+    "oracle_distinct_replays_by_purpose": {
+     "floors best_of_n: nine seeds": 2457,
+     "floors best_of_n: oracle seeds": 128,
+     "floors cem: nine seeds": 9999,
+     "floors cem: oracle seeds": 128,
+     "floors random: oracle seeds": 22496,
+     "floors random: nine seeds": 5283
+    }
+   }
+  },
+  {
+   "instance": "ho-g-10-v0|grow|H24",
+   "phase1": {
+    "seconds": 49.262609004974365,
+    "timing": {
+     "proposals": 14.138357162475586,
+     "pool_engine": 0.2368483543395996,
+     "pool_verdicts": 0.4784369468688965,
+     "builder_scores": 15.92269229888916,
+     "attack_cem_s0": 18.416495323181152,
+     "attack_random_s0": 0.0005447864532470703,
+     "attack_best_of_n_s0": 0.0004973411560058594,
+     "attack_random_verdict_s0": 0.0004825592041015625,
+     "verdict_selected": 0.007998228073120117,
+     "engine_selected": 0.04878735542297363
+    },
+    "judge_month_steps": 536016,
+    "judge_padded_month_steps": 0,
+    "judge_seconds": 48.72485637664795,
+    "judge_calls": 17,
+    "engine_requests": 186656,
+    "engine_cache_hits": 96206,
+    "engine_replays": 90002,
+    "engine_replays_remote": 65475,
+    "engine_city_months_replayed": 2160048,
+    "engine_seconds": 46.606977224349976,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 21192,
+    "shared_month_steps_computed": 480000,
+    "oracle_distinct_replays_by_purpose": {
+     "pool rows, nine seeds": 17028,
+     "behaviour table, oracle seeds": 3840,
+     "selected plans, nine seeds": 36,
+     "selected plans, oracle seeds": 288
+    }
+   },
+   "phase2": {
+    "seconds": 6.9697630405426025,
+    "timing": {
+     "floors_best_of_n_s0": 0.5032796859741211,
+     "floors_cem_s0": 5.089432716369629,
+     "floors_random_s0": 1.3711440563201904
+    },
+    "engine_requests": 57699,
+    "engine_cache_hits": 49824,
+    "engine_replays": 7875,
+    "engine_replays_remote": 5614,
+    "engine_city_months_replayed": 189000,
+    "engine_seconds": 4.847074031829834,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 57043,
+    "oracle_distinct_replays_by_purpose": {
+     "floors best_of_n: nine seeds": 8802,
+     "floors best_of_n: oracle seeds": 128,
+     "floors cem: nine seeds": 9999,
+     "floors cem: oracle seeds": 128,
+     "floors random: nine seeds": 8226,
+     "floors random: oracle seeds": 29760
+    }
+   }
+  },
+  {
+   "instance": "ho-g-15-v0|grow|H24",
+   "phase1": {
+    "seconds": 48.218268156051636,
+    "timing": {
+     "proposals": 12.873302698135376,
+     "pool_engine": 0.28874707221984863,
+     "pool_verdicts": 0.4708075523376465,
+     "builder_scores": 12.945909261703491,
+     "attack_cem_s0": 21.563464879989624,
+     "attack_random_s0": 0.0005345344543457031,
+     "attack_best_of_n_s0": 0.00048351287841796875,
+     "attack_random_verdict_s0": 0.00046539306640625,
+     "verdict_selected": 0.007754087448120117,
+     "engine_selected": 0.052881717681884766
+    },
+    "judge_month_steps": 536016,
+    "judge_padded_month_steps": 0,
+    "judge_seconds": 47.61100101470947,
+    "judge_calls": 17,
+    "engine_requests": 186656,
+    "engine_cache_hits": 99694,
+    "engine_replays": 85682,
+    "engine_replays_remote": 60801,
+    "engine_city_months_replayed": 2056368,
+    "engine_seconds": 45.617329835891724,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 19972,
+    "shared_month_steps_computed": 480000,
+    "oracle_distinct_replays_by_purpose": {
+     "pool rows, nine seeds": 15840,
+     "behaviour table, oracle seeds": 3808,
+     "selected plans, nine seeds": 36,
+     "selected plans, oracle seeds": 288
+    }
+   },
+   "phase2": {
+    "seconds": 7.090477466583252,
+    "timing": {
+     "floors_best_of_n_s0": 0.42266249656677246,
+     "floors_cem_s0": 5.27177882194519,
+     "floors_random_s0": 1.3867113590240479
+    },
+    "engine_requests": 56031,
+    "engine_cache_hits": 48092,
+    "engine_replays": 7939,
+    "engine_replays_remote": 6118,
+    "engine_city_months_replayed": 190536,
+    "engine_seconds": 5.02494478225708,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 55375,
+    "oracle_distinct_replays_by_purpose": {
+     "floors best_of_n: nine seeds": 7983,
+     "floors best_of_n: oracle seeds": 128,
+     "floors cem: nine seeds": 9999,
+     "floors cem: oracle seeds": 128,
+     "floors random: nine seeds": 7857,
+     "floors random: oracle seeds": 29280
+    }
+   }
+  },
+  {
+   "instance": "ho-g-20-v0|grow|H24",
+   "phase1": {
+    "seconds": 42.50358605384827,
+    "timing": {
+     "proposals": 13.262799978256226,
+     "pool_engine": 0.24917054176330566,
+     "pool_verdicts": 0.38750720024108887,
+     "builder_scores": 1.5278046131134033,
+     "attack_cem_s0": 26.99909806251526,
+     "attack_random_s0": 0.0005550384521484375,
+     "attack_best_of_n_s0": 0.00048828125,
+     "attack_random_verdict_s0": 0.0005257129669189453,
+     "verdict_selected": 0.006548881530761719,
+     "engine_selected": 0.0579533576965332
+    },
+    "judge_month_steps": 535440,
+    "judge_padded_month_steps": 0,
+    "judge_seconds": 42.05673146247864,
+    "judge_calls": 17,
+    "engine_requests": 186560,
+    "engine_cache_hits": 130158,
+    "engine_replays": 54098,
+    "engine_replays_remote": 37288,
+    "engine_city_months_replayed": 1298352,
+    "engine_seconds": 40.44961714744568,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 9879,
+    "shared_month_steps_computed": 480000,
+    "oracle_distinct_replays_by_purpose": {
+     "pool rows, nine seeds": 6291,
+     "behaviour table, oracle seeds": 3360,
+     "selected plans, nine seeds": 36,
+     "selected plans, oracle seeds": 192
+    }
+   },
+   "phase2": {
+    "seconds": 7.354951620101929,
+    "timing": {
+     "floors_best_of_n_s0": 0.05105876922607422,
+     "floors_cem_s0": 6.406842231750488,
+     "floors_random_s0": 0.8919498920440674
+    },
+    "engine_requests": 37970,
+    "engine_cache_hits": 29999,
+    "engine_replays": 7971,
+    "engine_replays_remote": 5570,
+    "engine_city_months_replayed": 191304,
+    "engine_seconds": 6.176417350769043,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 37314,
+    "oracle_distinct_replays_by_purpose": {
+     "floors best_of_n: nine seeds": 1287,
+     "floors best_of_n: oracle seeds": 128,
+     "floors cem: nine seeds": 9999,
+     "floors cem: oracle seeds": 128,
+     "floors random: nine seeds": 5004,
+     "floors random: oracle seeds": 20768
+    }
+   }
+  },
+  {
+   "instance": "ho-g-25-v0|grow|H24",
+   "phase1": {
+    "seconds": 68.70089888572693,
+    "timing": {
+     "proposals": 20.983597993850708,
+     "pool_engine": 0.23879170417785645,
+     "pool_verdicts": 0.5476701259613037,
+     "builder_scores": 21.56602191925049,
+     "attack_cem_s0": 25.280415534973145,
+     "attack_random_s0": 0.0005772113800048828,
+     "attack_best_of_n_s0": 0.0005517005920410156,
+     "attack_random_verdict_s0": 0.0005457401275634766,
+     "verdict_selected": 0.007392406463623047,
+     "engine_selected": 0.0623779296875
+    },
+    "judge_month_steps": 535824,
+    "judge_padded_month_steps": 0,
+    "judge_seconds": 68.15654253959656,
+    "judge_calls": 17,
+    "engine_requests": 186624,
+    "engine_cache_hits": 97070,
+    "engine_replays": 88402,
+    "engine_replays_remote": 61679,
+    "engine_city_months_replayed": 2121648,
+    "engine_seconds": 65.85705876350403,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 20587,
+    "shared_month_steps_computed": 480000,
+    "oracle_distinct_replays_by_purpose": {
+     "pool rows, nine seeds": 16551,
+     "behaviour table, oracle seeds": 3744,
+     "selected plans, nine seeds": 36,
+     "selected plans, oracle seeds": 256
+    }
+   },
+   "phase2": {
+    "seconds": 5.9312663078308105,
+    "timing": {
+     "floors_best_of_n_s0": 0.27575063705444336,
+     "floors_cem_s0": 4.398890495300293,
+     "floors_random_s0": 1.2492434978485107
+    },
+    "engine_requests": 56870,
+    "engine_cache_hits": 51181,
+    "engine_replays": 5689,
+    "engine_replays_remote": 4082,
+    "engine_city_months_replayed": 136536,
+    "engine_seconds": 4.172280550003052,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 56214,
+    "oracle_distinct_replays_by_purpose": {
+     "floors best_of_n: nine seeds": 8514,
+     "floors best_of_n: oracle seeds": 96,
+     "floors cem: nine seeds": 9999,
+     "floors cem: oracle seeds": 128,
+     "floors random: nine seeds": 8037,
+     "floors random: oracle seeds": 29440
+    }
+   }
+  },
+  {
+   "instance": "ho-g-30-v0|grow|H24",
+   "phase1": {
+    "seconds": 94.05513310432434,
+    "timing": {
+     "proposals": 28.152806043624878,
+     "pool_engine": 0.23051667213439941,
+     "pool_verdicts": 0.48300933837890625,
+     "builder_scores": 28.838911294937134,
+     "attack_cem_s0": 36.25251817703247,
+     "attack_random_s0": 0.0008847713470458984,
+     "attack_best_of_n_s0": 0.0006768703460693359,
+     "attack_random_verdict_s0": 0.0007905960083007812,
+     "verdict_selected": 0.006818532943725586,
+     "engine_selected": 0.0755765438079834
+    },
+    "judge_month_steps": 535248,
+    "judge_padded_month_steps": 0,
+    "judge_seconds": 93.4757821559906,
+    "judge_calls": 17,
+    "engine_requests": 186528,
+    "engine_cache_hits": 97006,
+    "engine_replays": 87986,
+    "engine_replays_remote": 59230,
+    "engine_city_months_replayed": 2111664,
+    "engine_seconds": 91.42374467849731,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 20392,
+    "shared_month_steps_computed": 480000,
+    "oracle_distinct_replays_by_purpose": {
+     "pool rows, nine seeds": 16452,
+     "behaviour table, oracle seeds": 3648,
+     "selected plans, nine seeds": 36,
+     "selected plans, oracle seeds": 256
+    }
+   },
+   "phase2": {
+    "seconds": 9.574675798416138,
+    "timing": {
+     "floors_best_of_n_s0": 0.43911242485046387,
+     "floors_cem_s0": 8.029099702835083,
+     "floors_random_s0": 1.098534107208252
+    },
+    "engine_requests": 56483,
+    "engine_cache_hits": 48994,
+    "engine_replays": 7489,
+    "engine_replays_remote": 5434,
+    "engine_city_months_replayed": 179736,
+    "engine_seconds": 7.792898654937744,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 55827,
+    "oracle_distinct_replays_by_purpose": {
+     "floors best_of_n: nine seeds": 8469,
+     "floors best_of_n: oracle seeds": 128,
+     "floors cem: nine seeds": 9999,
+     "floors cem: oracle seeds": 128,
+     "floors random: nine seeds": 7983,
+     "floors random: oracle seeds": 29120
+    }
+   }
+  },
+  {
+   "instance": "ho-g-35-v0|grow|H24",
+   "phase1": {
+    "seconds": 87.21130061149597,
+    "timing": {
+     "proposals": 25.4773371219635,
+     "pool_engine": 0.2145977020263672,
+     "pool_verdicts": 0.47251105308532715,
+     "builder_scores": 25.317882537841797,
+     "attack_cem_s0": 35.63423490524292,
+     "attack_random_s0": 0.00046324729919433594,
+     "attack_best_of_n_s0": 0.0004258155822753906,
+     "attack_random_verdict_s0": 0.0004239082336425781,
+     "verdict_selected": 0.006822347640991211,
+     "engine_selected": 0.07547378540039062
+    },
+    "judge_month_steps": 535824,
+    "judge_padded_month_steps": 0,
+    "judge_seconds": 86.69551372528076,
+    "judge_calls": 17,
+    "engine_requests": 186624,
+    "engine_cache_hits": 97646,
+    "engine_replays": 87794,
+    "engine_replays_remote": 56731,
+    "engine_city_months_replayed": 2107056,
+    "engine_seconds": 84.7441258430481,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 20397,
+    "shared_month_steps_computed": 480000,
+    "oracle_distinct_replays_by_purpose": {
+     "pool rows, nine seeds": 16425,
+     "behaviour table, oracle seeds": 3648,
+     "selected plans, nine seeds": 36,
+     "selected plans, oracle seeds": 288
+    }
+   },
+   "phase2": {
+    "seconds": 10.758447408676147,
+    "timing": {
+     "floors_best_of_n_s0": 0.46196794509887695,
+     "floors_cem_s0": 9.13919997215271,
+     "floors_random_s0": 1.1517276763916016
+    },
+    "engine_requests": 56936,
+    "engine_cache_hits": 48973,
+    "engine_replays": 7963,
+    "engine_replays_remote": 5478,
+    "engine_city_months_replayed": 191112,
+    "engine_seconds": 8.852486610412598,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 56280,
+    "oracle_distinct_replays_by_purpose": {
+     "floors best_of_n: nine seeds": 8361,
+     "floors best_of_n: oracle seeds": 96,
+     "floors cem: nine seeds": 9999,
+     "floors cem: oracle seeds": 128,
+     "floors random: nine seeds": 8064,
+     "floors random: oracle seeds": 29632
+    }
+   }
+  },
+  {
+   "instance": "ho-g-01-v0|solvent|H24",
+   "phase1": {
+    "seconds": 16.701948165893555,
+    "timing": {
+     "proposals": 0.6706967353820801,
+     "pool_engine": 0.2420649528503418,
+     "pool_verdicts": 0.5225076675415039,
+     "builder_scores": 1.3690931797027588,
+     "attack_cem_s0": 13.824658393859863,
+     "attack_random_s0": 0.0005896091461181641,
+     "attack_best_of_n_s0": 0.0005526542663574219,
+     "attack_random_verdict_s0": 0.0005178451538085938,
+     "verdict_selected": 0.0077342987060546875,
+     "engine_selected": 0.05000162124633789
+    },
+    "judge_month_steps": 536016,
+    "judge_padded_month_steps": 0,
+    "judge_seconds": 16.15478539466858,
+    "judge_calls": 17,
+    "engine_requests": 186656,
+    "engine_cache_hits": 158638,
+    "engine_replays": 28018,
+    "engine_replays_remote": 20516,
+    "engine_city_months_replayed": 672432,
+    "engine_seconds": 13.50385069847107,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 20659,
+    "shared_month_steps_computed": 480000,
+    "oracle_distinct_replays_by_purpose": {
+     "pool rows, nine seeds": 16623,
+     "behaviour table, oracle seeds": 3680,
+     "selected plans, nine seeds": 36,
+     "selected plans, oracle seeds": 320
+    }
+   },
+   "phase2": {
+    "seconds": 6.8844921588897705,
+    "timing": {
+     "floors_best_of_n_s0": 0.6915810108184814,
+     "floors_cem_s0": 5.072606801986694,
+     "floors_random_s0": 1.1114373207092285
+    },
+    "engine_requests": 56654,
+    "engine_cache_hits": 48715,
+    "engine_replays": 7939,
+    "engine_replays_remote": 5744,
+    "engine_city_months_replayed": 190536,
+    "engine_seconds": 4.843728303909302,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 55998,
+    "oracle_distinct_replays_by_purpose": {
+     "floors best_of_n: nine seeds": 8532,
+     "floors best_of_n: oracle seeds": 128,
+     "floors cem: nine seeds": 9999,
+     "floors cem: oracle seeds": 128,
+     "floors random: nine seeds": 8091,
+     "floors random: oracle seeds": 29120
+    }
+   }
+  },
+  {
+   "instance": "ho-g-06-v0|solvent|H24",
+   "phase1": {
+    "seconds": 16.53754758834839,
+    "timing": {
+     "proposals": 0.5452544689178467,
+     "pool_engine": 0.2107391357421875,
+     "pool_verdicts": 0.4200894832611084,
+     "builder_scores": 0.8307244777679443,
+     "attack_cem_s0": 14.457853555679321,
+     "attack_random_s0": 0.0005154609680175781,
+     "attack_best_of_n_s0": 0.00043582916259765625,
+     "attack_random_verdict_s0": 0.0004811286926269531,
+     "verdict_selected": 0.008217334747314453,
+     "engine_selected": 0.05253100395202637
+    },
+    "judge_month_steps": 536208,
+    "judge_padded_month_steps": 0,
+    "judge_seconds": 16.104490280151367,
+    "judge_calls": 17,
+    "engine_requests": 186688,
+    "engine_cache_hits": 158670,
+    "engine_replays": 28018,
+    "engine_replays_remote": 19978,
+    "engine_city_months_replayed": 672432,
+    "engine_seconds": 14.156305074691772,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 14741,
+    "shared_month_steps_computed": 480000,
+    "oracle_distinct_replays_by_purpose": {
+     "pool rows, nine seeds": 10737,
+     "behaviour table, oracle seeds": 3648,
+     "selected plans, nine seeds": 36,
+     "selected plans, oracle seeds": 320
+    }
+   },
+   "phase2": {
+    "seconds": 5.380794525146484,
+    "timing": {
+     "floors_best_of_n_s0": 0.29712390899658203,
+     "floors_cem_s0": 4.331864833831787,
+     "floors_random_s0": 0.7458064556121826
+    },
+    "engine_requests": 46064,
+    "engine_cache_hits": 38048,
+    "engine_replays": 8016,
+    "engine_replays_remote": 5708,
+    "engine_city_months_replayed": 192384,
+    "engine_seconds": 4.083251714706421,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 45408,
+    "oracle_distinct_replays_by_purpose": {
+     "floors best_of_n: nine seeds": 4572,
+     "floors best_of_n: oracle seeds": 128,
+     "floors cem: nine seeds": 9999,
+     "floors cem: oracle seeds": 128,
+     "floors random: nine seeds": 6165,
+     "floors random: oracle seeds": 24416
+    }
+   }
+  },
+  {
+   "instance": "ho-g-11-v0|solvent|H24",
+   "phase1": {
+    "seconds": 54.842767000198364,
+    "timing": {
+     "proposals": 16.797831535339355,
+     "pool_engine": 0.30774784088134766,
+     "pool_verdicts": 0.43984317779541016,
+     "builder_scores": 12.150151014328003,
+     "attack_cem_s0": 25.067457675933838,
+     "attack_random_s0": 0.000476837158203125,
+     "attack_best_of_n_s0": 0.00044155120849609375,
+     "attack_random_verdict_s0": 0.0004487037658691406,
+     "verdict_selected": 0.008115530014038086,
+     "engine_selected": 0.05941438674926758
+    },
+    "judge_month_steps": 536208,
+    "judge_padded_month_steps": 0,
+    "judge_seconds": 54.27473831176758,
+    "judge_calls": 17,
+    "engine_requests": 186688,
+    "engine_cache_hits": 107566,
+    "engine_replays": 76370,
+    "engine_replays_remote": 51566,
+    "engine_city_months_replayed": 1832880,
+    "engine_seconds": 52.43200659751892,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 17117,
+    "shared_month_steps_computed": 480000,
+    "oracle_distinct_replays_by_purpose": {
+     "pool rows, nine seeds": 13113,
+     "behaviour table, oracle seeds": 3648,
+     "selected plans, nine seeds": 36,
+     "selected plans, oracle seeds": 320
+    }
+   },
+   "phase2": {
+    "seconds": 7.268783807754517,
+    "timing": {
+     "floors_best_of_n_s0": 0.3542816638946533,
+     "floors_cem_s0": 6.057478666305542,
+     "floors_random_s0": 0.8516199588775635
+    },
+    "engine_requests": 50872,
+    "engine_cache_hits": 42901,
+    "engine_replays": 7971,
+    "engine_replays_remote": 5516,
+    "engine_city_months_replayed": 191304,
+    "engine_seconds": 5.840216159820557,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 50216,
+    "oracle_distinct_replays_by_purpose": {
+     "floors best_of_n: nine seeds": 6264,
+     "floors best_of_n: oracle seeds": 128,
+     "floors cem: nine seeds": 9999,
+     "floors cem: oracle seeds": 128,
+     "floors random: nine seeds": 6849,
+     "floors random: oracle seeds": 26848
+    }
+   }
+  },
+  {
+   "instance": "ho-g-16-v0|solvent|H24",
+   "phase1": {
+    "seconds": 42.06310439109802,
+    "timing": {
+     "proposals": 12.768208265304565,
+     "pool_engine": 0.2693462371826172,
+     "pool_verdicts": 0.5158863067626953,
+     "builder_scores": 8.849185466766357,
+     "attack_cem_s0": 19.584290981292725,
+     "attack_random_s0": 0.0005910396575927734,
+     "attack_best_of_n_s0": 0.0005464553833007812,
+     "attack_random_verdict_s0": 0.0005903244018554688,
+     "verdict_selected": 0.008618354797363281,
+     "engine_selected": 0.05364179611206055
+    },
+    "judge_month_steps": 536016,
+    "judge_padded_month_steps": 0,
+    "judge_seconds": 41.546995878219604,
+    "judge_calls": 17,
+    "engine_requests": 186656,
+    "engine_cache_hits": 112270,
+    "engine_replays": 72402,
+    "engine_replays_remote": 49358,
+    "engine_city_months_replayed": 1737648,
+    "engine_seconds": 39.648085594177246,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 15898,
+    "shared_month_steps_computed": 480000,
+    "oracle_distinct_replays_by_purpose": {
+     "pool rows, nine seeds": 11862,
+     "behaviour table, oracle seeds": 3680,
+     "selected plans, nine seeds": 36,
+     "selected plans, oracle seeds": 320
+    }
+   },
+   "phase2": {
+    "seconds": 5.655897378921509,
+    "timing": {
+     "floors_best_of_n_s0": 0.3029782772064209,
+     "floors_cem_s0": 4.520950794219971,
+     "floors_random_s0": 0.826758861541748
+    },
+    "engine_requests": 48789,
+    "engine_cache_hits": 40850,
+    "engine_replays": 7939,
+    "engine_replays_remote": 5802,
+    "engine_city_months_replayed": 190536,
+    "engine_seconds": 4.269935131072998,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 48133,
+    "oracle_distinct_replays_by_purpose": {
+     "floors best_of_n: nine seeds": 5148,
+     "floors best_of_n: oracle seeds": 128,
+     "floors cem: nine seeds": 9999,
+     "floors cem: oracle seeds": 128,
+     "floors random: nine seeds": 6714,
+     "floors random: oracle seeds": 26016
+    }
+   }
+  },
+  {
+   "instance": "ho-g-21-v0|solvent|H24",
+   "phase1": {
+    "seconds": 45.87892389297485,
+    "timing": {
+     "proposals": 14.943283796310425,
+     "pool_engine": 0.2830052375793457,
+     "pool_verdicts": 0.4407365322113037,
+     "builder_scores": 6.410780906677246,
+     "attack_cem_s0": 23.72059154510498,
+     "attack_random_s0": 0.0005939006805419922,
+     "attack_best_of_n_s0": 0.0005335807800292969,
+     "attack_random_verdict_s0": 0.0005550384521484375,
+     "verdict_selected": 0.00787496566772461,
+     "engine_selected": 0.057981014251708984
+    },
+    "judge_month_steps": 536208,
+    "judge_padded_month_steps": 0,
+    "judge_seconds": 45.369468688964844,
+    "judge_calls": 17,
+    "engine_requests": 186688,
+    "engine_cache_hits": 120238,
+    "engine_replays": 63698,
+    "engine_replays_remote": 43099,
+    "engine_city_months_replayed": 1528752,
+    "engine_seconds": 43.65558195114136,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 12783,
+    "shared_month_steps_computed": 480000,
+    "oracle_distinct_replays_by_purpose": {
+     "pool rows, nine seeds": 9099,
+     "behaviour table, oracle seeds": 3328,
+     "selected plans, nine seeds": 36,
+     "selected plans, oracle seeds": 320
+    }
+   },
+   "phase2": {
+    "seconds": 6.547569036483765,
+    "timing": {
+     "floors_best_of_n_s0": 0.22700142860412598,
+     "floors_cem_s0": 5.473270654678345,
+     "floors_random_s0": 0.8414883613586426
+    },
+    "engine_requests": 43242,
+    "engine_cache_hits": 35239,
+    "engine_replays": 8003,
+    "engine_replays_remote": 5885,
+    "engine_city_months_replayed": 192072,
+    "engine_seconds": 5.221215724945068,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 42586,
+    "oracle_distinct_replays_by_purpose": {
+     "floors best_of_n: nine seeds": 3258,
+     "floors best_of_n: oracle seeds": 128,
+     "floors cem: nine seeds": 9999,
+     "floors cem: oracle seeds": 128,
+     "floors random: oracle seeds": 23232,
+     "floors random: nine seeds": 5841
+    }
+   }
+  },
+  {
+   "instance": "ho-g-26-v0|solvent|H24",
+   "phase1": {
+    "seconds": 52.93056082725525,
+    "timing": {
+     "proposals": 16.117252349853516,
+     "pool_engine": 0.22698616981506348,
+     "pool_verdicts": 0.4427978992462158,
+     "builder_scores": 11.301351547241211,
+     "attack_cem_s0": 24.765438079833984,
+     "attack_random_s0": 0.0004856586456298828,
+     "attack_best_of_n_s0": 0.0004200935363769531,
+     "attack_random_verdict_s0": 0.00044465065002441406,
+     "verdict_selected": 0.007504940032958984,
+     "engine_selected": 0.055847883224487305
+    },
+    "judge_month_steps": 536016,
+    "judge_padded_month_steps": 0,
+    "judge_seconds": 52.44869041442871,
+    "judge_calls": 17,
+    "engine_requests": 186656,
+    "engine_cache_hits": 108430,
+    "engine_replays": 75026,
+    "engine_replays_remote": 50300,
+    "engine_city_months_replayed": 1800624,
+    "engine_seconds": 50.65576505661011,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 16744,
+    "shared_month_steps_computed": 480000,
+    "oracle_distinct_replays_by_purpose": {
+     "pool rows, nine seeds": 12708,
+     "behaviour table, oracle seeds": 3712,
+     "selected plans, nine seeds": 36,
+     "selected plans, oracle seeds": 288
+    }
+   },
+   "phase2": {
+    "seconds": 7.400027751922607,
+    "timing": {
+     "floors_best_of_n_s0": 0.34664487838745117,
+     "floors_cem_s0": 6.106393098831177,
+     "floors_random_s0": 0.9420101642608643
+    },
+    "engine_requests": 50211,
+    "engine_cache_hits": 42272,
+    "engine_replays": 7939,
+    "engine_replays_remote": 5597,
+    "engine_city_months_replayed": 190536,
+    "engine_seconds": 5.895106792449951,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 49555,
+    "oracle_distinct_replays_by_purpose": {
+     "floors best_of_n: nine seeds": 6048,
+     "floors best_of_n: oracle seeds": 96,
+     "floors cem: nine seeds": 9999,
+     "floors cem: oracle seeds": 128,
+     "floors random: nine seeds": 6660,
+     "floors random: oracle seeds": 26624
+    }
+   }
+  },
+  {
+   "instance": "ho-g-31-v0|solvent|H24",
+   "phase1": {
+    "seconds": 56.24152636528015,
+    "timing": {
+     "proposals": 16.93035888671875,
+     "pool_engine": 0.1709587574005127,
+     "pool_verdicts": 0.3629930019378662,
+     "builder_scores": 1.1427793502807617,
+     "attack_cem_s0": 37.53258204460144,
+     "attack_random_s0": 0.0005869865417480469,
+     "attack_best_of_n_s0": 0.0005316734313964844,
+     "attack_random_verdict_s0": 0.0005784034729003906,
+     "verdict_selected": 0.006472587585449219,
+     "engine_selected": 0.0777595043182373
+    },
+    "judge_month_steps": 535824,
+    "judge_padded_month_steps": 0,
+    "judge_seconds": 55.84557056427002,
+    "judge_calls": 17,
+    "engine_requests": 186624,
+    "engine_cache_hits": 129454,
+    "engine_replays": 53554,
+    "engine_replays_remote": 35047,
+    "engine_city_months_replayed": 1285296,
+    "engine_seconds": 54.337276220321655,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 9874,
+    "shared_month_steps_computed": 480000,
+    "oracle_distinct_replays_by_purpose": {
+     "pool rows, nine seeds": 6318,
+     "behaviour table, oracle seeds": 3200,
+     "selected plans, nine seeds": 36,
+     "selected plans, oracle seeds": 320
+    }
+   },
+   "phase2": {
+    "seconds": 9.864346742630005,
+    "timing": {
+     "floors_best_of_n_s0": 0.12444257736206055,
+     "floors_cem_s0": 9.110401630401611,
+     "floors_random_s0": 0.6225278377532959
+    },
+    "engine_requests": 38605,
+    "engine_cache_hits": 30666,
+    "engine_replays": 7939,
+    "engine_replays_remote": 5451,
+    "engine_city_months_replayed": 190536,
+    "engine_seconds": 8.81578540802002,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 37949,
+    "oracle_distinct_replays_by_purpose": {
+     "floors best_of_n: nine seeds": 1503,
+     "floors best_of_n: oracle seeds": 128,
+     "floors cem: nine seeds": 9999,
+     "floors cem: oracle seeds": 128,
+     "floors random: nine seeds": 4815,
+     "floors random: oracle seeds": 21376
+    }
+   }
+  },
+  {
+   "instance": "ho-g-36-v0|solvent|H24",
+   "phase1": {
+    "seconds": 81.46801328659058,
+    "timing": {
+     "proposals": 25.175370454788208,
+     "pool_engine": 0.2833983898162842,
+     "pool_verdicts": 0.4346463680267334,
+     "builder_scores": 14.683000564575195,
+     "attack_cem_s0": 40.78287744522095,
+     "attack_random_s0": 0.0005064010620117188,
+     "attack_best_of_n_s0": 0.00043320655822753906,
+     "attack_random_verdict_s0": 0.00044274330139160156,
+     "verdict_selected": 0.0076177120208740234,
+     "engine_selected": 0.08395719528198242
+    },
+    "judge_month_steps": 536016,
+    "judge_padded_month_steps": 0,
+    "judge_seconds": 80.90599346160889,
+    "judge_calls": 17,
+    "engine_requests": 186656,
+    "engine_cache_hits": 111982,
+    "engine_replays": 70770,
+    "engine_replays_remote": 47178,
+    "engine_city_months_replayed": 1698480,
+    "engine_seconds": 79.11734580993652,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 15380,
+    "shared_month_steps_computed": 480000,
+    "oracle_distinct_replays_by_purpose": {
+     "pool rows, nine seeds": 11376,
+     "behaviour table, oracle seeds": 3648,
+     "selected plans, nine seeds": 36,
+     "selected plans, oracle seeds": 320
+    }
+   },
+   "phase2": {
+    "seconds": 11.203661680221558,
+    "timing": {
+     "floors_best_of_n_s0": 0.34293055534362793,
+     "floors_cem_s0": 9.890467166900635,
+     "floors_random_s0": 0.9628951549530029
+    },
+    "engine_requests": 48655,
+    "engine_cache_hits": 40941,
+    "engine_replays": 7714,
+    "engine_replays_remote": 5167,
+    "engine_city_months_replayed": 185136,
+    "engine_seconds": 9.647576570510864,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 47999,
+    "oracle_distinct_replays_by_purpose": {
+     "floors best_of_n: nine seeds": 5058,
+     "floors best_of_n: oracle seeds": 128,
+     "floors cem: nine seeds": 9999,
+     "floors cem: oracle seeds": 128,
+     "floors random: nine seeds": 6318,
+     "floors random: oracle seeds": 26368
+    }
+   }
+  },
+  {
+   "instance": "ho-g-02-v0|treasury|H24",
+   "phase1": {
+    "seconds": 16.192561388015747,
+    "timing": {
+     "proposals": 0.5847451686859131,
+     "pool_engine": 0.24559235572814941,
+     "pool_verdicts": 0.4827284812927246,
+     "builder_scores": 1.3369479179382324,
+     "attack_cem_s0": 13.487186193466187,
+     "attack_random_s0": 0.0006339550018310547,
+     "attack_best_of_n_s0": 0.0006091594696044922,
+     "attack_random_verdict_s0": 0.0005896091461181641,
+     "verdict_selected": 0.008157968521118164,
+     "engine_selected": 0.03337836265563965
+    },
+    "judge_month_steps": 536016,
+    "judge_padded_month_steps": 0,
+    "judge_seconds": 15.658517360687256,
+    "judge_calls": 17,
+    "engine_requests": 186656,
+    "engine_cache_hits": 158583,
+    "engine_replays": 28073,
+    "engine_replays_remote": 20447,
+    "engine_city_months_replayed": 673752,
+    "engine_seconds": 13.136003732681274,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 20171,
+    "shared_month_steps_computed": 480000,
+    "oracle_distinct_replays_by_purpose": {
+     "pool rows, nine seeds": 16263,
+     "behaviour table, oracle seeds": 3584,
+     "selected plans, nine seeds": 36,
+     "selected plans, oracle seeds": 288
+    }
+   },
+   "phase2": {
+    "seconds": 5.298094034194946,
+    "timing": {
+     "floors_best_of_n_s0": 0.5320360660552979,
+     "floors_cem_s0": 3.758289098739624,
+     "floors_random_s0": 1.0021800994873047
+    },
+    "engine_requests": 56358,
+    "engine_cache_hits": 48419,
+    "engine_replays": 7939,
+    "engine_replays_remote": 5699,
+    "engine_city_months_replayed": 190536,
+    "engine_seconds": 3.5493202209472656,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 55702,
+    "oracle_distinct_replays_by_purpose": {
+     "floors best_of_n: nine seeds": 8388,
+     "floors best_of_n: oracle seeds": 128,
+     "floors cem: nine seeds": 9999,
+     "floors cem: oracle seeds": 128,
+     "floors random: nine seeds": 7875,
+     "floors random: oracle seeds": 29184
+    }
+   }
+  },
+  {
+   "instance": "ho-g-07-v0|treasury|H24",
+   "phase1": {
+    "seconds": 16.02610206604004,
+    "timing": {
+     "proposals": 0.5528891086578369,
+     "pool_engine": 0.22357940673828125,
+     "pool_verdicts": 0.41028475761413574,
+     "builder_scores": 0.761059045791626,
+     "attack_cem_s0": 14.006481170654297,
+     "attack_random_s0": 0.0005254745483398438,
+     "attack_best_of_n_s0": 0.00046706199645996094,
+     "attack_random_verdict_s0": 0.0004754066467285156,
+     "verdict_selected": 0.0059528350830078125,
+     "engine_selected": 0.0531153678894043
+    },
+    "judge_month_steps": 535248,
+    "judge_padded_month_steps": 0,
+    "judge_seconds": 15.579454183578491,
+    "judge_calls": 17,
+    "engine_requests": 186528,
+    "engine_cache_hits": 158341,
+    "engine_replays": 28187,
+    "engine_replays_remote": 19925,
+    "engine_city_months_replayed": 676488,
+    "engine_seconds": 13.682246923446655,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 13464,
+    "shared_month_steps_computed": 480000,
+    "oracle_distinct_replays_by_purpose": {
+     "pool rows, nine seeds": 9684,
+     "behaviour table, oracle seeds": 3552,
+     "selected plans, nine seeds": 36,
+     "selected plans, oracle seeds": 192
+    }
+   },
+   "phase2": {
+    "seconds": 5.054132699966431,
+    "timing": {
+     "floors_best_of_n_s0": 0.2807629108428955,
+     "floors_cem_s0": 3.951072931289673,
+     "floors_random_s0": 0.8170676231384277
+    },
+    "engine_requests": 44179,
+    "engine_cache_hits": 36208,
+    "engine_replays": 7971,
+    "engine_replays_remote": 5856,
+    "engine_city_months_replayed": 191304,
+    "engine_seconds": 3.689480781555176,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 43523,
+    "oracle_distinct_replays_by_purpose": {
+     "floors best_of_n: nine seeds": 3798,
+     "floors best_of_n: oracle seeds": 96,
+     "floors cem: nine seeds": 9999,
+     "floors cem: oracle seeds": 128,
+     "floors random: nine seeds": 5886,
+     "floors random: oracle seeds": 23616
+    }
+   }
+  },
+  {
+   "instance": "ho-g-12-v0|treasury|H24",
+   "phase1": {
+    "seconds": 51.16083908081055,
+    "timing": {
+     "proposals": 15.811525821685791,
+     "pool_engine": 0.22992682456970215,
+     "pool_verdicts": 0.4577317237854004,
+     "builder_scores": 8.724808692932129,
+     "attack_cem_s0": 25.850051641464233,
+     "attack_random_s0": 0.0004913806915283203,
+     "attack_best_of_n_s0": 0.0004756450653076172,
+     "attack_random_verdict_s0": 0.00045013427734375,
+     "verdict_selected": 0.006348371505737305,
+     "engine_selected": 0.06671452522277832
+    },
+    "judge_month_steps": 535440,
+    "judge_padded_month_steps": 0,
+    "judge_seconds": 50.67404007911682,
+    "judge_calls": 17,
+    "engine_requests": 186560,
+    "engine_cache_hits": 112965,
+    "engine_replays": 69275,
+    "engine_replays_remote": 47330,
+    "engine_city_months_replayed": 1662600,
+    "engine_seconds": 48.868492603302,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 14943,
+    "shared_month_steps_computed": 480000,
+    "oracle_distinct_replays_by_purpose": {
+     "pool rows, nine seeds": 10971,
+     "behaviour table, oracle seeds": 3680,
+     "selected plans, nine seeds": 36,
+     "selected plans, oracle seeds": 256
+    }
+   },
+   "phase2": {
+    "seconds": 7.241067409515381,
+    "timing": {
+     "floors_best_of_n_s0": 0.3152034282684326,
+     "floors_cem_s0": 5.935526371002197,
+     "floors_random_s0": 0.9837567806243896
+    },
+    "engine_requests": 47098,
+    "engine_cache_hits": 39123,
+    "engine_replays": 7975,
+    "engine_replays_remote": 5437,
+    "engine_city_months_replayed": 191400,
+    "engine_seconds": 5.71608304977417,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 46442,
+    "oracle_distinct_replays_by_purpose": {
+     "floors best_of_n: nine seeds": 4806,
+     "floors best_of_n: oracle seeds": 128,
+     "floors cem: nine seeds": 9999,
+     "floors cem: oracle seeds": 128,
+     "floors random: nine seeds": 6165,
+     "floors random: oracle seeds": 25216
+    }
+   }
+  },
+  {
+   "instance": "ho-g-17-v0|treasury|H24",
+   "phase1": {
+    "seconds": 61.12407994270325,
+    "timing": {
+     "proposals": 15.97107720375061,
+     "pool_engine": 0.26283907890319824,
+     "pool_verdicts": 0.4614548683166504,
+     "builder_scores": 8.881481170654297,
+     "attack_cem_s0": 35.45768618583679,
+     "attack_random_s0": 0.0005471706390380859,
+     "attack_best_of_n_s0": 0.0005230903625488281,
+     "attack_random_verdict_s0": 0.0005252361297607422,
+     "verdict_selected": 0.007056713104248047,
+     "engine_selected": 0.0679783821105957
+    },
+    "judge_month_steps": 535440,
+    "judge_padded_month_steps": 0,
+    "judge_seconds": 60.5566771030426,
+    "judge_calls": 17,
+    "engine_requests": 186560,
+    "engine_cache_hits": 114926,
+    "engine_replays": 68658,
+    "engine_replays_remote": 46635,
+    "engine_city_months_replayed": 1647792,
+    "engine_seconds": 58.71154165267944,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 14895,
+    "shared_month_steps_computed": 480000,
+    "oracle_distinct_replays_by_purpose": {
+     "pool rows, nine seeds": 10827,
+     "behaviour table, oracle seeds": 3840,
+     "selected plans, nine seeds": 36,
+     "selected plans, oracle seeds": 192
+    }
+   },
+   "phase2": {
+    "seconds": 6.923441171646118,
+    "timing": {
+     "floors_best_of_n_s0": 0.28570008277893066,
+     "floors_cem_s0": 5.796466588973999,
+     "floors_random_s0": 0.8352930545806885
+    },
+    "engine_requests": 47210,
+    "engine_cache_hits": 39207,
+    "engine_replays": 8003,
+    "engine_replays_remote": 5445,
+    "engine_city_months_replayed": 192072,
+    "engine_seconds": 5.547090768814087,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 46554,
+    "oracle_distinct_replays_by_purpose": {
+     "floors best_of_n: nine seeds": 4482,
+     "floors best_of_n: oracle seeds": 96,
+     "floors cem: nine seeds": 9999,
+     "floors cem: oracle seeds": 128,
+     "floors random: oracle seeds": 25504,
+     "floors random: nine seeds": 6345
+    }
+   }
+  },
+  {
+   "instance": "ho-g-22-v0|treasury|H24",
+   "phase1": {
+    "seconds": 70.20044827461243,
+    "timing": {
+     "proposals": 19.115123748779297,
+     "pool_engine": 0.228377103805542,
+     "pool_verdicts": 0.4962928295135498,
+     "builder_scores": 22.60428810119629,
+     "attack_cem_s0": 27.660836458206177,
+     "attack_random_s0": 0.0005202293395996094,
+     "attack_best_of_n_s0": 0.0004703998565673828,
+     "attack_random_verdict_s0": 0.0005018711090087891,
+     "verdict_selected": 0.006442546844482422,
+     "engine_selected": 0.07122468948364258
+    },
+    "judge_month_steps": 535248,
+    "judge_padded_month_steps": 0,
+    "judge_seconds": 69.47196960449219,
+    "judge_calls": 17,
+    "engine_requests": 186528,
+    "engine_cache_hits": 95397,
+    "engine_replays": 91067,
+    "engine_replays_remote": 62504,
+    "engine_city_months_replayed": 2185608,
+    "engine_seconds": 66.96801900863647,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 21452,
+    "shared_month_steps_computed": 480000,
+    "oracle_distinct_replays_by_purpose": {
+     "pool rows, nine seeds": 17352,
+     "behaviour table, oracle seeds": 3808,
+     "selected plans, nine seeds": 36,
+     "selected plans, oracle seeds": 256
+    }
+   },
+   "phase2": {
+    "seconds": 7.49264669418335,
+    "timing": {
+     "floors_best_of_n_s0": 0.468308687210083,
+     "floors_cem_s0": 5.9036455154418945,
+     "floors_random_s0": 1.1153886318206787
+    },
+    "engine_requests": 57991,
+    "engine_cache_hits": 50052,
+    "engine_replays": 7939,
+    "engine_replays_remote": 5222,
+    "engine_city_months_replayed": 190536,
+    "engine_seconds": 5.712449073791504,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 57335,
+    "oracle_distinct_replays_by_purpose": {
+     "floors best_of_n: nine seeds": 8982,
+     "floors best_of_n: oracle seeds": 96,
+     "floors cem: nine seeds": 9999,
+     "floors cem: oracle seeds": 128,
+     "floors random: nine seeds": 8370,
+     "floors random: oracle seeds": 29760
+    }
+   }
+  },
+  {
+   "instance": "ho-g-27-v0|treasury|H24",
+   "phase1": {
+    "seconds": 49.03454637527466,
+    "timing": {
+     "proposals": 14.70643401145935,
+     "pool_engine": 0.22678160667419434,
+     "pool_verdicts": 0.446352481842041,
+     "builder_scores": 8.04076623916626,
+     "attack_cem_s0": 25.532392978668213,
+     "attack_random_s0": 0.0005002021789550781,
+     "attack_best_of_n_s0": 0.00046324729919433594,
+     "attack_random_verdict_s0": 0.00047135353088378906,
+     "verdict_selected": 0.0067937374114990234,
+     "engine_selected": 0.06127285957336426
+    },
+    "judge_month_steps": 535632,
+    "judge_padded_month_steps": 0,
+    "judge_seconds": 48.56004571914673,
+    "judge_calls": 17,
+    "engine_requests": 186592,
+    "engine_cache_hits": 116293,
+    "engine_replays": 67195,
+    "engine_replays_remote": 45923,
+    "engine_city_months_replayed": 1612680,
+    "engine_seconds": 46.75667333602905,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 14116,
+    "shared_month_steps_computed": 480000,
+    "oracle_distinct_replays_by_purpose": {
+     "pool rows, nine seeds": 10368,
+     "behaviour table, oracle seeds": 3488,
+     "selected plans, nine seeds": 36,
+     "selected plans, oracle seeds": 224
+    }
+   },
+   "phase2": {
+    "seconds": 5.711711883544922,
+    "timing": {
+     "floors_best_of_n_s0": 0.25201940536499023,
+     "floors_cem_s0": 4.656686782836914,
+     "floors_random_s0": 0.7971372604370117
+    },
+    "engine_requests": 45631,
+    "engine_cache_hits": 37656,
+    "engine_replays": 7975,
+    "engine_replays_remote": 5780,
+    "engine_city_months_replayed": 191400,
+    "engine_seconds": 4.439638137817383,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 44975,
+    "oracle_distinct_replays_by_purpose": {
+     "floors best_of_n: nine seeds": 4365,
+     "floors best_of_n: oracle seeds": 128,
+     "floors cem: nine seeds": 9999,
+     "floors cem: oracle seeds": 128,
+     "floors random: nine seeds": 6003,
+     "floors random: oracle seeds": 24352
+    }
+   }
+  },
+  {
+   "instance": "ho-g-32-v0|treasury|H24",
+   "phase1": {
+    "seconds": 60.337135791778564,
+    "timing": {
+     "proposals": 19.026164293289185,
+     "pool_engine": 0.20082330703735352,
+     "pool_verdicts": 0.397660493850708,
+     "builder_scores": 1.357375144958496,
+     "attack_cem_s0": 39.24855613708496,
+     "attack_random_s0": 0.0004968643188476562,
+     "attack_best_of_n_s0": 0.00045180320739746094,
+     "attack_random_verdict_s0": 0.0004467964172363281,
+     "verdict_selected": 0.006236553192138672,
+     "engine_selected": 0.08728456497192383
+    },
+    "judge_month_steps": 535440,
+    "judge_padded_month_steps": 0,
+    "judge_seconds": 59.9197678565979,
+    "judge_calls": 17,
+    "engine_requests": 186560,
+    "engine_cache_hits": 132485,
+    "engine_replays": 52667,
+    "engine_replays_remote": 35318,
+    "engine_city_months_replayed": 1264008,
+    "engine_seconds": 58.504786014556885,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 9388,
+    "shared_month_steps_computed": 480000,
+    "oracle_distinct_replays_by_purpose": {
+     "pool rows, nine seeds": 5832,
+     "behaviour table, oracle seeds": 3360,
+     "selected plans, nine seeds": 36,
+     "selected plans, oracle seeds": 160
+    }
+   },
+   "phase2": {
+    "seconds": 10.270616054534912,
+    "timing": {
+     "floors_best_of_n_s0": 0.08420848846435547,
+     "floors_cem_s0": 9.52606725692749,
+     "floors_random_s0": 0.6551642417907715
+    },
+    "engine_requests": 36455,
+    "engine_cache_hits": 28444,
+    "engine_replays": 8011,
+    "engine_replays_remote": 5622,
+    "engine_city_months_replayed": 192264,
+    "engine_seconds": 9.226200103759766,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 35799,
+    "oracle_distinct_replays_by_purpose": {
+     "floors best_of_n: nine seeds": 990,
+     "floors best_of_n: oracle seeds": 96,
+     "floors cem: nine seeds": 9999,
+     "floors cem: oracle seeds": 128,
+     "floors random: oracle seeds": 19744,
+     "floors random: nine seeds": 4842
+    }
+   }
+  },
+  {
+   "instance": "ho-g-37-v0|treasury|H24",
+   "phase1": {
+    "seconds": 56.854082345962524,
+    "timing": {
+     "proposals": 16.25637722015381,
+     "pool_engine": 0.1706860065460205,
+     "pool_verdicts": 0.36496448516845703,
+     "builder_scores": 4.167838096618652,
+     "attack_cem_s0": 35.80001759529114,
+     "attack_random_s0": 0.000583648681640625,
+     "attack_best_of_n_s0": 0.0005385875701904297,
+     "attack_random_verdict_s0": 0.0005826950073242188,
+     "verdict_selected": 0.005869150161743164,
+     "engine_selected": 0.07451868057250977
+    },
+    "judge_month_steps": 535440,
+    "judge_padded_month_steps": 0,
+    "judge_seconds": 56.46863126754761,
+    "judge_calls": 17,
+    "engine_requests": 186560,
+    "engine_cache_hits": 128261,
+    "engine_replays": 56091,
+    "engine_replays_remote": 36791,
+    "engine_city_months_replayed": 1346184,
+    "engine_seconds": 54.98974132537842,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 10530,
+    "shared_month_steps_computed": 480000,
+    "oracle_distinct_replays_by_purpose": {
+     "pool rows, nine seeds": 7038,
+     "behaviour table, oracle seeds": 3232,
+     "selected plans, nine seeds": 36,
+     "selected plans, oracle seeds": 224
+    }
+   },
+   "phase2": {
+    "seconds": 9.710689783096313,
+    "timing": {
+     "floors_best_of_n_s0": 0.16751432418823242,
+     "floors_cem_s0": 8.843666791915894,
+     "floors_random_s0": 0.6949360370635986
+    },
+    "engine_requests": 38621,
+    "engine_cache_hits": 30646,
+    "engine_replays": 7975,
+    "engine_replays_remote": 5326,
+    "engine_city_months_replayed": 191400,
+    "engine_seconds": 8.564219951629639,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 37965,
+    "oracle_distinct_replays_by_purpose": {
+     "floors best_of_n: nine seeds": 2115,
+     "floors best_of_n: oracle seeds": 128,
+     "floors cem: nine seeds": 9999,
+     "floors cem: oracle seeds": 128,
+     "floors random: nine seeds": 4923,
+     "floors random: oracle seeds": 20672
+    }
+   }
+  },
+  {
+   "instance": "ho-g-03-v0|recover|H24",
+   "phase1": {
+    "seconds": 3.5524418354034424,
+    "timing": {
+     "proposals": 0.9106690883636475,
+     "pool_engine": 0.22633147239685059,
+     "pool_verdicts": 0.44370293617248535,
+     "builder_scores": 1.1347873210906982,
+     "attack_cem_s0": 0.8006319999694824,
+     "attack_random_s0": 0.0005090236663818359,
+     "attack_best_of_n_s0": 0.0004684925079345703,
+     "attack_random_verdict_s0": 0.0005123615264892578,
+     "verdict_selected": 0.008370161056518555,
+     "engine_selected": 0.011063098907470703
+    },
+    "judge_month_steps": 536208,
+    "judge_padded_month_steps": 0,
+    "judge_seconds": 3.093722105026245,
+    "judge_calls": 17,
+    "engine_requests": 186688,
+    "engine_cache_hits": 186688,
+    "engine_replays": 0,
+    "engine_replays_remote": 0,
+    "engine_city_months_replayed": 0,
+    "engine_seconds": 0.0,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 18377,
+    "shared_month_steps_computed": 480000,
+    "oracle_distinct_replays_by_purpose": {
+     "pool rows, nine seeds": 14373,
+     "behaviour table, oracle seeds": 3648,
+     "selected plans, nine seeds": 36,
+     "selected plans, oracle seeds": 320
+    }
+   },
+   "phase2": {
+    "seconds": 1.6895902156829834,
+    "timing": {
+     "floors_best_of_n_s0": 0.4264392852783203,
+     "floors_cem_s0": 0.3477175235748291,
+     "floors_random_s0": 0.9102210998535156
+    },
+    "engine_requests": 53444,
+    "engine_cache_hits": 53444,
+    "engine_replays": 0,
+    "engine_replays_remote": 0,
+    "engine_city_months_replayed": 0,
+    "engine_seconds": 0.0,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 52788,
+    "oracle_distinct_replays_by_purpose": {
+     "floors best_of_n: nine seeds": 7272,
+     "floors best_of_n: oracle seeds": 128,
+     "floors cem: nine seeds": 9999,
+     "floors cem: oracle seeds": 128,
+     "floors random: nine seeds": 7101,
+     "floors random: oracle seeds": 28160
+    }
+   }
+  },
+  {
+   "instance": "ho-g-08-v0|recover|H24",
+   "phase1": {
+    "seconds": 2.7950403690338135,
+    "timing": {
+     "proposals": 0.7603070735931396,
+     "pool_engine": 0.20392298698425293,
+     "pool_verdicts": 0.4349346160888672,
+     "builder_scores": 0.6456165313720703,
+     "attack_cem_s0": 0.7187621593475342,
+     "attack_random_s0": 0.0005936622619628906,
+     "attack_best_of_n_s0": 0.0005412101745605469,
+     "attack_random_verdict_s0": 0.0005285739898681641,
+     "verdict_selected": 0.007896900177001953,
+     "engine_selected": 0.010158538818359375
+    },
+    "judge_month_steps": 535824,
+    "judge_padded_month_steps": 0,
+    "judge_seconds": 2.434600830078125,
+    "judge_calls": 17,
+    "engine_requests": 186624,
+    "engine_cache_hits": 186624,
+    "engine_replays": 0,
+    "engine_replays_remote": 0,
+    "engine_city_months_replayed": 0,
+    "engine_seconds": 0.0,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 12827,
+    "shared_month_steps_computed": 480000,
+    "oracle_distinct_replays_by_purpose": {
+     "pool rows, nine seeds": 9207,
+     "behaviour table, oracle seeds": 3328,
+     "selected plans, nine seeds": 36,
+     "selected plans, oracle seeds": 256
+    }
+   },
+   "phase2": {
+    "seconds": 1.3308744430541992,
+    "timing": {
+     "floors_best_of_n_s0": 0.22834205627441406,
+     "floors_cem_s0": 0.38129639625549316,
+     "floors_random_s0": 0.7161068916320801
+    },
+    "engine_requests": 43670,
+    "engine_cache_hits": 43670,
+    "engine_replays": 0,
+    "engine_replays_remote": 0,
+    "engine_city_months_replayed": 0,
+    "engine_seconds": 0.0,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 43014,
+    "oracle_distinct_replays_by_purpose": {
+     "floors best_of_n: nine seeds": 3456,
+     "floors best_of_n: oracle seeds": 128,
+     "floors cem: nine seeds": 9999,
+     "floors cem: oracle seeds": 128,
+     "floors random: nine seeds": 5751,
+     "floors random: oracle seeds": 23552
+    }
+   }
+  },
+  {
+   "instance": "ho-g-13-v0|recover|H24",
+   "phase1": {
+    "seconds": 53.84065866470337,
+    "timing": {
+     "proposals": 15.981120109558105,
+     "pool_engine": 0.2406778335571289,
+     "pool_verdicts": 0.4524538516998291,
+     "builder_scores": 16.202573537826538,
+     "attack_cem_s0": 20.890663385391235,
+     "attack_random_s0": 0.0005033016204833984,
+     "attack_best_of_n_s0": 0.000438690185546875,
+     "attack_random_verdict_s0": 0.00044918060302734375,
+     "verdict_selected": 0.007706165313720703,
+     "engine_selected": 0.05157661437988281
+    },
+    "judge_month_steps": 536016,
+    "judge_padded_month_steps": 0,
+    "judge_seconds": 53.266658782958984,
+    "judge_calls": 17,
+    "engine_requests": 186656,
+    "engine_cache_hits": 96174,
+    "engine_replays": 90098,
+    "engine_replays_remote": 61147,
+    "engine_city_months_replayed": 2162352,
+    "engine_seconds": 51.3558464050293,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 21218,
+    "shared_month_steps_computed": 480000,
+    "oracle_distinct_replays_by_purpose": {
+     "pool rows, nine seeds": 17118,
+     "behaviour table, oracle seeds": 3744,
+     "selected plans, nine seeds": 36,
+     "selected plans, oracle seeds": 320
+    }
+   },
+   "phase2": {
+    "seconds": 5.38263726234436,
+    "timing": {
+     "floors_best_of_n_s0": 0.41205811500549316,
+     "floors_cem_s0": 3.995063543319702,
+     "floors_random_s0": 0.9704585075378418
+    },
+    "engine_requests": 57501,
+    "engine_cache_hits": 49562,
+    "engine_replays": 7939,
+    "engine_replays_remote": 5816,
+    "engine_city_months_replayed": 190536,
+    "engine_seconds": 3.7925808429718018,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 56845,
+    "oracle_distinct_replays_by_purpose": {
+     "floors best_of_n: nine seeds": 8874,
+     "floors best_of_n: oracle seeds": 128,
+     "floors cem: nine seeds": 9999,
+     "floors cem: oracle seeds": 128,
+     "floors random: nine seeds": 8244,
+     "floors random: oracle seeds": 29472
+    }
+   }
+  },
+  {
+   "instance": "ho-g-18-v0|recover|H24",
+   "phase1": {
+    "seconds": 41.11296343803406,
+    "timing": {
+     "proposals": 12.39364504814148,
+     "pool_engine": 0.34925317764282227,
+     "pool_verdicts": 0.5612356662750244,
+     "builder_scores": 5.679152727127075,
+     "attack_cem_s0": 22.05731511116028,
+     "attack_random_s0": 0.00048828125,
+     "attack_best_of_n_s0": 0.0004382133483886719,
+     "attack_random_verdict_s0": 0.0004317760467529297,
+     "verdict_selected": 0.0071566104888916016,
+     "engine_selected": 0.05234956741333008
+    },
+    "judge_month_steps": 535824,
+    "judge_padded_month_steps": 0,
+    "judge_seconds": 40.55058717727661,
+    "judge_calls": 17,
+    "engine_requests": 186624,
+    "engine_cache_hits": 121646,
+    "engine_replays": 63794,
+    "engine_replays_remote": 43562,
+    "engine_city_months_replayed": 1531056,
+    "engine_seconds": 38.394366979599,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 12672,
+    "shared_month_steps_computed": 480000,
+    "oracle_distinct_replays_by_purpose": {
+     "pool rows, nine seeds": 9180,
+     "behaviour table, oracle seeds": 3264,
+     "selected plans, nine seeds": 36,
+     "selected plans, oracle seeds": 192
+    }
+   },
+   "phase2": {
+    "seconds": 5.963839530944824,
+    "timing": {
+     "floors_best_of_n_s0": 0.16915273666381836,
+     "floors_cem_s0": 5.05628514289856,
+     "floors_random_s0": 0.7331976890563965
+    },
+    "engine_requests": 42811,
+    "engine_cache_hits": 34872,
+    "engine_replays": 7939,
+    "engine_replays_remote": 5715,
+    "engine_city_months_replayed": 190536,
+    "engine_seconds": 4.831716060638428,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 42155,
+    "oracle_distinct_replays_by_purpose": {
+     "floors best_of_n: nine seeds": 3303,
+     "floors best_of_n: oracle seeds": 128,
+     "floors cem: nine seeds": 9999,
+     "floors cem: oracle seeds": 128,
+     "floors random: nine seeds": 5877,
+     "floors random: oracle seeds": 22720
+    }
+   }
+  },
+  {
+   "instance": "ho-g-23-v0|recover|H24",
+   "phase1": {
+    "seconds": 51.56150937080383,
+    "timing": {
+     "proposals": 17.047874212265015,
+     "pool_engine": 0.2123548984527588,
+     "pool_verdicts": 0.43100762367248535,
+     "builder_scores": 2.1255762577056885,
+     "attack_cem_s0": 31.659289360046387,
+     "attack_random_s0": 0.0004932880401611328,
+     "attack_best_of_n_s0": 0.0004305839538574219,
+     "attack_random_verdict_s0": 0.00045561790466308594,
+     "verdict_selected": 0.007064104080200195,
+     "engine_selected": 0.06575965881347656
+    },
+    "judge_month_steps": 535824,
+    "judge_padded_month_steps": 0,
+    "judge_seconds": 51.14963221549988,
+    "judge_calls": 17,
+    "engine_requests": 186624,
+    "engine_cache_hits": 127662,
+    "engine_replays": 54962,
+    "engine_replays_remote": 37355,
+    "engine_city_months_replayed": 1319088,
+    "engine_seconds": 49.573298931121826,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 10534,
+    "shared_month_steps_computed": 480000,
+    "oracle_distinct_replays_by_purpose": {
+     "pool rows, nine seeds": 6786,
+     "behaviour table, oracle seeds": 3424,
+     "selected plans, nine seeds": 36,
+     "selected plans, oracle seeds": 288
+    }
+   },
+   "phase2": {
+    "seconds": 9.081571340560913,
+    "timing": {
+     "floors_best_of_n_s0": 0.13465404510498047,
+     "floors_cem_s0": 8.210103988647461,
+     "floors_random_s0": 0.7319648265838623
+    },
+    "engine_requests": 39649,
+    "engine_cache_hits": 31710,
+    "engine_replays": 7939,
+    "engine_replays_remote": 5453,
+    "engine_city_months_replayed": 190536,
+    "engine_seconds": 7.976797342300415,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 38993,
+    "oracle_distinct_replays_by_purpose": {
+     "floors best_of_n: nine seeds": 1899,
+     "floors best_of_n: oracle seeds": 128,
+     "floors cem: nine seeds": 9999,
+     "floors cem: oracle seeds": 128,
+     "floors random: nine seeds": 4887,
+     "floors random: oracle seeds": 21952
+    }
+   }
+  },
+  {
+   "instance": "ho-g-33-v0|recover|H24",
+   "phase1": {
+    "seconds": 87.76444935798645,
+    "timing": {
+     "proposals": 26.10961079597473,
+     "pool_engine": 0.23969101905822754,
+     "pool_verdicts": 0.44797539710998535,
+     "builder_scores": 25.12210440635681,
+     "attack_cem_s0": 35.7342255115509,
+     "attack_random_s0": 0.0005085468292236328,
+     "attack_best_of_n_s0": 0.00045752525329589844,
+     "attack_random_verdict_s0": 0.0004711151123046875,
+     "verdict_selected": 0.007539033889770508,
+     "engine_selected": 0.0862429141998291
+    },
+    "judge_month_steps": 535632,
+    "judge_padded_month_steps": 0,
+    "judge_seconds": 87.01538562774658,
+    "judge_calls": 17,
+    "engine_requests": 186592,
+    "engine_cache_hits": 100526,
+    "engine_replays": 84018,
+    "engine_replays_remote": 54943,
+    "engine_city_months_replayed": 2016432,
+    "engine_seconds": 84.10932397842407,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 19331,
+    "shared_month_steps_computed": 480000,
+    "oracle_distinct_replays_by_purpose": {
+     "pool rows, nine seeds": 15327,
+     "behaviour table, oracle seeds": 3712,
+     "selected plans, nine seeds": 36,
+     "selected plans, oracle seeds": 256
+    }
+   },
+   "phase2": {
+    "seconds": 10.041664361953735,
+    "timing": {
+     "floors_best_of_n_s0": 0.29439854621887207,
+     "floors_cem_s0": 8.848650455474854,
+     "floors_random_s0": 0.8922619819641113
+    },
+    "engine_requests": 54686,
+    "engine_cache_hits": 46747,
+    "engine_replays": 7939,
+    "engine_replays_remote": 5399,
+    "engine_city_months_replayed": 190536,
+    "engine_seconds": 8.665216445922852,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 54030,
+    "oracle_distinct_replays_by_purpose": {
+     "floors best_of_n: nine seeds": 7857,
+     "floors best_of_n: oracle seeds": 128,
+     "floors cem: nine seeds": 9999,
+     "floors cem: oracle seeds": 128,
+     "floors random: nine seeds": 7470,
+     "floors random: oracle seeds": 28448
+    }
+   }
+  },
+  {
+   "instance": "ho-g-38-v0|recover|H24",
+   "phase1": {
+    "seconds": 86.01906967163086,
+    "timing": {
+     "proposals": 24.713074445724487,
+     "pool_engine": 0.25811076164245605,
+     "pool_verdicts": 0.5749499797821045,
+     "builder_scores": 27.964972972869873,
+     "attack_cem_s0": 32.39859580993652,
+     "attack_random_s0": 0.0005233287811279297,
+     "attack_best_of_n_s0": 0.0004801750183105469,
+     "attack_random_verdict_s0": 0.0004801750183105469,
+     "verdict_selected": 0.009437322616577148,
+     "engine_selected": 0.08623933792114258
+    },
+    "judge_month_steps": 536208,
+    "judge_padded_month_steps": 0,
+    "judge_seconds": 85.39889478683472,
+    "judge_calls": 17,
+    "engine_requests": 186688,
+    "engine_cache_hits": 96046,
+    "engine_replays": 90514,
+    "engine_replays_remote": 60578,
+    "engine_city_months_replayed": 2172336,
+    "engine_seconds": 82.85405206680298,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 21235,
+    "shared_month_steps_computed": 480000,
+    "oracle_distinct_replays_by_purpose": {
+     "pool rows, nine seeds": 17199,
+     "behaviour table, oracle seeds": 3680,
+     "selected plans, nine seeds": 36,
+     "selected plans, oracle seeds": 320
+    }
+   },
+   "phase2": {
+    "seconds": 8.218851566314697,
+    "timing": {
+     "floors_best_of_n_s0": 0.18158602714538574,
+     "floors_cem_s0": 7.181970834732056,
+     "floors_random_s0": 0.8499369621276855
+    },
+    "engine_requests": 57582,
+    "engine_cache_hits": 49643,
+    "engine_replays": 7939,
+    "engine_replays_remote": 5683,
+    "engine_city_months_replayed": 190536,
+    "engine_seconds": 7.031593561172485,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 56926,
+    "oracle_distinct_replays_by_purpose": {
+     "floors best_of_n: nine seeds": 8937,
+     "floors best_of_n: oracle seeds": 96,
+     "floors cem: nine seeds": 9999,
+     "floors cem: oracle seeds": 128,
+     "floors random: nine seeds": 8262,
+     "floors random: oracle seeds": 29504
+    }
+   }
+  },
+  {
+   "instance": "ho-g-04-v0|recover|H24",
+   "phase1": {
+    "seconds": 53.10493302345276,
+    "timing": {
+     "proposals": 16.13816475868225,
+     "pool_engine": 0.2435319423675537,
+     "pool_verdicts": 0.4847698211669922,
+     "builder_scores": 17.55984139442444,
+     "attack_cem_s0": 18.59927010536194,
+     "attack_random_s0": 0.0005884170532226562,
+     "attack_best_of_n_s0": 0.0005567073822021484,
+     "attack_random_verdict_s0": 0.0005438327789306641,
+     "verdict_selected": 0.008959054946899414,
+     "engine_selected": 0.05436348915100098
+    },
+    "judge_month_steps": 536016,
+    "judge_padded_month_steps": 0,
+    "judge_seconds": 52.54175305366516,
+    "judge_calls": 17,
+    "engine_requests": 186656,
+    "engine_cache_hits": 95334,
+    "engine_replays": 91322,
+    "engine_replays_remote": 63237,
+    "engine_city_months_replayed": 2191728,
+    "engine_seconds": 50.3389208316803,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 21547,
+    "shared_month_steps_computed": 480000,
+    "oracle_distinct_replays_by_purpose": {
+     "pool rows, nine seeds": 17415,
+     "behaviour table, oracle seeds": 3776,
+     "selected plans, nine seeds": 36,
+     "selected plans, oracle seeds": 320
+    }
+   },
+   "phase2": {
+    "seconds": 5.437082529067993,
+    "timing": {
+     "floors_best_of_n_s0": 0.16025948524475098,
+     "floors_cem_s0": 4.512199878692627,
+     "floors_random_s0": 0.7590372562408447
+    },
+    "engine_requests": 58214,
+    "engine_cache_hits": 50243,
+    "engine_replays": 7971,
+    "engine_replays_remote": 5611,
+    "engine_city_months_replayed": 191304,
+    "engine_seconds": 4.372849941253662,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 57558,
+    "oracle_distinct_replays_by_purpose": {
+     "floors best_of_n: nine seeds": 9000,
+     "floors best_of_n: oracle seeds": 96,
+     "floors cem: nine seeds": 9999,
+     "floors cem: oracle seeds": 128,
+     "floors random: nine seeds": 8415,
+     "floors random: oracle seeds": 29920
+    }
+   }
+  },
+  {
+   "instance": "ho-g-09-v0|power|H24",
+   "phase1": {
+    "seconds": 21.502298831939697,
+    "timing": {
+     "proposals": 1.1206064224243164,
+     "pool_engine": 0.323253870010376,
+     "pool_verdicts": 0.4811689853668213,
+     "builder_scores": 2.866994619369507,
+     "attack_cem_s0": 16.635499000549316,
+     "attack_random_s0": 0.0006058216094970703,
+     "attack_best_of_n_s0": 0.0007421970367431641,
+     "attack_random_verdict_s0": 0.000591278076171875,
+     "verdict_selected": 0.007033586502075195,
+     "engine_selected": 0.05359148979187012
+    },
+    "judge_month_steps": 535440,
+    "judge_padded_month_steps": 0,
+    "judge_seconds": 20.623836755752563,
+    "judge_calls": 17,
+    "engine_requests": 186560,
+    "engine_cache_hits": 158382,
+    "engine_replays": 28178,
+    "engine_replays_remote": 20426,
+    "engine_city_months_replayed": 676272,
+    "engine_seconds": 16.281221866607666,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 21135,
+    "shared_month_steps_computed": 480000,
+    "oracle_distinct_replays_by_purpose": {
+     "pool rows, nine seeds": 17163,
+     "behaviour table, oracle seeds": 3680,
+     "selected plans, nine seeds": 36,
+     "selected plans, oracle seeds": 256
+    }
+   },
+   "phase2": {
+    "seconds": 5.698729991912842,
+    "timing": {
+     "floors_best_of_n_s0": 0.19642877578735352,
+     "floors_cem_s0": 4.699007511138916,
+     "floors_random_s0": 0.7979695796966553
+    },
+    "engine_requests": 57578,
+    "engine_cache_hits": 49635,
+    "engine_replays": 7943,
+    "engine_replays_remote": 5544,
+    "engine_city_months_replayed": 190632,
+    "engine_seconds": 4.563616752624512,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 56922,
+    "oracle_distinct_replays_by_purpose": {
+     "floors best_of_n: nine seeds": 8928,
+     "floors best_of_n: oracle seeds": 96,
+     "floors cem: nine seeds": 9999,
+     "floors cem: oracle seeds": 128,
+     "floors random: nine seeds": 8235,
+     "floors random: oracle seeds": 29536
+    }
+   }
+  },
+  {
+   "instance": "ho-g-14-v0|power|H24",
+   "phase1": {
+    "seconds": 48.33892035484314,
+    "timing": {
+     "proposals": 15.367842435836792,
+     "pool_engine": 0.24812746047973633,
+     "pool_verdicts": 0.4764840602874756,
+     "builder_scores": 11.937928199768066,
+     "attack_cem_s0": 20.23305344581604,
+     "attack_random_s0": 0.0005507469177246094,
+     "attack_best_of_n_s0": 0.0004980564117431641,
+     "attack_random_verdict_s0": 0.0004885196685791016,
+     "verdict_selected": 0.007328510284423828,
+     "engine_selected": 0.05486106872558594
+    },
+    "judge_month_steps": 535440,
+    "judge_padded_month_steps": 0,
+    "judge_seconds": 47.83528709411621,
+    "judge_calls": 17,
+    "engine_requests": 186560,
+    "engine_cache_hits": 101550,
+    "engine_replays": 81394,
+    "engine_replays_remote": 56079,
+    "engine_city_months_replayed": 1953456,
+    "engine_seconds": 45.74280858039856,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 18630,
+    "shared_month_steps_computed": 480000,
+    "oracle_distinct_replays_by_purpose": {
+     "pool rows, nine seeds": 14562,
+     "behaviour table, oracle seeds": 3808,
+     "selected plans, nine seeds": 36,
+     "selected plans, oracle seeds": 224
+    }
+   },
+   "phase2": {
+    "seconds": 5.455470323562622,
+    "timing": {
+     "floors_best_of_n_s0": 0.1223294734954834,
+     "floors_cem_s0": 4.603108644485474,
+     "floors_random_s0": 0.7240040302276611
+    },
+    "engine_requests": 54145,
+    "engine_cache_hits": 46279,
+    "engine_replays": 7866,
+    "engine_replays_remote": 5532,
+    "engine_city_months_replayed": 188784,
+    "engine_seconds": 4.472073078155518,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 53489,
+    "oracle_distinct_replays_by_purpose": {
+     "floors best_of_n: nine seeds": 7101,
+     "floors best_of_n: oracle seeds": 96,
+     "floors cem: nine seeds": 9999,
+     "floors cem: oracle seeds": 128,
+     "floors random: nine seeds": 7461,
+     "floors random: oracle seeds": 28704
+    }
+   }
+  },
+  {
+   "instance": "ho-g-19-v0|power|H24",
+   "phase1": {
+    "seconds": 50.02970504760742,
+    "timing": {
+     "proposals": 14.792852640151978,
+     "pool_engine": 0.32897090911865234,
+     "pool_verdicts": 0.4923725128173828,
+     "builder_scores": 12.18834376335144,
+     "attack_cem_s0": 22.11936640739441,
+     "attack_random_s0": 0.0011911392211914062,
+     "attack_best_of_n_s0": 0.0008246898651123047,
+     "attack_random_verdict_s0": 0.0005514621734619141,
+     "verdict_selected": 0.01066732406616211,
+     "engine_selected": 0.0827643871307373
+    },
+    "judge_month_steps": 535248,
+    "judge_padded_month_steps": 0,
+    "judge_seconds": 49.40450310707092,
+    "judge_calls": 17,
+    "engine_requests": 186528,
+    "engine_cache_hits": 103685,
+    "engine_replays": 80059,
+    "engine_replays_remote": 54816,
+    "engine_city_months_replayed": 1921416,
+    "engine_seconds": 47.42182803153992,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 18206,
+    "shared_month_steps_computed": 480000,
+    "oracle_distinct_replays_by_purpose": {
+     "pool rows, nine seeds": 14202,
+     "behaviour table, oracle seeds": 3744,
+     "selected plans, nine seeds": 36,
+     "selected plans, oracle seeds": 224
+    }
+   },
+   "phase2": {
+    "seconds": 5.950313091278076,
+    "timing": {
+     "floors_best_of_n_s0": 0.12913751602172852,
+     "floors_cem_s0": 5.113332033157349,
+     "floors_random_s0": 0.7033147811889648
+    },
+    "engine_requests": 53433,
+    "engine_cache_hits": 45499,
+    "engine_replays": 7934,
+    "engine_replays_remote": 5342,
+    "engine_city_months_replayed": 190416,
+    "engine_seconds": 4.973257541656494,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 52777,
+    "oracle_distinct_replays_by_purpose": {
+     "floors best_of_n: nine seeds": 7119,
+     "floors best_of_n: oracle seeds": 96,
+     "floors cem: nine seeds": 9999,
+     "floors cem: oracle seeds": 128,
+     "floors random: nine seeds": 7083,
+     "floors random: oracle seeds": 28352
+    }
+   }
+  },
+  {
+   "instance": "ho-g-24-v0|power|H24",
+   "phase1": {
+    "seconds": 75.29191541671753,
+    "timing": {
+     "proposals": 21.626017093658447,
+     "pool_engine": 0.24965167045593262,
+     "pool_verdicts": 0.489544153213501,
+     "builder_scores": 22.66575837135315,
+     "attack_cem_s0": 30.196834325790405,
+     "attack_random_s0": 0.0005424022674560547,
+     "attack_best_of_n_s0": 0.0004918575286865234,
+     "attack_random_verdict_s0": 0.0005109310150146484,
+     "verdict_selected": 0.007709503173828125,
+     "engine_selected": 0.040984153747558594
+    },
+    "judge_month_steps": 535632,
+    "judge_padded_month_steps": 0,
+    "judge_seconds": 74.75960159301758,
+    "judge_calls": 17,
+    "engine_requests": 186592,
+    "engine_cache_hits": 96791,
+    "engine_replays": 88841,
+    "engine_replays_remote": 59578,
+    "engine_city_months_replayed": 2132184,
+    "engine_seconds": 72.5085220336914,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 20717,
+    "shared_month_steps_computed": 480000,
+    "oracle_distinct_replays_by_purpose": {
+     "pool rows, nine seeds": 16713,
+     "behaviour table, oracle seeds": 3776,
+     "selected plans, nine seeds": 36,
+     "selected plans, oracle seeds": 192
+    }
+   },
+   "phase2": {
+    "seconds": 2.684241533279419,
+    "timing": {
+     "floors_best_of_n_s0": 0.16260719299316406,
+     "floors_cem_s0": 1.8014538288116455,
+     "floors_random_s0": 0.7149806022644043
+    },
+    "engine_requests": 57064,
+    "engine_cache_hits": 55232,
+    "engine_replays": 1832,
+    "engine_replays_remote": 1196,
+    "engine_city_months_replayed": 43968,
+    "engine_seconds": 1.5994632244110107,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 56408,
+    "oracle_distinct_replays_by_purpose": {
+     "floors best_of_n: nine seeds": 8568,
+     "floors best_of_n: oracle seeds": 64,
+     "floors cem: nine seeds": 9999,
+     "floors cem: oracle seeds": 128,
+     "floors random: nine seeds": 8145,
+     "floors random: oracle seeds": 29504
+    }
+   }
+  },
+  {
+   "instance": "ho-g-29-v0|power|H24",
+   "phase1": {
+    "seconds": 46.60559916496277,
+    "timing": {
+     "proposals": 14.76740574836731,
+     "pool_engine": 0.27992773056030273,
+     "pool_verdicts": 0.4053151607513428,
+     "builder_scores": 5.443750381469727,
+     "attack_cem_s0": 25.618111610412598,
+     "attack_random_s0": 0.0004968643188476562,
+     "attack_best_of_n_s0": 0.0004405975341796875,
+     "attack_random_verdict_s0": 0.00043773651123046875,
+     "verdict_selected": 0.005730628967285156,
+     "engine_selected": 0.0706484317779541
+    },
+    "judge_month_steps": 535248,
+    "judge_padded_month_steps": 0,
+    "judge_seconds": 46.08151936531067,
+    "judge_calls": 17,
+    "engine_requests": 186528,
+    "engine_cache_hits": 119621,
+    "engine_replays": 63035,
+    "engine_replays_remote": 43585,
+    "engine_city_months_replayed": 1512840,
+    "engine_seconds": 44.40731978416443,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 12980,
+    "shared_month_steps_computed": 480000,
+    "oracle_distinct_replays_by_purpose": {
+     "pool rows, nine seeds": 9072,
+     "behaviour table, oracle seeds": 3680,
+     "selected plans, nine seeds": 36,
+     "selected plans, oracle seeds": 192
+    }
+   },
+   "phase2": {
+    "seconds": 5.87737250328064,
+    "timing": {
+     "floors_best_of_n_s0": 0.07541823387145996,
+     "floors_cem_s0": 5.198527574539185,
+     "floors_random_s0": 0.5963821411132812
+    },
+    "engine_requests": 43823,
+    "engine_cache_hits": 35889,
+    "engine_replays": 7934,
+    "engine_replays_remote": 5696,
+    "engine_city_months_replayed": 190416,
+    "engine_seconds": 5.062610149383545,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 43167,
+    "oracle_distinct_replays_by_purpose": {
+     "floors best_of_n: nine seeds": 3384,
+     "floors best_of_n: oracle seeds": 32,
+     "floors cem: nine seeds": 9999,
+     "floors cem: oracle seeds": 128,
+     "floors random: nine seeds": 5688,
+     "floors random: oracle seeds": 23936
+    }
+   }
+  },
+  {
+   "instance": "ho-g-34-v0|power|H24",
+   "phase1": {
+    "seconds": 73.6676766872406,
+    "timing": {
+     "proposals": 21.840744018554688,
+     "pool_engine": 0.23968982696533203,
+     "pool_verdicts": 0.3926360607147217,
+     "builder_scores": 8.81326699256897,
+     "attack_cem_s0": 42.2489218711853,
+     "attack_random_s0": 0.00054168701171875,
+     "attack_best_of_n_s0": 0.0004875659942626953,
+     "attack_random_verdict_s0": 0.0005047321319580078,
+     "verdict_selected": 0.00802922248840332,
+     "engine_selected": 0.11028146743774414
+    },
+    "judge_month_steps": 535824,
+    "judge_padded_month_steps": 0,
+    "judge_seconds": 73.16879224777222,
+    "judge_calls": 17,
+    "engine_requests": 186624,
+    "engine_cache_hits": 122085,
+    "engine_replays": 61627,
+    "engine_replays_remote": 39697,
+    "engine_city_months_replayed": 1479048,
+    "engine_seconds": 71.60320734977722,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 12588,
+    "shared_month_steps_computed": 480000,
+    "oracle_distinct_replays_by_purpose": {
+     "pool rows, nine seeds": 8712,
+     "behaviour table, oracle seeds": 3552,
+     "selected plans, nine seeds": 36,
+     "selected plans, oracle seeds": 288
+    }
+   },
+   "phase2": {
+    "seconds": 9.634388208389282,
+    "timing": {
+     "floors_best_of_n_s0": 0.06397104263305664,
+     "floors_cem_s0": 9.019550561904907,
+     "floors_random_s0": 0.5453357696533203
+    },
+    "engine_requests": 42375,
+    "engine_cache_hits": 34441,
+    "engine_replays": 7934,
+    "engine_replays_remote": 5587,
+    "engine_city_months_replayed": 190416,
+    "engine_seconds": 8.878000020980835,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 41719,
+    "oracle_distinct_replays_by_purpose": {
+     "floors best_of_n: nine seeds": 3222,
+     "floors best_of_n: oracle seeds": 128,
+     "floors cem: nine seeds": 9999,
+     "floors cem: oracle seeds": 128,
+     "floors random: oracle seeds": 22752,
+     "floors random: nine seeds": 5490
+    }
+   }
+  },
+  {
+   "instance": "ho-g-39-v0|power|H24",
+   "phase1": {
+    "seconds": 76.26810598373413,
+    "timing": {
+     "proposals": 22.97226905822754,
+     "pool_engine": 0.24126458168029785,
+     "pool_verdicts": 0.46094465255737305,
+     "builder_scores": 15.442203998565674,
+     "attack_cem_s0": 36.953410387039185,
+     "attack_random_s0": 0.0009143352508544922,
+     "attack_best_of_n_s0": 0.0008282661437988281,
+     "attack_random_verdict_s0": 0.00047469139099121094,
+     "verdict_selected": 0.011950254440307617,
+     "engine_selected": 0.1687166690826416
+    },
+    "judge_month_steps": 535440,
+    "judge_padded_month_steps": 0,
+    "judge_seconds": 75.63406777381897,
+    "judge_calls": 17,
+    "engine_requests": 186560,
+    "engine_cache_hits": 108142,
+    "engine_replays": 75378,
+    "engine_replays_remote": 49533,
+    "engine_city_months_replayed": 1809072,
+    "engine_seconds": 73.80510997772217,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 16629,
+    "shared_month_steps_computed": 480000,
+    "oracle_distinct_replays_by_purpose": {
+     "pool rows, nine seeds": 12753,
+     "behaviour table, oracle seeds": 3616,
+     "selected plans, nine seeds": 36,
+     "selected plans, oracle seeds": 224
+    }
+   },
+   "phase2": {
+    "seconds": 9.382301568984985,
+    "timing": {
+     "floors_best_of_n_s0": 0.12879419326782227,
+     "floors_cem_s0": 8.582486867904663,
+     "floors_random_s0": 0.6627378463745117
+    },
+    "engine_requests": 50800,
+    "engine_cache_hits": 42943,
+    "engine_replays": 7857,
+    "engine_replays_remote": 5249,
+    "engine_city_months_replayed": 188568,
+    "engine_seconds": 8.45784592628479,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 50144,
+    "oracle_distinct_replays_by_purpose": {
+     "floors best_of_n: nine seeds": 5868,
+     "floors best_of_n: oracle seeds": 64,
+     "floors cem: nine seeds": 9999,
+     "floors cem: oracle seeds": 128,
+     "floors random: nine seeds": 6885,
+     "floors random: oracle seeds": 27200
+    }
+   }
+  },
+  {
+   "instance": "ho-g-28-v0|power|H24",
+   "phase1": {
+    "seconds": 52.26961278915405,
+    "timing": {
+     "proposals": 16.540658235549927,
+     "pool_engine": 0.297853946685791,
+     "pool_verdicts": 0.48203158378601074,
+     "builder_scores": 11.0260169506073,
+     "attack_cem_s0": 23.820077657699585,
+     "attack_random_s0": 0.0011637210845947266,
+     "attack_best_of_n_s0": 0.0008335113525390625,
+     "attack_random_verdict_s0": 0.0005939006805419922,
+     "verdict_selected": 0.011702537536621094,
+     "engine_selected": 0.07380127906799316
+    },
+    "judge_month_steps": 535632,
+    "judge_padded_month_steps": 0,
+    "judge_seconds": 51.66506552696228,
+    "judge_calls": 17,
+    "engine_requests": 186592,
+    "engine_cache_hits": 110117,
+    "engine_replays": 72603,
+    "engine_replays_remote": 51452,
+    "engine_city_months_replayed": 1742472,
+    "engine_seconds": 49.4559907913208,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 16006,
+    "shared_month_steps_computed": 480000,
+    "oracle_distinct_replays_by_purpose": {
+     "pool rows, nine seeds": 11970,
+     "behaviour table, oracle seeds": 3744,
+     "selected plans, nine seeds": 36,
+     "selected plans, oracle seeds": 256
+    }
+   },
+   "phase2": {
+    "seconds": 6.512021780014038,
+    "timing": {
+     "floors_best_of_n_s0": 0.0933067798614502,
+     "floors_cem_s0": 5.7530128955841064,
+     "floors_random_s0": 0.660496711730957
+    },
+    "engine_requests": 49377,
+    "engine_cache_hits": 41484,
+    "engine_replays": 7893,
+    "engine_replays_remote": 5455,
+    "engine_city_months_replayed": 189432,
+    "engine_seconds": 5.622222185134888,
+    "engine_workers": 12,
+    "oracle_distinct_replays": 48721,
+    "oracle_distinct_replays_by_purpose": {
+     "floors best_of_n: nine seeds": 5517,
+     "floors best_of_n: oracle seeds": 64,
+     "floors cem: nine seeds": 9999,
+     "floors cem: oracle seeds": 128,
+     "floors random: nine seeds": 6453,
+     "floors random: oracle seeds": 26560
+    }
+   }
+  }
+ ]
+}

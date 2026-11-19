@@ -1,0 +1,229 @@
+{
+ "comment": "The brief's 16 runs, same runs, budgets and settings as ladder-v1 (ladder_queue_bk.json), under the corrected model: censored likelihood at the engine's bounds (dc.model.BOUND_SOURCES; no clamp after sampling), the three stages in SIZES (map dynamics, census read off the next map, bookkeeping on scalars; bk_width 256 / 384 / 512, so model_overrides now equal the defaults), evaluation with decoding a on the development selection (every checkpoint) and on test and train_eval (final checkpoint). Third stage: 2 scalar-only updates of 4,096 rows per trunk step from the run's own index, 64 third-stage rows per trunk sample: 384M per 6M-sample one-step run, about twice the 200M at which the step-1 diagnostic's valves, score and treasury had converged (results/fidelity/bookkeeping/a/table.md: res_valve 0.136 at 50M, 0.069 at 200M), and 96M more in each self-forcing run, which starts from its base run's third stage. Not 10: on train_small (300,000 transitions) 2 updates are already 1,280 passes over the run's rows (128 on train_full), 10 would be 6,400 with no held-out stopping, and the third stage's quality does not feed back into the trunk's training. Pilot 6 used 10 updates only to match pilot 5. One-step: AdamW 8e-4, warm-up 3%, cosine to 5%, batch 128. Self-forcing: 4-month windows, half teacher-forced, peak lr 2e-4, from the base run's final checkpoint.",
+ "defaults": {
+  "batch_size": 128,
+  "budget_weight": 6.0,
+  "table_lr_mult": 10.0,
+  "workers": 6,
+  "bk_updates": 2,
+  "bk_batch": 4096
+ },
+ "runs": [
+  {
+   "name": "os_15m_small",
+   "size": "15m",
+   "index": "train_small",
+   "mode": "onestep",
+   "samples": 6000000,
+   "seed": 0,
+   "lr": 0.0008,
+   "model_overrides": {
+    "bookkeeping": true,
+    "bk_width": 256
+   }
+  },
+  {
+   "name": "os_15m_full",
+   "size": "15m",
+   "index": "train_full",
+   "mode": "onestep",
+   "samples": 6000000,
+   "seed": 0,
+   "lr": 0.0008,
+   "model_overrides": {
+    "bookkeeping": true,
+    "bk_width": 256
+   }
+  },
+  {
+   "name": "os_50m_small",
+   "size": "50m",
+   "index": "train_small",
+   "mode": "onestep",
+   "samples": 6000000,
+   "seed": 0,
+   "lr": 0.0008,
+   "model_overrides": {
+    "bookkeeping": true,
+    "bk_width": 384
+   }
+  },
+  {
+   "name": "os_50m_full",
+   "size": "50m",
+   "index": "train_full",
+   "mode": "onestep",
+   "samples": 6000000,
+   "seed": 0,
+   "lr": 0.0008,
+   "model_overrides": {
+    "bookkeeping": true,
+    "bk_width": 384
+   }
+  },
+  {
+   "name": "os_100m_small",
+   "size": "100m",
+   "index": "train_small",
+   "mode": "onestep",
+   "samples": 6000000,
+   "seed": 0,
+   "lr": 0.0008,
+   "model_overrides": {
+    "bookkeeping": true,
+    "bk_width": 512
+   }
+  },
+  {
+   "name": "os_100m_full",
+   "size": "100m",
+   "index": "train_full",
+   "mode": "onestep",
+   "samples": 6000000,
+   "seed": 0,
+   "lr": 0.0008,
+   "model_overrides": {
+    "bookkeeping": true,
+    "bk_width": 512
+   }
+  },
+  {
+   "name": "sf_15m_small",
+   "size": "15m",
+   "index": "train_small",
+   "mode": "selfforce",
+   "samples": 1500000,
+   "seed": 0,
+   "lr": 0.0002,
+   "init_from": "os_15m_small",
+   "model_overrides": {
+    "bookkeeping": true,
+    "bk_width": 256
+   }
+  },
+  {
+   "name": "sf_15m_full",
+   "size": "15m",
+   "index": "train_full",
+   "mode": "selfforce",
+   "samples": 1500000,
+   "seed": 0,
+   "lr": 0.0002,
+   "init_from": "os_15m_full",
+   "model_overrides": {
+    "bookkeeping": true,
+    "bk_width": 256
+   }
+  },
+  {
+   "name": "sf_50m_small",
+   "size": "50m",
+   "index": "train_small",
+   "mode": "selfforce",
+   "samples": 1500000,
+   "seed": 0,
+   "lr": 0.0002,
+   "init_from": "os_50m_small",
+   "model_overrides": {
+    "bookkeeping": true,
+    "bk_width": 384
+   }
+  },
+  {
+   "name": "sf_50m_full",
+   "size": "50m",
+   "index": "train_full",
+   "mode": "selfforce",
+   "samples": 1500000,
+   "seed": 0,
+   "lr": 0.0002,
+   "init_from": "os_50m_full",
+   "model_overrides": {
+    "bookkeeping": true,
+    "bk_width": 384
+   }
+  },
+  {
+   "name": "sf_100m_small",
+   "size": "100m",
+   "index": "train_small",
+   "mode": "selfforce",
+   "samples": 1500000,
+   "seed": 0,
+   "lr": 0.0002,
+   "init_from": "os_100m_small",
+   "model_overrides": {
+    "bookkeeping": true,
+    "bk_width": 512
+   }
+  },
+  {
+   "name": "sf_100m_full",
+   "size": "100m",
+   "index": "train_full",
+   "mode": "selfforce",
+   "samples": 1500000,
+   "seed": 0,
+   "lr": 0.0002,
+   "init_from": "os_100m_full",
+   "model_overrides": {
+    "bookkeeping": true,
+    "bk_width": 512
+   }
+  },
+  {
+   "name": "os_50m_full_s1",
+   "size": "50m",
+   "index": "train_full",
+   "mode": "onestep",
+   "samples": 6000000,
+   "seed": 1,
+   "lr": 0.0008,
+   "model_overrides": {
+    "bookkeeping": true,
+    "bk_width": 384
+   }
+  },
+  {
+   "name": "os_50m_full_s2",
+   "size": "50m",
+   "index": "train_full",
+   "mode": "onestep",
+   "samples": 6000000,
+   "seed": 2,
+   "lr": 0.0008,
+   "model_overrides": {
+    "bookkeeping": true,
+    "bk_width": 384
+   }
+  },
+  {
+   "name": "sf_50m_full_s1",
+   "size": "50m",
+   "index": "train_full",
+   "mode": "selfforce",
+   "samples": 1500000,
+   "seed": 1,
+   "lr": 0.0002,
+   "init_from": "os_50m_full_s1",
+   "model_overrides": {
+    "bookkeeping": true,
+    "bk_width": 384
+   }
+  },
+  {
+   "name": "sf_50m_full_s2",
+   "size": "50m",
+   "index": "train_full",
+   "mode": "selfforce",
+   "samples": 1500000,
+   "seed": 2,
+   "lr": 0.0002,
+   "init_from": "os_50m_full_s2",
+   "model_overrides": {
+    "bookkeeping": true,
+    "bk_width": 384
+   }
+  }
+ ]
+}

@@ -1,0 +1,137 @@
+{
+ "design": {
+  "decision": 88,
+  "model": {
+   "model": "emulator",
+   "judge": "emulator",
+   "ckpt_sha256": "7b08be25577b36669ef6b35cdc6cc6a62f927de00d0e69f96496afc1b6934283",
+   "model_src_commit": "2cbd5c2252e9f3b5578edb0057e4b770069fa8f9",
+   "model_config": {
+    "size": "50m",
+    "scalar_stage": "twostage",
+    "ledger": true,
+    "bookkeeping": true
+   },
+   "chunk": 256,
+   "buckets": [
+    16,
+    64,
+    144,
+    256
+   ],
+   "compiled_trunk": false,
+   "fast": {
+    "fast": false
+   },
+   "decoding": {
+    "temperature": 1.0,
+    "overlay": "sample",
+    "source": "model.rollout defaults",
+    "default_decoding": "a",
+    "default_decoding_matches": true
+   },
+   "seeds": null,
+   "seeds_avoid": null,
+   "continuation": null
+  },
+  "tasks_file": "data/tasks_v2_H24.json",
+  "tasks_sha256": "2c35286cf5fa61858c94d83716884f092b7afff228828bc4f2d7b05b9e2c76e5",
+  "tasks_code_sha256": "05d94a02622a79dd07c2a5d8cf5e2bdf5371488c56355f6af16b9a3ee6cd1485",
+  "order_file": "data/replan_order_v1.json",
+  "order_sha256": "e5475dcbe4420e1948fec16dab559e6725642bf4549bd9281a2dd091ba1ebbf5",
+  "n_plans": 8,
+  "H": 24,
+  "oracle_seeds": 32,
+  "K_search": 2,
+  "K_verdict": 8,
+  "verdict_rank": 4,
+  "replan_code_sha256": "530e820de93181367b6f0be51408c8c4ff624be0a6431de826a46a4e253b9fba"
+ },
+ "invocations": [
+  {
+   "argv": [
+    "code/scripts/run_replan.py",
+    "--model",
+    "emulator",
+    "--checkpoint",
+    "<cache>/ckpt/ladder_v2/os_50m_full/samples_006000000.pt",
+    "--instances",
+    "2",
+    "--plans",
+    "8",
+    "--workers",
+    "2",
+    "--device",
+    "cpu",
+    "--no-compile",
+    "--out",
+    "results/replan/dryrun/emulator_cpu"
+   ],
+   "started_utc": "2026-11-12T22:22:59",
+   "host": "host-a",
+   "git": {
+    "rev": "6871a109a1def32443c393825cefa070ec46d2bf",
+    "dirty_files": [
+     "M code/dc/audit.py",
+     "?? code/dc/replan.py",
+     "?? code/scripts/replan_axis.py",
+     "?? code/scripts/run_replan.py",
+     "?? code/tests/test_replan.py",
+     "?? data/replan_order_v1.json",
+     "?? results/audit/ladder/os_100m_full/samples_003000064/tasks_v2x_H24/",
+     "?? results/audit/ladder/os_50m_full/samples_003000064/tasks_v2_H24_cem_seeded/",
+     "?? results/audit/ladder/os_50m_full/samples_006000000/tasks_v2_H24_cem_seeded_1e4_shard8of8/",
+     "?? results/audit/ladder/sf_15m_full/samples_000750080/tasks_v2x_H24/",
+     "?? results/audit/ladder/sf_50m_small/samples_001500032/tasks_v2_H24_cem_seeded/",
+     "?? results/replan/"
+    ],
+    "file_sha256": {
+     "code/dc/replan.py": "530e820de93181367b6f0be51408c8c4ff624be0a6431de826a46a4e253b9fba",
+     "code/dc/audit.py": "ea79479c6c5f1d3ec9b1fd4d725cc1ea7c02e583c9b92ba6b905653ccc441c6b",
+     "code/scripts/run_replan.py": "33b27b19320e625eb93d2c990663f4fa15e109f5e380112147bd50fa1065d812",
+     "code/dc/behaviour.py": "d8cbf8f1f2f2bcc78b623422d3e047383c4e1673cec064f59971deeb0489c846",
+     "code/dc/tasks.py": "05d94a02622a79dd07c2a5d8cf5e2bdf5371488c56355f6af16b9a3ee6cd1485"
+    }
+   },
+   "remote": null,
+   "workers": 2,
+   "describe": {
+    "model": "emulator",
+    "judge": "emulator",
+    "ckpt": "<cache>/ckpt/ladder_v2/os_50m_full/samples_006000000.pt",
+    "model_src": "auto",
+    "model_src_resolved": "2cbd5c2252e9f3b5578edb0057e4b770069fa8f9",
+    "model_src_commit": "2cbd5c2252e9f3b5578edb0057e4b770069fa8f9",
+    "model_py_sha256": "fd9cd9eec0364df780d16968652bd213987fbea3e45717a997aeee1a28c2c191",
+    "samples": 6000000,
+    "ckpt_sha256": "7b08be25577b36669ef6b35cdc6cc6a62f927de00d0e69f96496afc1b6934283",
+    "ckpt_trained_at": "2cbd5c2252e9f3b5578edb0057e4b770069fa8f9",
+    "model_config": {
+     "size": "50m",
+     "scalar_stage": "twostage",
+     "ledger": true,
+     "bookkeeping": true
+    },
+    "device": "cpu",
+    "chunk": 256,
+    "buckets": [
+     16,
+     64,
+     144,
+     256
+    ],
+    "compiled_trunk": false,
+    "fast": {
+     "fast": false
+    },
+    "decoding": {
+     "temperature": 1.0,
+     "overlay": "sample",
+     "source": "model.rollout defaults",
+     "default_decoding": "a",
+     "default_decoding_matches": true
+    }
+   }
+  }
+ ]
+}

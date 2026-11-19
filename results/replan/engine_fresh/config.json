@@ -1,0 +1,103 @@
+{
+ "design": {
+  "decision": 88,
+  "model": {
+   "model": "engine",
+   "judge": "engine-seeds",
+   "ckpt_sha256": null,
+   "model_src_commit": null,
+   "model_config": null,
+   "chunk": null,
+   "buckets": null,
+   "compiled_trunk": null,
+   "fast": null,
+   "decoding": null,
+   "seeds": "seed_for('audit-seedcheck', start, *stream, row, sample)",
+   "seeds_avoid": "the nine residual seeds and the 32 oracle seeds of every task of the start; a reserved draw is replaced by seed_for('audit-seedcheck', start, *stream, row, sample, 'redraw', r)",
+   "continuation": "months 0..t-1 on the realised seed, the generator reseeded at month t with the judge's seed (dc.replan.continued)"
+  },
+  "tasks_file": "data/tasks_v2_H24.json",
+  "tasks_sha256": "2c35286cf5fa61858c94d83716884f092b7afff228828bc4f2d7b05b9e2c76e5",
+  "tasks_code_sha256": "05d94a02622a79dd07c2a5d8cf5e2bdf5371488c56355f6af16b9a3ee6cd1485",
+  "order_file": "data/replan_order_v1.json",
+  "order_sha256": "e5475dcbe4420e1948fec16dab559e6725642bf4549bd9281a2dd091ba1ebbf5",
+  "n_plans": 1000,
+  "H": 24,
+  "oracle_seeds": 32,
+  "K_search": 2,
+  "K_verdict": 8,
+  "verdict_rank": 4,
+  "replan_code_sha256": "79e214b12f40ad1f7a7b565ae1494fab83cae64138421ce8ab24f1bd3de90f71",
+  "controller_version": 3,
+  "seed_stream": "fresh1"
+ },
+ "invocations": [
+  {
+   "argv": [
+    "code/scripts/run_replan.py",
+    "--model",
+    "engine",
+    "--controller-version",
+    "3",
+    "--seed-stream",
+    "fresh1",
+    "--instances",
+    "100",
+    "--plans",
+    "1000",
+    "--workers",
+    "4",
+    "--remote",
+    "host-b",
+    "--remote-workers",
+    "22",
+    "--out",
+    "results/replan/engine_fresh"
+   ],
+   "started_utc": "2026-11-13T06:39:58",
+   "host": "host-a",
+   "git": {
+    "rev": "acababb5e99bbd16c9d3094fce7172e3e7c3dbf3",
+    "dirty_files": [
+     "M code/scripts/analyse_ladder.py",
+     " M paper/main.pdf",
+     " M paper/numbers.tex",
+     " M paper/numbers_ledger.md",
+     " M paper/numbers_manifest.json",
+     " M paper/refs_tex.bib",
+     " M paper/review/main-pdf-check.json",
+     "?? code/tests/test_budget_contrast.py",
+     "?? results/replan/emulator/"
+    ],
+    "file_sha256": {
+     "code/dc/replan.py": "79e214b12f40ad1f7a7b565ae1494fab83cae64138421ce8ab24f1bd3de90f71",
+     "code/dc/audit.py": "ea79479c6c5f1d3ec9b1fd4d725cc1ea7c02e583c9b92ba6b905653ccc441c6b",
+     "code/scripts/run_replan.py": "8b6a277a17e1724d8a310a793b057c033b3db5f4b46fb480c170a1a09fe392b5",
+     "code/dc/behaviour.py": "d8cbf8f1f2f2bcc78b623422d3e047383c4e1673cec064f59971deeb0489c846",
+     "code/dc/tasks.py": "05d94a02622a79dd07c2a5d8cf5e2bdf5371488c56355f6af16b9a3ee6cd1485"
+    }
+   },
+   "remote": {
+    "host": "host-b",
+    "workers": 22,
+    "checked_files": [
+     "code/dc/replan.py",
+     "code/dc/behaviour.py",
+     "code/dc/oracle.py",
+     "code/dc/engine.py",
+     "code/dc/grammar.py",
+     "code/dc/seeds.py"
+    ],
+    "identical_jobs": 9
+   },
+   "workers": 4,
+   "describe": {
+    "model": "engine",
+    "judge": "engine-seeds",
+    "seeds": "seed_for('audit-seedcheck', start, *stream, row, sample)",
+    "seeds_avoid": "the nine residual seeds and the 32 oracle seeds of every task of the start; a reserved draw is replaced by seed_for('audit-seedcheck', start, *stream, row, sample, 'redraw', r)",
+    "continuation": "months 0..t-1 on the realised seed, the generator reseeded at month t with the judge's seed (dc.replan.continued)"
+   }
+  }
+ ]
+}

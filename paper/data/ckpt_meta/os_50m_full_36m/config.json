@@ -1,0 +1,150 @@
+{
+ "train": {
+  "size": "50m",
+  "mode": "onestep",
+  "samples": 36000000,
+  "batch_size": 128,
+  "lr": 0.0008,
+  "min_lr_frac": 0.05,
+  "warmup_frac": 0.03,
+  "weight_decay": 0.05,
+  "betas": [
+   0.9,
+   0.98
+  ],
+  "grad_clip": 1.0,
+  "ema_decay": 0.999,
+  "kl_warmup": 0.05,
+  "weights": {
+   "tile_gate": 1.0,
+   "tile_cat": 1.0,
+   "flags": 1.0,
+   "power": 1.0,
+   "half": 0.25,
+   "eighth": 1.0,
+   "scalars": 4.0,
+   "ledger": 4.0,
+   "terrain": 0.25,
+   "com_rate": 1.0,
+   "scalars_s2": 4.0,
+   "build_cost": 4.0
+  },
+  "save_fracs": [
+   0.5,
+   1.0
+  ],
+  "save_samples": [
+   6000000,
+   12000000,
+   18000000,
+   24000000,
+   30000000
+  ],
+  "sf_k": 4,
+  "sf_tf_ratio": 0.5,
+  "compile": true,
+  "seed": 0,
+  "log_every": 20,
+  "resume_every_s": 600.0,
+  "init_from": "",
+  "budget_weight": 6.0,
+  "table_lr_mult": 10.0,
+  "model_overrides": {
+   "bookkeeping": true,
+   "bk_width": 384
+  },
+  "micro_batch": 0,
+  "bk_updates": 2,
+  "bk_batch": 4096,
+  "bk_lr": 0.001
+ },
+ "model": {
+  "size": "50m",
+  "d0": 96,
+  "dims": [
+   192,
+   384,
+   768
+  ],
+  "enc": [
+   2,
+   3,
+   6
+  ],
+  "dec": [
+   2,
+   2
+  ],
+  "full_blocks": 1,
+  "full_ratio": 4,
+  "mlp_ratio": 4,
+  "cond_dim": 512,
+  "cat_hidden": 384,
+  "z_dim": 32,
+  "k_mix_overlay": 2,
+  "k_mix_scalar": 3,
+  "post_dim": 96,
+  "layer_scale": 0.1,
+  "spend_features": true,
+  "scalar_stage": "twostage",
+  "ss_table_dim": 32,
+  "ss_change_dim": 32,
+  "ss_level_dim": 32,
+  "ss_direct_cond": false,
+  "ledger": true,
+  "bookkeeping": true,
+  "bk_width": 384,
+  "bk_depth": 4
+ },
+ "data": {
+  "store": "<cache>/data/train_full",
+  "manifest_sha256": "40ff8557a2562da8c94934de701fbe7e8eef2d4bd5e6ebb8a110a13f77185135",
+  "index": "train_full",
+  "index_len": 3000000,
+  "index_sha256": "16ebcde8f374c58b738cbda2f5e90d2e69be0f4e4be899ecafbfcd93659df64b",
+  "loader": "OneStepBatches(num_workers=10)",
+  "seed": 0,
+  "store_complete": true,
+  "store_transitions": 3000000,
+  "bookkeeping_data": {
+   "source": "<cache>/ckpt/bookkeeping_cache/train_full.npz",
+   "rows": 3000000,
+   "index_sha256": "16ebcde8f374c58b738cbda2f5e90d2e69be0f4e4be899ecafbfcd93659df64b"
+  }
+ },
+ "argv": [
+  "code/scripts/train_run.py",
+  "--run",
+  "os_50m_full_36m",
+  "--size",
+  "50m",
+  "--mode",
+  "onestep",
+  "--samples",
+  "36000000",
+  "--index",
+  "train_full",
+  "--seed",
+  "0",
+  "--batch-size",
+  "128",
+  "--lr",
+  "0.0008",
+  "--budget-weight",
+  "6.0",
+  "--table-lr-mult",
+  "10.0",
+  "--bk-updates",
+  "2",
+  "--bk-batch",
+  "4096",
+  "--model-overrides",
+  "{\"bookkeeping\": true, \"bk_width\": 384}",
+  "--save-samples",
+  "6000000,12000000,18000000,24000000,30000000",
+  "--ckpt-root",
+  "<cache>/ckpt/ladder_v2",
+  "--workers",
+  "10"
+ ]
+}

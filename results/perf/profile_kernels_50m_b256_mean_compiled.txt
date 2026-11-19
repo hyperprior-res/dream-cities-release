@@ -1,0 +1,45 @@
+trunk FLOPs per sample 32.14 GFLOP (B=256)
+{'aten.addmm': 28.82, 'aten.convolution': 3.26, 'aten.bmm': 0.06}
+wall 148.5 ms/step (profiler on); GPU busy (sum of kernel time) 279.3 ms/step = 188.1 % of wall
+  triton fused (elementwise/norm)     97.04 ms/step   34.7 %
+  other aten                          75.24 ms/step   26.9 %
+  gemm                                60.90 ms/step   21.8 %
+  conv (cudnn)                        45.85 ms/step   16.4 %
+  memcpy/memset                        0.26 ms/step    0.1 %
+----------------------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+                                                                  Name    Self CPU %      Self CPU   CPU total %     CPU total  CPU time avg     Self CUDA   Self CUDA %    CUDA total  CUDA time avg    # of Calls  
+----------------------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+                                                              aten::mm         1.12%       9.755ms         1.21%      10.566ms      33.227us     304.726ms        36.37%     304.726ms     958.259us           318  
+                        ampere_bf16_s16816gemm_bf16_128x64_ldg8_f2f_tn         0.00%       0.000us         0.00%       0.000us       0.000us     191.987ms        22.91%     191.987ms       1.391ms           138  
+               ampere_bf16_s1688gemm_bf16_64x128_sliced1x2_ldg8_f2f_tn         0.00%       0.000us         0.00%       0.000us       0.000us      89.983ms        10.74%      89.983ms       1.500ms            60  
+                                              triton_poi_fused_gelu_38         0.01%      96.137us         0.02%     145.920us       6.080us      61.067ms         7.29%      61.067ms       2.544ms            24  
+                                              triton_poi_fused_gelu_38         0.00%       0.000us         0.00%       0.000us       0.000us      61.067ms         7.29%      61.067ms       2.544ms            24  
+                                               aten::cudnn_convolution         0.13%       1.109ms         0.17%       1.447ms      12.693us      60.579ms         7.23%      60.579ms     531.396us           114  
+                                         conv2d_c1_k1_nhwc_specialized         0.00%       0.000us         0.00%       0.000us       0.000us      46.161ms         5.51%      46.161ms     480.846us            96  
+                                              triton_poi_fused_gelu_43         0.01%     124.079us         0.02%     184.927us       6.164us      37.828ms         4.51%      37.828ms       1.261ms            30  
+                                              triton_poi_fused_gelu_43         0.00%       0.000us         0.00%       0.000us       0.000us      37.828ms         4.51%      37.828ms       1.261ms            30  
+                                              triton_poi_fused_gelu_66         0.00%      30.471us         0.01%      47.615us       7.936us      30.638ms         3.66%      30.638ms       5.106ms             6  
+                                              triton_poi_fused_gelu_66         0.00%       0.000us         0.00%       0.000us       0.000us      30.638ms         3.66%      30.638ms       5.106ms             6  
+        triton_per_fused__to_copy_add_convolution_native_layer_norm_67         0.00%      39.897us         0.01%      54.021us       9.003us      26.559ms         3.17%      26.559ms       4.426ms             6  
+        triton_per_fused__to_copy_add_convolution_native_layer_norm_67         0.00%       0.000us         0.00%       0.000us       0.000us      26.559ms         3.17%      26.559ms       4.426ms             6  
+                                     aten::cudnn_convolution_transpose         0.03%     289.240us         0.06%     524.656us      29.148us      23.378ms         2.79%      23.378ms       1.299ms            18  
+                                              triton_poi_fused_gelu_50         0.02%     132.403us         0.02%     196.923us       5.470us      23.231ms         2.77%      23.231ms     645.312us            36  
+                                              triton_poi_fused_gelu_50         0.00%       0.000us         0.00%       0.000us       0.000us      23.231ms         2.77%      23.231ms     645.312us            36  
+            ampere_bf16_s1688gemm_bf16_128x128_ldg8_f2f_stages_32x1_tn         0.00%       0.000us         0.00%       0.000us       0.000us      19.758ms         2.36%      19.758ms       1.098ms            18  
+sm80_xmma_dgrad_implicit_gemm_indexed_bf16bf16_bf16f32_f32_nhwckrsc...         0.00%       0.000us         0.00%       0.000us       0.000us      18.207ms         2.17%      18.207ms       1.517ms            12  
+          triton_red_fused__to_copy_add_embedding_native_layer_norm_35         0.01%      48.753us         0.01%      67.468us      11.245us      15.771ms         1.88%      15.771ms       2.628ms             6  
+          triton_red_fused__to_copy_add_embedding_native_layer_norm_35         0.00%       0.000us         0.00%       0.000us       0.000us      15.771ms         1.88%      15.771ms       2.628ms             6  
+                          triton_poi_fused__to_copy_add_convolution_64         0.00%      34.329us         0.01%      49.276us       8.213us      15.107ms         1.80%      15.107ms       2.518ms             6  
+                          triton_poi_fused__to_copy_add_convolution_64         0.00%       0.000us         0.00%       0.000us       0.000us      15.107ms         1.80%      15.107ms       2.518ms             6  
+                triton_red_fused__to_copy_add_mul_native_layer_norm_37         0.02%     140.590us         0.02%     195.039us       8.127us      15.096ms         1.80%      15.096ms     629.019us            24  
+                triton_red_fused__to_copy_add_mul_native_layer_norm_37         0.00%       0.000us         0.00%       0.000us       0.000us      15.096ms         1.80%      15.096ms     629.019us            24  
+                          triton_poi_fused__to_copy_add_convolution_61         0.00%      40.124us         0.01%      58.804us       9.801us      13.135ms         1.57%      13.135ms       2.189ms             6  
+                          triton_poi_fused__to_copy_add_convolution_61         0.00%       0.000us         0.00%       0.000us       0.000us      13.135ms         1.57%      13.135ms       2.189ms             6  
+                                                           aten::addmm         0.75%       6.585ms         0.83%       7.248ms      44.743us      12.655ms         1.51%      12.655ms      78.118us           162  
+                                                           aten::copy_         0.24%       2.116ms         5.49%      47.871ms      42.895us      11.955ms         1.43%      11.955ms      10.712us          1116  
+                    triton_red_fused__to_copy_add_native_layer_norm_40         0.01%      75.854us         0.01%      92.327us      15.388us      11.333ms         1.35%      11.333ms       1.889ms             6  
+                    triton_red_fused__to_copy_add_native_layer_norm_40         0.00%       0.000us         0.00%       0.000us       0.000us      11.333ms         1.35%      11.333ms       1.889ms             6  
+----------------------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+Self CPU time total: 872.509ms
+Self CUDA time total: 837.879ms
+

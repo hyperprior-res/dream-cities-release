@@ -1,0 +1,1392 @@
+{
+ "generated_utc": "2026-11-12T13:09:51Z",
+ "script": "code/scripts/rl_axis.py",
+ "argv": [
+  "analyse"
+ ],
+ "definitions": {
+  "replay": "one 24-month engine run of one plan from a start file on one seed (24 engine city-months)",
+  "audit, emulator side": "per checkpoint: random search inside the emulator at budgets 1, 10, 100 and 1,000 (the 1,000 candidates are the start's first 1,000 behaviour plans; budgets nest) and the engine verdict of each budget's selected plan: engine_city_months_judge per record",
+  "perfect-emulator reference": "the same search with the engine as the judge (EngineSeedJudge), run once per city set and shared by every checkpoint: K = 2 engine samples of each candidate, 8 of the selected plan, and the selected plan's oracle and residual seeds",
+  "floors": "the residual and flip floors (40-city audits only); not needed for false acceptance"
+ },
+ "city_sets": {
+  "c40": {
+   "tasks": "tasks_v2_H24",
+   "checkpoints": {
+    "os_100m_full-samples_003000064": {
+     "n_instances": 193,
+     "budgets": [
+      1,
+      10,
+      100,
+      1000
+     ],
+     "records": 772,
+     "engine_city_months_judge_per_record": [
+      984
+     ],
+     "replays_per_record": [
+      41
+     ],
+     "engine_city_months_judge_all_budgets": 759648,
+     "distinct_selected_plans_per_instance_mean": 3.523316062176166,
+     "distinct_selected_plans": 680,
+     "engine_city_months_floor_all_budgets": 0,
+     "engine_city_months_judge_B1000": 189912,
+     "emu_month_steps_all_budgets": 10440528,
+     "emu_month_steps_B1000": 9301056,
+     "oracle_seeds_per_plan": [
+      32
+     ],
+     "residual_seeds_per_plan": [
+      9
+     ],
+     "seeds_per_plan_from_records": [
+      41
+     ]
+    },
+    "os_100m_full-samples_006000000": {
+     "n_instances": 193,
+     "budgets": [
+      1,
+      10,
+      100,
+      1000
+     ],
+     "records": 772,
+     "engine_city_months_judge_per_record": [
+      984
+     ],
+     "replays_per_record": [
+      41
+     ],
+     "engine_city_months_judge_all_budgets": 759648,
+     "distinct_selected_plans_per_instance_mean": 3.5129533678756477,
+     "distinct_selected_plans": 678,
+     "engine_city_months_floor_all_budgets": 0,
+     "engine_city_months_judge_B1000": 189912,
+     "emu_month_steps_all_budgets": 10440528,
+     "emu_month_steps_B1000": 9301056,
+     "oracle_seeds_per_plan": [
+      32
+     ],
+     "residual_seeds_per_plan": [
+      9
+     ],
+     "seeds_per_plan_from_records": [
+      41
+     ]
+    },
+    "os_100m_small-samples_003000064": {
+     "n_instances": 193,
+     "budgets": [
+      1,
+      10,
+      100,
+      1000
+     ],
+     "records": 772,
+     "engine_city_months_judge_per_record": [
+      984
+     ],
+     "replays_per_record": [
+      41
+     ],
+     "engine_city_months_judge_all_budgets": 759648,
+     "distinct_selected_plans_per_instance_mean": 3.4455958549222796,
+     "distinct_selected_plans": 665,
+     "engine_city_months_floor_all_budgets": 0,
+     "engine_city_months_judge_B1000": 189912,
+     "emu_month_steps_all_budgets": 10440528,
+     "emu_month_steps_B1000": 9301056,
+     "oracle_seeds_per_plan": [
+      32
+     ],
+     "residual_seeds_per_plan": [
+      9
+     ],
+     "seeds_per_plan_from_records": [
+      41
+     ]
+    },
+    "os_100m_small-samples_006000000": {
+     "n_instances": 193,
+     "budgets": [
+      1,
+      10,
+      100,
+      1000
+     ],
+     "records": 772,
+     "engine_city_months_judge_per_record": [
+      984
+     ],
+     "replays_per_record": [
+      41
+     ],
+     "engine_city_months_judge_all_budgets": 759648,
+     "distinct_selected_plans_per_instance_mean": 3.4870466321243523,
+     "distinct_selected_plans": 673,
+     "engine_city_months_floor_all_budgets": 0,
+     "engine_city_months_judge_B1000": 189912,
+     "emu_month_steps_all_budgets": 10440528,
+     "emu_month_steps_B1000": 9301056,
+     "oracle_seeds_per_plan": [
+      32
+     ],
+     "residual_seeds_per_plan": [
+      9
+     ],
+     "seeds_per_plan_from_records": [
+      41
+     ]
+    },
+    "os_15m_full-samples_003000064": {
+     "n_instances": 193,
+     "budgets": [
+      1,
+      10,
+      100,
+      1000
+     ],
+     "records": 772,
+     "engine_city_months_judge_per_record": [
+      984
+     ],
+     "replays_per_record": [
+      41
+     ],
+     "engine_city_months_judge_all_budgets": 759648,
+     "distinct_selected_plans_per_instance_mean": 3.5595854922279795,
+     "distinct_selected_plans": 687,
+     "engine_city_months_floor_all_budgets": 543744,
+     "engine_city_months_judge_B1000": 189912,
+     "emu_month_steps_all_budgets": 10440528,
+     "emu_month_steps_B1000": 9301056,
+     "oracle_seeds_per_plan": [
+      32
+     ],
+     "residual_seeds_per_plan": [
+      9
+     ],
+     "seeds_per_plan_from_records": [
+      41
+     ]
+    },
+    "os_15m_full-samples_006000000": {
+     "n_instances": 193,
+     "budgets": [
+      1,
+      10,
+      100,
+      1000
+     ],
+     "records": 772,
+     "engine_city_months_judge_per_record": [
+      984
+     ],
+     "replays_per_record": [
+      41
+     ],
+     "engine_city_months_judge_all_budgets": 759648,
+     "distinct_selected_plans_per_instance_mean": 3.4974093264248705,
+     "distinct_selected_plans": 675,
+     "engine_city_months_floor_all_budgets": 543744,
+     "engine_city_months_judge_B1000": 189912,
+     "emu_month_steps_all_budgets": 10440528,
+     "emu_month_steps_B1000": 9301056,
+     "oracle_seeds_per_plan": [
+      32
+     ],
+     "residual_seeds_per_plan": [
+      9
+     ],
+     "seeds_per_plan_from_records": [
+      41
+     ]
+    },
+    "os_15m_small-samples_003000064": {
+     "n_instances": 193,
+     "budgets": [
+      1,
+      10,
+      100,
+      1000
+     ],
+     "records": 772,
+     "engine_city_months_judge_per_record": [
+      984
+     ],
+     "replays_per_record": [
+      41
+     ],
+     "engine_city_months_judge_all_budgets": 759648,
+     "distinct_selected_plans_per_instance_mean": 3.616580310880829,
+     "distinct_selected_plans": 698,
+     "engine_city_months_floor_all_budgets": 546816,
+     "engine_city_months_judge_B1000": 189912,
+     "emu_month_steps_all_budgets": 10440528,
+     "emu_month_steps_B1000": 9301056,
+     "oracle_seeds_per_plan": [
+      32
+     ],
+     "residual_seeds_per_plan": [
+      9
+     ],
+     "seeds_per_plan_from_records": [
+      41
+     ]
+    },
+    "os_15m_small-samples_006000000": {
+     "n_instances": 193,
+     "budgets": [
+      1,
+      10,
+      100,
+      1000
+     ],
+     "records": 772,
+     "engine_city_months_judge_per_record": [
+      984
+     ],
+     "replays_per_record": [
+      41
+     ],
+     "engine_city_months_judge_all_budgets": 759648,
+     "distinct_selected_plans_per_instance_mean": 3.523316062176166,
+     "distinct_selected_plans": 680,
+     "engine_city_months_floor_all_budgets": 552192,
+     "engine_city_months_judge_B1000": 189912,
+     "emu_month_steps_all_budgets": 10440528,
+     "emu_month_steps_B1000": 9301056,
+     "oracle_seeds_per_plan": [
+      32
+     ],
+     "residual_seeds_per_plan": [
+      9
+     ],
+     "seeds_per_plan_from_records": [
+      41
+     ]
+    },
+    "os_50m_full-samples_003000064": {
+     "n_instances": 193,
+     "budgets": [
+      1,
+      10,
+      100,
+      1000
+     ],
+     "records": 772,
+     "engine_city_months_judge_per_record": [
+      984
+     ],
+     "replays_per_record": [
+      41
+     ],
+     "engine_city_months_judge_all_budgets": 759648,
+     "distinct_selected_plans_per_instance_mean": 3.5544041450777204,
+     "distinct_selected_plans": 686,
+     "engine_city_months_floor_all_budgets": 553728,
+     "engine_city_months_judge_B1000": 189912,
+     "emu_month_steps_all_budgets": 10440528,
+     "emu_month_steps_B1000": 9301056,
+     "oracle_seeds_per_plan": [
+      32
+     ],
+     "residual_seeds_per_plan": [
+      9
+     ],
+     "seeds_per_plan_from_records": [
+      41
+     ]
+    },
+    "os_50m_full-samples_006000000": {
+     "n_instances": 193,
+     "budgets": [
+      1,
+      10,
+      100,
+      1000
+     ],
+     "records": 772,
+     "engine_city_months_judge_per_record": [
+      984
+     ],
+     "replays_per_record": [
+      41
+     ],
+     "engine_city_months_judge_all_budgets": 759648,
+     "distinct_selected_plans_per_instance_mean": 3.5077720207253886,
+     "distinct_selected_plans": 677,
+     "engine_city_months_floor_all_budgets": 116769792,
+     "engine_city_months_judge_B1000": 189912,
+     "emu_month_steps_all_budgets": 10440528,
+     "emu_month_steps_B1000": 9301056,
+     "oracle_seeds_per_plan": [
+      32
+     ],
+     "residual_seeds_per_plan": [
+      9
+     ],
+     "seeds_per_plan_from_records": [
+      41
+     ]
+    },
+    "os_50m_small-samples_003000064": {
+     "n_instances": 193,
+     "budgets": [
+      1,
+      10,
+      100,
+      1000
+     ],
+     "records": 772,
+     "engine_city_months_judge_per_record": [
+      984
+     ],
+     "replays_per_record": [
+      41
+     ],
+     "engine_city_months_judge_all_budgets": 759648,
+     "distinct_selected_plans_per_instance_mean": 3.5077720207253886,
+     "distinct_selected_plans": 677,
+     "engine_city_months_floor_all_budgets": 0,
+     "engine_city_months_judge_B1000": 189912,
+     "emu_month_steps_all_budgets": 10440528,
+     "emu_month_steps_B1000": 9301056,
+     "oracle_seeds_per_plan": [
+      32
+     ],
+     "residual_seeds_per_plan": [
+      9
+     ],
+     "seeds_per_plan_from_records": [
+      41
+     ]
+    },
+    "os_50m_small-samples_006000000": {
+     "n_instances": 193,
+     "budgets": [
+      1,
+      10,
+      100,
+      1000
+     ],
+     "records": 772,
+     "engine_city_months_judge_per_record": [
+      984
+     ],
+     "replays_per_record": [
+      41
+     ],
+     "engine_city_months_judge_all_budgets": 759648,
+     "distinct_selected_plans_per_instance_mean": 3.5129533678756477,
+     "distinct_selected_plans": 678,
+     "engine_city_months_floor_all_budgets": 556032,
+     "engine_city_months_judge_B1000": 189912,
+     "emu_month_steps_all_budgets": 10440528,
+     "emu_month_steps_B1000": 9301056,
+     "oracle_seeds_per_plan": [
+      32
+     ],
+     "residual_seeds_per_plan": [
+      9
+     ],
+     "seeds_per_plan_from_records": [
+      41
+     ]
+    },
+    "sf_100m_full-samples_000750080": {
+     "n_instances": 193,
+     "budgets": [
+      1,
+      10,
+      100,
+      1000
+     ],
+     "records": 772,
+     "engine_city_months_judge_per_record": [
+      984
+     ],
+     "replays_per_record": [
+      41
+     ],
+     "engine_city_months_judge_all_budgets": 759648,
+     "distinct_selected_plans_per_instance_mean": 3.5544041450777204,
+     "distinct_selected_plans": 686,
+     "engine_city_months_floor_all_budgets": 0,
+     "engine_city_months_judge_B1000": 189912,
+     "emu_month_steps_all_budgets": 10440528,
+     "emu_month_steps_B1000": 9301056,
+     "oracle_seeds_per_plan": [
+      32
+     ],
+     "residual_seeds_per_plan": [
+      9
+     ],
+     "seeds_per_plan_from_records": [
+      41
+     ]
+    },
+    "sf_100m_full-samples_001500032": {
+     "n_instances": 193,
+     "budgets": [
+      1,
+      10,
+      100,
+      1000
+     ],
+     "records": 772,
+     "engine_city_months_judge_per_record": [
+      984
+     ],
+     "replays_per_record": [
+      41
+     ],
+     "engine_city_months_judge_all_budgets": 759648,
+     "distinct_selected_plans_per_instance_mean": 3.523316062176166,
+     "distinct_selected_plans": 680,
+     "engine_city_months_floor_all_budgets": 0,
+     "engine_city_months_judge_B1000": 189912,
+     "emu_month_steps_all_budgets": 10440528,
+     "emu_month_steps_B1000": 9301056,
+     "oracle_seeds_per_plan": [
+      32
+     ],
+     "residual_seeds_per_plan": [
+      9
+     ],
+     "seeds_per_plan_from_records": [
+      41
+     ]
+    },
+    "sf_100m_small-samples_000750080": {
+     "n_instances": 193,
+     "budgets": [
+      1,
+      10,
+      100,
+      1000
+     ],
+     "records": 772,
+     "engine_city_months_judge_per_record": [
+      984
+     ],
+     "replays_per_record": [
+      41
+     ],
+     "engine_city_months_judge_all_budgets": 759648,
+     "distinct_selected_plans_per_instance_mean": 3.569948186528497,
+     "distinct_selected_plans": 689,
+     "engine_city_months_floor_all_budgets": 0,
+     "engine_city_months_judge_B1000": 189912,
+     "emu_month_steps_all_budgets": 10440528,
+     "emu_month_steps_B1000": 9301056,
+     "oracle_seeds_per_plan": [
+      32
+     ],
+     "residual_seeds_per_plan": [
+      9
+     ],
+     "seeds_per_plan_from_records": [
+      41
+     ]
+    },
+    "sf_100m_small-samples_001500032": {
+     "n_instances": 193,
+     "budgets": [
+      1,
+      10,
+      100,
+      1000
+     ],
+     "records": 772,
+     "engine_city_months_judge_per_record": [
+      984
+     ],
+     "replays_per_record": [
+      41
+     ],
+     "engine_city_months_judge_all_budgets": 759648,
+     "distinct_selected_plans_per_instance_mean": 3.481865284974093,
+     "distinct_selected_plans": 672,
+     "engine_city_months_floor_all_budgets": 0,
+     "engine_city_months_judge_B1000": 189912,
+     "emu_month_steps_all_budgets": 10440528,
+     "emu_month_steps_B1000": 9301056,
+     "oracle_seeds_per_plan": [
+      32
+     ],
+     "residual_seeds_per_plan": [
+      9
+     ],
+     "seeds_per_plan_from_records": [
+      41
+     ]
+    },
+    "sf_15m_full-samples_000750080": {
+     "n_instances": 193,
+     "budgets": [
+      1,
+      10,
+      100,
+      1000
+     ],
+     "records": 772,
+     "engine_city_months_judge_per_record": [
+      984
+     ],
+     "replays_per_record": [
+      41
+     ],
+     "engine_city_months_judge_all_budgets": 759648,
+     "distinct_selected_plans_per_instance_mean": 3.430051813471503,
+     "distinct_selected_plans": 662,
+     "engine_city_months_floor_all_budgets": 548352,
+     "engine_city_months_judge_B1000": 189912,
+     "emu_month_steps_all_budgets": 10440528,
+     "emu_month_steps_B1000": 9301056,
+     "oracle_seeds_per_plan": [
+      32
+     ],
+     "residual_seeds_per_plan": [
+      9
+     ],
+     "seeds_per_plan_from_records": [
+      41
+     ]
+    },
+    "sf_15m_full-samples_001500032": {
+     "n_instances": 193,
+     "budgets": [
+      1,
+      10,
+      100,
+      1000
+     ],
+     "records": 772,
+     "engine_city_months_judge_per_record": [
+      984
+     ],
+     "replays_per_record": [
+      41
+     ],
+     "engine_city_months_judge_all_budgets": 759648,
+     "distinct_selected_plans_per_instance_mean": 3.5544041450777204,
+     "distinct_selected_plans": 686,
+     "engine_city_months_floor_all_budgets": 549888,
+     "engine_city_months_judge_B1000": 189912,
+     "emu_month_steps_all_budgets": 10440528,
+     "emu_month_steps_B1000": 9301056,
+     "oracle_seeds_per_plan": [
+      32
+     ],
+     "residual_seeds_per_plan": [
+      9
+     ],
+     "seeds_per_plan_from_records": [
+      41
+     ]
+    },
+    "sf_15m_small-samples_000750080": {
+     "n_instances": 193,
+     "budgets": [
+      1,
+      10,
+      100,
+      1000
+     ],
+     "records": 772,
+     "engine_city_months_judge_per_record": [
+      984
+     ],
+     "replays_per_record": [
+      41
+     ],
+     "engine_city_months_judge_all_budgets": 759648,
+     "distinct_selected_plans_per_instance_mean": 3.528497409326425,
+     "distinct_selected_plans": 681,
+     "engine_city_months_floor_all_budgets": 555264,
+     "engine_city_months_judge_B1000": 189912,
+     "emu_month_steps_all_budgets": 10440528,
+     "emu_month_steps_B1000": 9301056,
+     "oracle_seeds_per_plan": [
+      32
+     ],
+     "residual_seeds_per_plan": [
+      9
+     ],
+     "seeds_per_plan_from_records": [
+      41
+     ]
+    },
+    "sf_15m_small-samples_001500032": {
+     "n_instances": 193,
+     "budgets": [
+      1,
+      10,
+      100,
+      1000
+     ],
+     "records": 772,
+     "engine_city_months_judge_per_record": [
+      984
+     ],
+     "replays_per_record": [
+      41
+     ],
+     "engine_city_months_judge_all_budgets": 759648,
+     "distinct_selected_plans_per_instance_mean": 3.5958549222797926,
+     "distinct_selected_plans": 694,
+     "engine_city_months_floor_all_budgets": 548352,
+     "engine_city_months_judge_B1000": 189912,
+     "emu_month_steps_all_budgets": 10440528,
+     "emu_month_steps_B1000": 9301056,
+     "oracle_seeds_per_plan": [
+      32
+     ],
+     "residual_seeds_per_plan": [
+      9
+     ],
+     "seeds_per_plan_from_records": [
+      41
+     ]
+    },
+    "sf_50m_full-samples_000750080": {
+     "n_instances": 193,
+     "budgets": [
+      1,
+      10,
+      100,
+      1000
+     ],
+     "records": 772,
+     "engine_city_months_judge_per_record": [
+      984
+     ],
+     "replays_per_record": [
+      41
+     ],
+     "engine_city_months_judge_all_budgets": 759648,
+     "distinct_selected_plans_per_instance_mean": 3.564766839378238,
+     "distinct_selected_plans": 688,
+     "engine_city_months_floor_all_budgets": 551424,
+     "engine_city_months_judge_B1000": 189912,
+     "emu_month_steps_all_budgets": 10440528,
+     "emu_month_steps_B1000": 9301056,
+     "oracle_seeds_per_plan": [
+      32
+     ],
+     "residual_seeds_per_plan": [
+      9
+     ],
+     "seeds_per_plan_from_records": [
+      41
+     ]
+    },
+    "sf_50m_full-samples_001500032": {
+     "n_instances": 193,
+     "budgets": [
+      1,
+      10,
+      100,
+      1000
+     ],
+     "records": 772,
+     "engine_city_months_judge_per_record": [
+      984
+     ],
+     "replays_per_record": [
+      41
+     ],
+     "engine_city_months_judge_all_budgets": 759648,
+     "distinct_selected_plans_per_instance_mean": 3.528497409326425,
+     "distinct_selected_plans": 681,
+     "engine_city_months_floor_all_budgets": 619008,
+     "engine_city_months_judge_B1000": 189912,
+     "emu_month_steps_all_budgets": 10440528,
+     "emu_month_steps_B1000": 9301056,
+     "oracle_seeds_per_plan": [
+      32
+     ],
+     "residual_seeds_per_plan": [
+      9
+     ],
+     "seeds_per_plan_from_records": [
+      41
+     ]
+    },
+    "sf_50m_small-samples_000750080": {
+     "n_instances": 193,
+     "budgets": [
+      1,
+      10,
+      100,
+      1000
+     ],
+     "records": 772,
+     "engine_city_months_judge_per_record": [
+      984
+     ],
+     "replays_per_record": [
+      41
+     ],
+     "engine_city_months_judge_all_budgets": 759648,
+     "distinct_selected_plans_per_instance_mean": 3.4922279792746114,
+     "distinct_selected_plans": 674,
+     "engine_city_months_floor_all_budgets": 0,
+     "engine_city_months_judge_B1000": 189912,
+     "emu_month_steps_all_budgets": 10440528,
+     "emu_month_steps_B1000": 9301056,
+     "oracle_seeds_per_plan": [
+      32
+     ],
+     "residual_seeds_per_plan": [
+      9
+     ],
+     "seeds_per_plan_from_records": [
+      41
+     ]
+    },
+    "sf_50m_small-samples_001500032": {
+     "n_instances": 193,
+     "budgets": [
+      1,
+      10,
+      100,
+      1000
+     ],
+     "records": 772,
+     "engine_city_months_judge_per_record": [
+      984
+     ],
+     "replays_per_record": [
+      41
+     ],
+     "engine_city_months_judge_all_budgets": 759648,
+     "distinct_selected_plans_per_instance_mean": 3.5803108808290154,
+     "distinct_selected_plans": 691,
+     "engine_city_months_floor_all_budgets": 0,
+     "engine_city_months_judge_B1000": 189912,
+     "emu_month_steps_all_budgets": 10440528,
+     "emu_month_steps_B1000": 9301056,
+     "oracle_seeds_per_plan": [
+      32
+     ],
+     "residual_seeds_per_plan": [
+      9
+     ],
+     "seeds_per_plan_from_records": [
+      41
+     ]
+    }
+   },
+   "perfect_emulator_reference": {
+    "source": "results/audit/engine_reference/tasks_v2_H24/B_economy",
+    "n_instances": 193,
+    "per_instance_B1000": {
+     "engine_city_months_search_samples": 48000.0,
+     "engine_city_months_verdict_samples": 192.0,
+     "engine_city_months_oracle_and_residual": 984.0,
+     "total": 49176.0,
+     "replays": 2049.0
+    },
+    "whole_run_from_costs_json": {
+     "judge_month_steps_computed (engine-seeds judge: engine city-months)": 46684176,
+     "engine_city_months_replayed (cache misses, every purpose incl. floors)": 262063392,
+     "engine_replays": 10919308
+    }
+   }
+  },
+  "c80": {
+   "tasks": "tasks_v2x_H24",
+   "checkpoints": {
+    "os_100m_full-samples_006000000": {
+     "n_instances": 381,
+     "budgets": [
+      1,
+      10,
+      100,
+      1000
+     ],
+     "records": 1524,
+     "engine_city_months_judge_per_record": [
+      984
+     ],
+     "replays_per_record": [
+      41
+     ],
+     "engine_city_months_judge_all_budgets": 1499616,
+     "distinct_selected_plans_per_instance_mean": 3.540682414698163,
+     "distinct_selected_plans": 1349,
+     "engine_city_months_floor_all_budgets": 0,
+     "engine_city_months_judge_B1000": 374904,
+     "emu_month_steps_all_budgets": 20610576,
+     "emu_month_steps_B1000": 18361152,
+     "oracle_seeds_per_plan": [
+      32
+     ],
+     "residual_seeds_per_plan": [
+      9
+     ],
+     "seeds_per_plan_from_records": [
+      41
+     ]
+    },
+    "os_100m_small-samples_006000000": {
+     "n_instances": 381,
+     "budgets": [
+      1,
+      10,
+      100,
+      1000
+     ],
+     "records": 1524,
+     "engine_city_months_judge_per_record": [
+      984
+     ],
+     "replays_per_record": [
+      41
+     ],
+     "engine_city_months_judge_all_budgets": 1499616,
+     "distinct_selected_plans_per_instance_mean": 3.5118110236220472,
+     "distinct_selected_plans": 1338,
+     "engine_city_months_floor_all_budgets": 0,
+     "engine_city_months_judge_B1000": 374904,
+     "emu_month_steps_all_budgets": 20610576,
+     "emu_month_steps_B1000": 18361152,
+     "oracle_seeds_per_plan": [
+      32
+     ],
+     "residual_seeds_per_plan": [
+      9
+     ],
+     "seeds_per_plan_from_records": [
+      41
+     ]
+    },
+    "os_15m_full-samples_006000000": {
+     "n_instances": 381,
+     "budgets": [
+      1,
+      10,
+      100,
+      1000
+     ],
+     "records": 1524,
+     "engine_city_months_judge_per_record": [
+      984
+     ],
+     "replays_per_record": [
+      41
+     ],
+     "engine_city_months_judge_all_budgets": 1499616,
+     "distinct_selected_plans_per_instance_mean": 3.5118110236220472,
+     "distinct_selected_plans": 1338,
+     "engine_city_months_floor_all_budgets": 0,
+     "engine_city_months_judge_B1000": 374904,
+     "emu_month_steps_all_budgets": 20610576,
+     "emu_month_steps_B1000": 18361152,
+     "oracle_seeds_per_plan": [
+      32
+     ],
+     "residual_seeds_per_plan": [
+      9
+     ],
+     "seeds_per_plan_from_records": [
+      41
+     ]
+    },
+    "os_15m_small-samples_006000000": {
+     "n_instances": 381,
+     "budgets": [
+      1,
+      10,
+      100,
+      1000
+     ],
+     "records": 1524,
+     "engine_city_months_judge_per_record": [
+      984
+     ],
+     "replays_per_record": [
+      41
+     ],
+     "engine_city_months_judge_all_budgets": 1499616,
+     "distinct_selected_plans_per_instance_mean": 3.506561679790026,
+     "distinct_selected_plans": 1336,
+     "engine_city_months_floor_all_budgets": 0,
+     "engine_city_months_judge_B1000": 374904,
+     "emu_month_steps_all_budgets": 20610576,
+     "emu_month_steps_B1000": 18361152,
+     "oracle_seeds_per_plan": [
+      32
+     ],
+     "residual_seeds_per_plan": [
+      9
+     ],
+     "seeds_per_plan_from_records": [
+      41
+     ]
+    },
+    "os_50m_full-samples_006000000": {
+     "n_instances": 381,
+     "budgets": [
+      1,
+      10,
+      100,
+      1000
+     ],
+     "records": 1524,
+     "engine_city_months_judge_per_record": [
+      984
+     ],
+     "replays_per_record": [
+      41
+     ],
+     "engine_city_months_judge_all_budgets": 1499616,
+     "distinct_selected_plans_per_instance_mean": 3.4750656167979,
+     "distinct_selected_plans": 1324,
+     "engine_city_months_floor_all_budgets": 0,
+     "engine_city_months_judge_B1000": 374904,
+     "emu_month_steps_all_budgets": 20610576,
+     "emu_month_steps_B1000": 18361152,
+     "oracle_seeds_per_plan": [
+      32
+     ],
+     "residual_seeds_per_plan": [
+      9
+     ],
+     "seeds_per_plan_from_records": [
+      41
+     ]
+    },
+    "os_50m_small-samples_006000000": {
+     "n_instances": 381,
+     "budgets": [
+      1,
+      10,
+      100,
+      1000
+     ],
+     "records": 1524,
+     "engine_city_months_judge_per_record": [
+      984
+     ],
+     "replays_per_record": [
+      41
+     ],
+     "engine_city_months_judge_all_budgets": 1499616,
+     "distinct_selected_plans_per_instance_mean": 3.5039370078740157,
+     "distinct_selected_plans": 1335,
+     "engine_city_months_floor_all_budgets": 0,
+     "engine_city_months_judge_B1000": 374904,
+     "emu_month_steps_all_budgets": 20610576,
+     "emu_month_steps_B1000": 18361152,
+     "oracle_seeds_per_plan": [
+      32
+     ],
+     "residual_seeds_per_plan": [
+      9
+     ],
+     "seeds_per_plan_from_records": [
+      41
+     ]
+    },
+    "sf_100m_full-samples_001500032": {
+     "n_instances": 381,
+     "budgets": [
+      1,
+      10,
+      100,
+      1000
+     ],
+     "records": 1524,
+     "engine_city_months_judge_per_record": [
+      984
+     ],
+     "replays_per_record": [
+      41
+     ],
+     "engine_city_months_judge_all_budgets": 1499616,
+     "distinct_selected_plans_per_instance_mean": 3.4356955380577427,
+     "distinct_selected_plans": 1309,
+     "engine_city_months_floor_all_budgets": 0,
+     "engine_city_months_judge_B1000": 374904,
+     "emu_month_steps_all_budgets": 20610576,
+     "emu_month_steps_B1000": 18361152,
+     "oracle_seeds_per_plan": [
+      32
+     ],
+     "residual_seeds_per_plan": [
+      9
+     ],
+     "seeds_per_plan_from_records": [
+      41
+     ]
+    },
+    "sf_100m_small-samples_001500032": {
+     "n_instances": 381,
+     "budgets": [
+      1,
+      10,
+      100,
+      1000
+     ],
+     "records": 1524,
+     "engine_city_months_judge_per_record": [
+      984
+     ],
+     "replays_per_record": [
+      41
+     ],
+     "engine_city_months_judge_all_budgets": 1499616,
+     "distinct_selected_plans_per_instance_mean": 3.493438320209974,
+     "distinct_selected_plans": 1331,
+     "engine_city_months_floor_all_budgets": 0,
+     "engine_city_months_judge_B1000": 374904,
+     "emu_month_steps_all_budgets": 20610576,
+     "emu_month_steps_B1000": 18361152,
+     "oracle_seeds_per_plan": [
+      32
+     ],
+     "residual_seeds_per_plan": [
+      9
+     ],
+     "seeds_per_plan_from_records": [
+      41
+     ]
+    },
+    "sf_15m_full-samples_001500032": {
+     "n_instances": 381,
+     "budgets": [
+      1,
+      10,
+      100,
+      1000
+     ],
+     "records": 1524,
+     "engine_city_months_judge_per_record": [
+      984
+     ],
+     "replays_per_record": [
+      41
+     ],
+     "engine_city_months_judge_all_budgets": 1499616,
+     "distinct_selected_plans_per_instance_mean": 3.4698162729658795,
+     "distinct_selected_plans": 1322,
+     "engine_city_months_floor_all_budgets": 0,
+     "engine_city_months_judge_B1000": 374904,
+     "emu_month_steps_all_budgets": 20610576,
+     "emu_month_steps_B1000": 18361152,
+     "oracle_seeds_per_plan": [
+      32
+     ],
+     "residual_seeds_per_plan": [
+      9
+     ],
+     "seeds_per_plan_from_records": [
+      41
+     ]
+    },
+    "sf_15m_small-samples_001500032": {
+     "n_instances": 381,
+     "budgets": [
+      1,
+      10,
+      100,
+      1000
+     ],
+     "records": 1524,
+     "engine_city_months_judge_per_record": [
+      984
+     ],
+     "replays_per_record": [
+      41
+     ],
+     "engine_city_months_judge_all_budgets": 1499616,
+     "distinct_selected_plans_per_instance_mean": 3.5511811023622046,
+     "distinct_selected_plans": 1353,
+     "engine_city_months_floor_all_budgets": 0,
+     "engine_city_months_judge_B1000": 374904,
+     "emu_month_steps_all_budgets": 20610576,
+     "emu_month_steps_B1000": 18361152,
+     "oracle_seeds_per_plan": [
+      32
+     ],
+     "residual_seeds_per_plan": [
+      9
+     ],
+     "seeds_per_plan_from_records": [
+      41
+     ]
+    },
+    "sf_50m_full-samples_001500032": {
+     "n_instances": 381,
+     "budgets": [
+      1,
+      10,
+      100,
+      1000
+     ],
+     "records": 1524,
+     "engine_city_months_judge_per_record": [
+      984
+     ],
+     "replays_per_record": [
+      41
+     ],
+     "engine_city_months_judge_all_budgets": 1499616,
+     "distinct_selected_plans_per_instance_mean": 3.4435695538057742,
+     "distinct_selected_plans": 1312,
+     "engine_city_months_floor_all_budgets": 0,
+     "engine_city_months_judge_B1000": 374904,
+     "emu_month_steps_all_budgets": 20610576,
+     "emu_month_steps_B1000": 18361152,
+     "oracle_seeds_per_plan": [
+      32
+     ],
+     "residual_seeds_per_plan": [
+      9
+     ],
+     "seeds_per_plan_from_records": [
+      41
+     ]
+    },
+    "sf_50m_small-samples_001500032": {
+     "n_instances": 381,
+     "budgets": [
+      1,
+      10,
+      100,
+      1000
+     ],
+     "records": 1524,
+     "engine_city_months_judge_per_record": [
+      984
+     ],
+     "replays_per_record": [
+      41
+     ],
+     "engine_city_months_judge_all_budgets": 1499616,
+     "distinct_selected_plans_per_instance_mean": 3.4356955380577427,
+     "distinct_selected_plans": 1309,
+     "engine_city_months_floor_all_budgets": 0,
+     "engine_city_months_judge_B1000": 374904,
+     "emu_month_steps_all_budgets": 20610576,
+     "emu_month_steps_B1000": 18361152,
+     "oracle_seeds_per_plan": [
+      32
+     ],
+     "residual_seeds_per_plan": [
+      9
+     ],
+     "seeds_per_plan_from_records": [
+      41
+     ]
+    }
+   },
+   "perfect_emulator_reference": {
+    "source": "results/audit/engine_reference/tasks_v2x_H24/B_economy",
+    "n_instances": 381,
+    "per_instance_B1000": {
+     "engine_city_months_search_samples": 48000.0,
+     "engine_city_months_verdict_samples": 192.0,
+     "engine_city_months_oracle_and_residual": 984.0,
+     "total": 49176.0,
+     "replays": 2049.0
+    },
+    "whole_run_from_costs_json": {
+     "judge_month_steps_computed (engine-seeds judge: engine city-months)": 36172608,
+     "engine_city_months_replayed (cache misses, every purpose incl. floors)": 121238592,
+     "engine_replays": 5051608
+    }
+   }
+  }
+ },
+ "c120_per_checkpoint": {
+  "os_100m_full-samples_006000000": {
+   "n_instances": 574,
+   "engine_city_months_judge_all_budgets": 2259264,
+   "engine_city_months_judge_B1000": 564816,
+   "distinct_selected_plans": 2027
+  },
+  "os_100m_small-samples_006000000": {
+   "n_instances": 574,
+   "engine_city_months_judge_all_budgets": 2259264,
+   "engine_city_months_judge_B1000": 564816,
+   "distinct_selected_plans": 2011
+  },
+  "os_15m_full-samples_006000000": {
+   "n_instances": 574,
+   "engine_city_months_judge_all_budgets": 2259264,
+   "engine_city_months_judge_B1000": 564816,
+   "distinct_selected_plans": 2013
+  },
+  "os_15m_small-samples_006000000": {
+   "n_instances": 574,
+   "engine_city_months_judge_all_budgets": 2259264,
+   "engine_city_months_judge_B1000": 564816,
+   "distinct_selected_plans": 2016
+  },
+  "os_50m_full-samples_006000000": {
+   "n_instances": 574,
+   "engine_city_months_judge_all_budgets": 2259264,
+   "engine_city_months_judge_B1000": 564816,
+   "distinct_selected_plans": 2001
+  },
+  "os_50m_small-samples_006000000": {
+   "n_instances": 574,
+   "engine_city_months_judge_all_budgets": 2259264,
+   "engine_city_months_judge_B1000": 564816,
+   "distinct_selected_plans": 2013
+  },
+  "sf_100m_full-samples_001500032": {
+   "n_instances": 574,
+   "engine_city_months_judge_all_budgets": 2259264,
+   "engine_city_months_judge_B1000": 564816,
+   "distinct_selected_plans": 1989
+  },
+  "sf_100m_small-samples_001500032": {
+   "n_instances": 574,
+   "engine_city_months_judge_all_budgets": 2259264,
+   "engine_city_months_judge_B1000": 564816,
+   "distinct_selected_plans": 2003
+  },
+  "sf_15m_full-samples_001500032": {
+   "n_instances": 574,
+   "engine_city_months_judge_all_budgets": 2259264,
+   "engine_city_months_judge_B1000": 564816,
+   "distinct_selected_plans": 2008
+  },
+  "sf_15m_small-samples_001500032": {
+   "n_instances": 574,
+   "engine_city_months_judge_all_budgets": 2259264,
+   "engine_city_months_judge_B1000": 564816,
+   "distinct_selected_plans": 2047
+  },
+  "sf_50m_full-samples_001500032": {
+   "n_instances": 574,
+   "engine_city_months_judge_all_budgets": 2259264,
+   "engine_city_months_judge_B1000": 564816,
+   "distinct_selected_plans": 1993
+  },
+  "sf_50m_small-samples_001500032": {
+   "n_instances": 574,
+   "engine_city_months_judge_all_budgets": 2259264,
+   "engine_city_months_judge_B1000": 564816,
+   "distinct_selected_plans": 2000
+  }
+ },
+ "rl": {
+  "definitions": {
+   "open": "open-loop oracle: 8 action logs per instance on 32 oracle seeds (256 replays, 6,144 city-months per instance): what the acceptance gap and plan 0's false acceptance need",
+   "closed": "the policy acting on the engine, 8 episodes per instance (192 city-months)",
+   "closed_check": "the closed-loop logs replayed for the equality check (192 city-months)",
+   "greedy": "the greedy plan: 32 oracle seeds plus two 24-month closed-loop runs (816 city-months)",
+   "engine-trained learner": "1,000,000 engine months of training per run (the summary's months), plus its evaluation"
+  },
+  "ladder_360_runs": {
+   "design_engine_city_months": 102052224,
+   "open": 85377024,
+   "closed": 2668032,
+   "closed_check": 2668032,
+   "greedy": 11339136,
+   "instances": 13896,
+   "n_runs": 360,
+   "n_checkpoints": 24
+  },
+  "main_checkpoint_15_runs": {
+   "design_engine_city_months": 4252176,
+   "open": 3557376,
+   "closed": 111168,
+   "closed_check": 111168,
+   "greedy": 472464,
+   "instances": 579
+  },
+  "per_checkpoint_mean": {
+   "design_engine_city_months": 4252176.0,
+   "open": 3557376.0,
+   "closed": 111168.0,
+   "closed_check": 111168.0,
+   "greedy": 472464.0,
+   "instances": 579.0
+  },
+  "engine_trained_learner": {
+   "runs": {
+    "grow": [
+     "engine__grow__s0__tasks_v2_H24__v-stab_spatial",
+     "engine__grow__s1__tasks_v2_H24",
+     "engine__grow__s2__tasks_v2_H24"
+    ],
+    "solvent": [
+     "engine__solvent__s0__tasks_v2_H24__v-stab_spatial"
+    ],
+    "treasury": [
+     "engine__treasury__s0__tasks_v2_H24",
+     "engine__treasury__s1__tasks_v2_H24",
+     "engine__treasury__s2__tasks_v2_H24"
+    ],
+    "recover": [
+     "engine__recover__s0__tasks_v2_H24__v-stab_spatial",
+     "engine__recover__s1__tasks_v2_H24",
+     "engine__recover__s2__tasks_v2_H24"
+    ],
+    "power": [
+     "engine__power__s0__tasks_v2_H24__v-stab_spatial"
+    ]
+   },
+   "training_months": {
+    "grow": [
+     1000000,
+     1000000,
+     1000000
+    ],
+    "solvent": [
+     1000000
+    ],
+    "treasury": [
+     1000000,
+     1000000,
+     1000000
+    ],
+    "recover": [
+     1000000,
+     1000000,
+     1000000
+    ],
+    "power": [
+     1000000
+    ]
+   },
+   "evaluation_city_months": {
+    "grow": [
+     293760,
+     293760,
+     293760
+    ],
+    "solvent": [
+     279072
+    ],
+    "treasury": [
+     293760,
+     293760,
+     293760
+    ],
+    "recover": [
+     257040,
+     257040,
+     257040
+    ],
+    "power": [
+     293760
+    ]
+   },
+   "n_runs": 11,
+   "training_months_total": 11000000,
+   "evaluation_city_months_total": 3106512
+  }
+ }
+}

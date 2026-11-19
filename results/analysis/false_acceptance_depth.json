@@ -1,0 +1,273 @@
+{
+ "generated_utc": "2026-11-12T13:09:51Z",
+ "script": "code/scripts/rl_axis.py",
+ "argv": [
+  "analyse"
+ ],
+ "budget": 1000,
+ "n_instances_expected": 193,
+ "definitions": {
+  "false acceptance": "the judge accepts the selected plan (pass share >= 0.5 over its 8 fresh samples: grader_p >= 0.5) and the 32-seed majority oracle rejects it (oracle_accept false)",
+  "oracle share": "the selected plan's pass share over its 32 oracle seeds (oracle_share, checked against oracle_accept_seeds)",
+  "majority margin": "oracle_margin: the 16th-largest of the 32 per-seed margins (negative for every false acceptance)"
+ },
+ "methods": {
+  "random": {
+   "emulator": {
+    "source": "results/audit/ladder/os_50m_full/samples_006000000/tasks_v2_H24",
+    "status": "ok",
+    "n_instances": 193,
+    "n_false_acceptances": 29,
+    "false_acceptance": 0.15025906735751296,
+    "median_oracle_share": 0.09375,
+    "n_share_below_0_1": 15,
+    "n_share_zero": 11,
+    "median_majority_margin": -0.5278373026087029,
+    "shares": [
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.03125,
+     0.03125,
+     0.0625,
+     0.09375,
+     0.15625,
+     0.1875,
+     0.1875,
+     0.25,
+     0.25,
+     0.25,
+     0.375,
+     0.375,
+     0.40625,
+     0.40625,
+     0.40625,
+     0.4375,
+     0.46875,
+     0.46875
+    ],
+    "by_family": {
+     "grow": {
+      "n_false_acceptances": 1,
+      "n_share_below_0_1": 1,
+      "median_share": 0.03125
+     },
+     "solvent": {
+      "n_false_acceptances": 2,
+      "n_share_below_0_1": 1,
+      "median_share": 0.25
+     },
+     "treasury": {
+      "n_false_acceptances": 8,
+      "n_share_below_0_1": 7,
+      "median_share": 0.0
+     },
+     "recover": {
+      "n_false_acceptances": 12,
+      "n_share_below_0_1": 0,
+      "median_share": 0.375
+     },
+     "power": {
+      "n_false_acceptances": 6,
+      "n_share_below_0_1": 6,
+      "median_share": 0.0
+     }
+    }
+   },
+   "perfect_emulator": {
+    "source": "results/audit/engine_reference/tasks_v2_H24/B_economy",
+    "status": "ok",
+    "n_instances": 193,
+    "n_false_acceptances": 16,
+    "false_acceptance": 0.08290155440414508,
+    "median_oracle_share": 0.28125,
+    "n_share_below_0_1": 3,
+    "n_share_zero": 0,
+    "median_majority_margin": -0.19254807615223235,
+    "shares": [
+     0.03125,
+     0.03125,
+     0.09375,
+     0.1875,
+     0.1875,
+     0.25,
+     0.25,
+     0.28125,
+     0.28125,
+     0.28125,
+     0.34375,
+     0.40625,
+     0.40625,
+     0.4375,
+     0.46875,
+     0.46875
+    ],
+    "by_family": {
+     "grow": {
+      "n_false_acceptances": 4,
+      "n_share_below_0_1": 0,
+      "median_share": 0.3125
+     },
+     "solvent": {
+      "n_false_acceptances": 6,
+      "n_share_below_0_1": 2,
+      "median_share": 0.1875
+     },
+     "treasury": {
+      "n_false_acceptances": 1,
+      "n_share_below_0_1": 0,
+      "median_share": 0.28125
+     },
+     "recover": {
+      "n_false_acceptances": 5,
+      "n_share_below_0_1": 1,
+      "median_share": 0.25
+     },
+     "power": {
+      "n_false_acceptances": 0,
+      "n_share_below_0_1": 0,
+      "median_share": null
+     }
+    }
+   }
+  },
+  "cem_seeded": {
+   "emulator": {
+    "source": "results/audit/ladder/os_50m_full/samples_006000000/tasks_v2_H24_cem_seeded",
+    "status": "ok",
+    "n_instances": 193,
+    "n_false_acceptances": 35,
+    "false_acceptance": 0.18134715025906736,
+    "median_oracle_share": 0.03125,
+    "n_share_below_0_1": 23,
+    "n_share_zero": 14,
+    "median_majority_margin": -0.7171841309074224,
+    "shares": [
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.03125,
+     0.03125,
+     0.03125,
+     0.03125,
+     0.0625,
+     0.0625,
+     0.0625,
+     0.0625,
+     0.09375,
+     0.1875,
+     0.25,
+     0.25,
+     0.28125,
+     0.34375,
+     0.34375,
+     0.375,
+     0.40625,
+     0.40625,
+     0.4375,
+     0.4375,
+     0.46875
+    ],
+    "by_family": {
+     "grow": {
+      "n_false_acceptances": 0,
+      "n_share_below_0_1": 0,
+      "median_share": null
+     },
+     "solvent": {
+      "n_false_acceptances": 2,
+      "n_share_below_0_1": 1,
+      "median_share": 0.234375
+     },
+     "treasury": {
+      "n_false_acceptances": 11,
+      "n_share_below_0_1": 9,
+      "median_share": 0.03125
+     },
+     "recover": {
+      "n_false_acceptances": 13,
+      "n_share_below_0_1": 4,
+      "median_share": 0.34375
+     },
+     "power": {
+      "n_false_acceptances": 9,
+      "n_share_below_0_1": 9,
+      "median_share": 0.0
+     }
+    }
+   },
+   "perfect_emulator": {
+    "source": "results/audit/engine_reference/tasks_v2_H24/cem_seeded_B_economy",
+    "status": "ok",
+    "n_instances": 193,
+    "n_false_acceptances": 13,
+    "false_acceptance": 0.06735751295336788,
+    "median_oracle_share": 0.34375,
+    "n_share_below_0_1": 0,
+    "n_share_zero": 0,
+    "median_majority_margin": -0.1216958939553142,
+    "shares": [
+     0.28125,
+     0.28125,
+     0.28125,
+     0.3125,
+     0.34375,
+     0.34375,
+     0.34375,
+     0.375,
+     0.40625,
+     0.40625,
+     0.40625,
+     0.4375,
+     0.46875
+    ],
+    "by_family": {
+     "grow": {
+      "n_false_acceptances": 2,
+      "n_share_below_0_1": 0,
+      "median_share": 0.3125
+     },
+     "solvent": {
+      "n_false_acceptances": 1,
+      "n_share_below_0_1": 0,
+      "median_share": 0.3125
+     },
+     "treasury": {
+      "n_false_acceptances": 3,
+      "n_share_below_0_1": 0,
+      "median_share": 0.375
+     },
+     "recover": {
+      "n_false_acceptances": 7,
+      "n_share_below_0_1": 0,
+      "median_share": 0.40625
+     },
+     "power": {
+      "n_false_acceptances": 0,
+      "n_share_below_0_1": 0,
+      "median_share": null
+     }
+    }
+   }
+  }
+ }
+}

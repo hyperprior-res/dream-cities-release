@@ -1,0 +1,450 @@
+{
+ "design": {
+  "decision": 88,
+  "model": {
+   "model": "emulator",
+   "judge": "emulator",
+   "ckpt_sha256": "7b08be25577b36669ef6b35cdc6cc6a62f927de00d0e69f96496afc1b6934283",
+   "model_src_commit": "2cbd5c2252e9f3b5578edb0057e4b770069fa8f9",
+   "model_config": {
+    "size": "50m",
+    "scalar_stage": "twostage",
+    "ledger": true,
+    "bookkeeping": true
+   },
+   "chunk": 256,
+   "buckets": [
+    16,
+    64,
+    144,
+    256
+   ],
+   "compiled_trunk": true,
+   "fast": {
+    "fused": true,
+    "compile": true,
+    "graphs": true,
+    "source_sha": "5659be20f167508d7853784fdfad14f2428038d10c6cd83c9ccf1058774b4491"
+   },
+   "decoding": {
+    "temperature": 1.0,
+    "overlay": "sample",
+    "source": "model.rollout defaults",
+    "default_decoding": "a",
+    "default_decoding_matches": true
+   },
+   "seeds": null,
+   "seeds_avoid": null,
+   "continuation": null
+  },
+  "tasks_file": "data/tasks_v2_H24.json",
+  "tasks_sha256": "2c35286cf5fa61858c94d83716884f092b7afff228828bc4f2d7b05b9e2c76e5",
+  "tasks_code_sha256": "05d94a02622a79dd07c2a5d8cf5e2bdf5371488c56355f6af16b9a3ee6cd1485",
+  "order_file": "data/replan_order_v1.json",
+  "order_sha256": "e5475dcbe4420e1948fec16dab559e6725642bf4549bd9281a2dd091ba1ebbf5",
+  "n_plans": 1000,
+  "H": 24,
+  "oracle_seeds": 32,
+  "K_search": 2,
+  "K_verdict": 8,
+  "verdict_rank": 4,
+  "replan_code_sha256": "2050152afb9d6d4d3fa342e47f7fdf5b4a2c4c1126e07e75f3cc0403bda6e053",
+  "controller_version": 3
+ },
+ "invocations": [
+  {
+   "argv": [
+    "code/scripts/run_replan.py",
+    "--model",
+    "emulator",
+    "--controller-version",
+    "3",
+    "--checkpoint",
+    "<cache>/ckpt/ladder_v2/os_50m_full/samples_006000000.pt",
+    "--instances",
+    "100",
+    "--plans",
+    "1000",
+    "--shard",
+    "1/1",
+    "--workers",
+    "4",
+    "--remote",
+    "host-b",
+    "--remote-workers",
+    "22",
+    "--device",
+    "cuda:0",
+    "--out",
+    "results/replan/emulator"
+   ],
+   "started_utc": "2026-11-13T04:58:27",
+   "host": "host-a",
+   "git": {
+    "rev": "c365d83884189f4d164756bbb02d95867af6e0a9",
+    "dirty_files": [
+     "?? results/audit/ladder/os_100m_small/samples_003000064/tasks_v2x_H24/",
+     "?? results/audit/ladder/sf_100m_full/samples_000750080/tasks_v2_H24_cem_seeded/",
+     "?? results/audit/ladder/sf_50m_full/samples_000750080/tasks_v2_H24_cem_seeded/",
+     "?? results/audit/ladder/sf_50m_small/samples_000750080/tasks_v2_H24_cem_seeded/"
+    ],
+    "file_sha256": {
+     "code/dc/replan.py": "2050152afb9d6d4d3fa342e47f7fdf5b4a2c4c1126e07e75f3cc0403bda6e053",
+     "code/dc/audit.py": "ea79479c6c5f1d3ec9b1fd4d725cc1ea7c02e583c9b92ba6b905653ccc441c6b",
+     "code/scripts/run_replan.py": "ecbf6c7b1bc55aae5934172520e83d5a0563779bb2f64f0906179acbd23b6a12",
+     "code/dc/behaviour.py": "d8cbf8f1f2f2bcc78b623422d3e047383c4e1673cec064f59971deeb0489c846",
+     "code/dc/tasks.py": "05d94a02622a79dd07c2a5d8cf5e2bdf5371488c56355f6af16b9a3ee6cd1485"
+    }
+   },
+   "remote": {
+    "host": "host-b",
+    "workers": 22,
+    "checked_files": [
+     "code/dc/replan.py",
+     "code/dc/behaviour.py",
+     "code/dc/oracle.py",
+     "code/dc/engine.py",
+     "code/dc/grammar.py",
+     "code/dc/seeds.py"
+    ],
+    "identical_jobs": 9
+   },
+   "workers": 4,
+   "describe": {
+    "model": "emulator",
+    "judge": "emulator",
+    "ckpt": "<cache>/ckpt/ladder_v2/os_50m_full/samples_006000000.pt",
+    "model_src": "auto",
+    "model_src_resolved": "2cbd5c2252e9f3b5578edb0057e4b770069fa8f9",
+    "model_src_commit": "2cbd5c2252e9f3b5578edb0057e4b770069fa8f9",
+    "model_py_sha256": "fd9cd9eec0364df780d16968652bd213987fbea3e45717a997aeee1a28c2c191",
+    "samples": 6000000,
+    "ckpt_sha256": "7b08be25577b36669ef6b35cdc6cc6a62f927de00d0e69f96496afc1b6934283",
+    "ckpt_trained_at": "2cbd5c2252e9f3b5578edb0057e4b770069fa8f9",
+    "model_config": {
+     "size": "50m",
+     "scalar_stage": "twostage",
+     "ledger": true,
+     "bookkeeping": true
+    },
+    "device": "cuda:0",
+    "chunk": 256,
+    "buckets": [
+     16,
+     64,
+     144,
+     256
+    ],
+    "compiled_trunk": true,
+    "fast": {
+     "fused": true,
+     "compile": true,
+     "graphs": true,
+     "source_sha": "5659be20f167508d7853784fdfad14f2428038d10c6cd83c9ccf1058774b4491"
+    },
+    "decoding": {
+     "temperature": 1.0,
+     "overlay": "sample",
+     "source": "model.rollout defaults",
+     "default_decoding": "a",
+     "default_decoding_matches": true
+    }
+   }
+  },
+  {
+   "argv": [
+    "code/scripts/run_replan.py",
+    "--model",
+    "emulator",
+    "--controller-version",
+    "3",
+    "--checkpoint",
+    "<cache>/ckpt/ladder_v2/os_50m_full/samples_006000000.pt",
+    "--instances",
+    "100",
+    "--plans",
+    "1000",
+    "--shard",
+    "2/3",
+    "--workers",
+    "4",
+    "--remote",
+    "host-b",
+    "--remote-workers",
+    "7",
+    "--device",
+    "cuda:0",
+    "--out",
+    "results/replan/emulator"
+   ],
+   "started_utc": "2026-11-13T05:16:11",
+   "host": "host-a",
+   "git": {
+    "rev": "07463ec1f75088423f589ad89345422ccee3b63f",
+    "dirty_files": [
+     "?? results/audit/ladder/os_100m_small/samples_003000064/tasks_v2x_H24/",
+     "?? results/audit/ladder/sf_100m_full/samples_000750080/tasks_v2_H24_cem_seeded/",
+     "?? results/audit/ladder/sf_50m_full/samples_000750080/tasks_v2_H24_cem_seeded/",
+     "?? results/replan/emulator/"
+    ],
+    "file_sha256": {
+     "code/dc/replan.py": "2050152afb9d6d4d3fa342e47f7fdf5b4a2c4c1126e07e75f3cc0403bda6e053",
+     "code/dc/audit.py": "ea79479c6c5f1d3ec9b1fd4d725cc1ea7c02e583c9b92ba6b905653ccc441c6b",
+     "code/scripts/run_replan.py": "ecbf6c7b1bc55aae5934172520e83d5a0563779bb2f64f0906179acbd23b6a12",
+     "code/dc/behaviour.py": "d8cbf8f1f2f2bcc78b623422d3e047383c4e1673cec064f59971deeb0489c846",
+     "code/dc/tasks.py": "05d94a02622a79dd07c2a5d8cf5e2bdf5371488c56355f6af16b9a3ee6cd1485"
+    }
+   },
+   "remote": {
+    "host": "host-b",
+    "workers": 7,
+    "checked_files": [
+     "code/dc/replan.py",
+     "code/dc/behaviour.py",
+     "code/dc/oracle.py",
+     "code/dc/engine.py",
+     "code/dc/grammar.py",
+     "code/dc/seeds.py"
+    ],
+    "identical_jobs": 9
+   },
+   "workers": 4,
+   "describe": {
+    "model": "emulator",
+    "judge": "emulator",
+    "ckpt": "<cache>/ckpt/ladder_v2/os_50m_full/samples_006000000.pt",
+    "model_src": "auto",
+    "model_src_resolved": "2cbd5c2252e9f3b5578edb0057e4b770069fa8f9",
+    "model_src_commit": "2cbd5c2252e9f3b5578edb0057e4b770069fa8f9",
+    "model_py_sha256": "fd9cd9eec0364df780d16968652bd213987fbea3e45717a997aeee1a28c2c191",
+    "samples": 6000000,
+    "ckpt_sha256": "7b08be25577b36669ef6b35cdc6cc6a62f927de00d0e69f96496afc1b6934283",
+    "ckpt_trained_at": "2cbd5c2252e9f3b5578edb0057e4b770069fa8f9",
+    "model_config": {
+     "size": "50m",
+     "scalar_stage": "twostage",
+     "ledger": true,
+     "bookkeeping": true
+    },
+    "device": "cuda:0",
+    "chunk": 256,
+    "buckets": [
+     16,
+     64,
+     144,
+     256
+    ],
+    "compiled_trunk": true,
+    "fast": {
+     "fused": true,
+     "compile": true,
+     "graphs": true,
+     "source_sha": "5659be20f167508d7853784fdfad14f2428038d10c6cd83c9ccf1058774b4491"
+    },
+    "decoding": {
+     "temperature": 1.0,
+     "overlay": "sample",
+     "source": "model.rollout defaults",
+     "default_decoding": "a",
+     "default_decoding_matches": true
+    }
+   }
+  },
+  {
+   "argv": [
+    "code/scripts/run_replan.py",
+    "--model",
+    "emulator",
+    "--controller-version",
+    "3",
+    "--checkpoint",
+    "<cache>/ckpt/ladder_v2/os_50m_full/samples_006000000.pt",
+    "--instances",
+    "100",
+    "--plans",
+    "1000",
+    "--shard",
+    "1/3",
+    "--workers",
+    "4",
+    "--remote",
+    "host-b",
+    "--remote-workers",
+    "8",
+    "--device",
+    "cuda:0",
+    "--out",
+    "results/replan/emulator"
+   ],
+   "started_utc": "2026-11-13T05:16:11",
+   "host": "host-a",
+   "git": {
+    "rev": "07463ec1f75088423f589ad89345422ccee3b63f",
+    "dirty_files": [
+     "?? results/audit/ladder/os_100m_small/samples_003000064/tasks_v2x_H24/",
+     "?? results/audit/ladder/sf_100m_full/samples_000750080/tasks_v2_H24_cem_seeded/",
+     "?? results/audit/ladder/sf_50m_full/samples_000750080/tasks_v2_H24_cem_seeded/",
+     "?? results/replan/emulator/"
+    ],
+    "file_sha256": {
+     "code/dc/replan.py": "2050152afb9d6d4d3fa342e47f7fdf5b4a2c4c1126e07e75f3cc0403bda6e053",
+     "code/dc/audit.py": "ea79479c6c5f1d3ec9b1fd4d725cc1ea7c02e583c9b92ba6b905653ccc441c6b",
+     "code/scripts/run_replan.py": "ecbf6c7b1bc55aae5934172520e83d5a0563779bb2f64f0906179acbd23b6a12",
+     "code/dc/behaviour.py": "d8cbf8f1f2f2bcc78b623422d3e047383c4e1673cec064f59971deeb0489c846",
+     "code/dc/tasks.py": "05d94a02622a79dd07c2a5d8cf5e2bdf5371488c56355f6af16b9a3ee6cd1485"
+    }
+   },
+   "remote": {
+    "host": "host-b",
+    "workers": 8,
+    "checked_files": [
+     "code/dc/replan.py",
+     "code/dc/behaviour.py",
+     "code/dc/oracle.py",
+     "code/dc/engine.py",
+     "code/dc/grammar.py",
+     "code/dc/seeds.py"
+    ],
+    "identical_jobs": 9
+   },
+   "workers": 4,
+   "describe": {
+    "model": "emulator",
+    "judge": "emulator",
+    "ckpt": "<cache>/ckpt/ladder_v2/os_50m_full/samples_006000000.pt",
+    "model_src": "auto",
+    "model_src_resolved": "2cbd5c2252e9f3b5578edb0057e4b770069fa8f9",
+    "model_src_commit": "2cbd5c2252e9f3b5578edb0057e4b770069fa8f9",
+    "model_py_sha256": "fd9cd9eec0364df780d16968652bd213987fbea3e45717a997aeee1a28c2c191",
+    "samples": 6000000,
+    "ckpt_sha256": "7b08be25577b36669ef6b35cdc6cc6a62f927de00d0e69f96496afc1b6934283",
+    "ckpt_trained_at": "2cbd5c2252e9f3b5578edb0057e4b770069fa8f9",
+    "model_config": {
+     "size": "50m",
+     "scalar_stage": "twostage",
+     "ledger": true,
+     "bookkeeping": true
+    },
+    "device": "cuda:0",
+    "chunk": 256,
+    "buckets": [
+     16,
+     64,
+     144,
+     256
+    ],
+    "compiled_trunk": true,
+    "fast": {
+     "fused": true,
+     "compile": true,
+     "graphs": true,
+     "source_sha": "5659be20f167508d7853784fdfad14f2428038d10c6cd83c9ccf1058774b4491"
+    },
+    "decoding": {
+     "temperature": 1.0,
+     "overlay": "sample",
+     "source": "model.rollout defaults",
+     "default_decoding": "a",
+     "default_decoding_matches": true
+    }
+   }
+  },
+  {
+   "argv": [
+    "code/scripts/run_replan.py",
+    "--model",
+    "emulator",
+    "--controller-version",
+    "3",
+    "--checkpoint",
+    "<cache>/ckpt/ladder_v2/os_50m_full/samples_006000000.pt",
+    "--instances",
+    "100",
+    "--plans",
+    "1000",
+    "--shard",
+    "3/3",
+    "--workers",
+    "4",
+    "--remote",
+    "host-b",
+    "--remote-workers",
+    "7",
+    "--device",
+    "cuda:0",
+    "--out",
+    "results/replan/emulator"
+   ],
+   "started_utc": "2026-11-13T05:28:27",
+   "host": "host-a",
+   "git": {
+    "rev": "0c43bcaf6dcf2bf35709a95888f9c47bea60d60e",
+    "dirty_files": [
+     "?? results/audit/ladder/os_100m_small/samples_003000064/tasks_v2x_H24/",
+     "?? results/replan/emulator/"
+    ],
+    "file_sha256": {
+     "code/dc/replan.py": "2050152afb9d6d4d3fa342e47f7fdf5b4a2c4c1126e07e75f3cc0403bda6e053",
+     "code/dc/audit.py": "ea79479c6c5f1d3ec9b1fd4d725cc1ea7c02e583c9b92ba6b905653ccc441c6b",
+     "code/scripts/run_replan.py": "ecbf6c7b1bc55aae5934172520e83d5a0563779bb2f64f0906179acbd23b6a12",
+     "code/dc/behaviour.py": "d8cbf8f1f2f2bcc78b623422d3e047383c4e1673cec064f59971deeb0489c846",
+     "code/dc/tasks.py": "05d94a02622a79dd07c2a5d8cf5e2bdf5371488c56355f6af16b9a3ee6cd1485"
+    }
+   },
+   "remote": {
+    "host": "host-b",
+    "workers": 7,
+    "checked_files": [
+     "code/dc/replan.py",
+     "code/dc/behaviour.py",
+     "code/dc/oracle.py",
+     "code/dc/engine.py",
+     "code/dc/grammar.py",
+     "code/dc/seeds.py"
+    ],
+    "identical_jobs": 9
+   },
+   "workers": 4,
+   "describe": {
+    "model": "emulator",
+    "judge": "emulator",
+    "ckpt": "<cache>/ckpt/ladder_v2/os_50m_full/samples_006000000.pt",
+    "model_src": "auto",
+    "model_src_resolved": "2cbd5c2252e9f3b5578edb0057e4b770069fa8f9",
+    "model_src_commit": "2cbd5c2252e9f3b5578edb0057e4b770069fa8f9",
+    "model_py_sha256": "fd9cd9eec0364df780d16968652bd213987fbea3e45717a997aeee1a28c2c191",
+    "samples": 6000000,
+    "ckpt_sha256": "7b08be25577b36669ef6b35cdc6cc6a62f927de00d0e69f96496afc1b6934283",
+    "ckpt_trained_at": "2cbd5c2252e9f3b5578edb0057e4b770069fa8f9",
+    "model_config": {
+     "size": "50m",
+     "scalar_stage": "twostage",
+     "ledger": true,
+     "bookkeeping": true
+    },
+    "device": "cuda:0",
+    "chunk": 256,
+    "buckets": [
+     16,
+     64,
+     144,
+     256
+    ],
+    "compiled_trunk": true,
+    "fast": {
+     "fused": true,
+     "compile": true,
+     "graphs": true,
+     "source_sha": "5659be20f167508d7853784fdfad14f2428038d10c6cd83c9ccf1058774b4491"
+    },
+    "decoding": {
+     "temperature": 1.0,
+     "overlay": "sample",
+     "source": "model.rollout defaults",
+     "default_decoding": "a",
+     "default_decoding_matches": true
+    }
+   }
+  }
+ ]
+}

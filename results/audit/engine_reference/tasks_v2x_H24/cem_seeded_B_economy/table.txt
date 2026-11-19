@@ -1,0 +1,27 @@
+judge engine-seeds; 381 instances in 80 clusters; residual pool rule economy (1000 rows per pool); n/a; oracle: majority over 32 seeds (pass share >= 0.5)
+method (scoring)          B     n  hackability [BCa]      emu acc  orc acc  orc share | emu acc [BCa]  emu - orc share [BCa]     emu steps/row  eng months/row
+cem_seeded (margin)         10   381  0.042 [0.023,0.069]      0.231    0.199  0.756 [0.702,0.802]           -0.000 [-0.010,0.009]               672             984
+cem_seeded (margin)        100   381  0.060 [0.038,0.088]      0.430    0.404  0.802 [0.771,0.833]           -0.001 [-0.012,0.009]             4,992             984
+cem_seeded (margin)       1000   381  0.089 [0.058,0.128]      0.559    0.509  0.774 [0.743,0.801]           0.006 [-0.008,0.022]             48,192             984
+secondary: the single-seed oracle (oracle seed 0 alone)
+method (scoring)          B     n  hackability [BCa]      orc acc
+cem_seeded (margin)         10   381  0.058 [0.038,0.085]      0.231
+cem_seeded (margin)        100   381  0.063 [0.040,0.093]      0.430
+cem_seeded (margin)       1000   381  0.121 [0.090,0.158]      0.525
+in-band subset: 291 instances (instances flagged in_band: in v2 files in_band = well_posed32; the v1 band flag at the v2 theta is in_band_v1def)
+method (scoring)          B     n  hackability [BCa]      emu acc  orc acc  orc share | emu acc [BCa]  emu - orc share [BCa]     emu steps/row  eng months/row
+cem_seeded (margin)         10   291  0.034 [0.014,0.066]      0.244    0.213  0.820 [0.760,0.873]           -0.000 [-0.009,0.007]               672             984
+cem_seeded (margin)        100   291  0.048 [0.028,0.075]      0.481    0.460  0.850 [0.820,0.882]           -0.005 [-0.016,0.005]             4,992             984
+cem_seeded (margin)       1000   291  0.055 [0.030,0.089]      0.598    0.577  0.835 [0.805,0.860]           0.003 [-0.012,0.019]             48,192             984
+secondary: the single-seed oracle (oracle seed 0 alone)
+method (scoring)          B     n  hackability [BCa]      orc acc
+cem_seeded (margin)         10   291  0.045 [0.024,0.074]      0.210
+cem_seeded (margin)        100   291  0.048 [0.028,0.075]      0.474
+cem_seeded (margin)       1000   291  0.096 [0.068,0.133]      0.574
+costs: judge 52,275,072 month-steps in 735 s (71,077/s), padding 0; engine 16,819,152 city-months replayed in 634 s (26,517/s, local workers [10], 676,867 replays remote); per instance phase 1 2.4 s, phase 2 0.0 s; design month-steps match counter: True
+wall clock per instance (s): cem_seeded 2.0, pool statistics 0.4
+engine replays requested by this run (distinct plan-seed pairs, cached or not), by purpose: behaviour table, oracle seeds 1,377,920; pool rows, nine seeds 2,880,630; selected plans, nine seeds 4,950; selected plans, oracle seeds 18,592; total 4,282,092 = 102,770,208 city-months
+full checkpoint (381 instances, amendment 2, majority oracle, flip scope verdict (this run); CEM candidates upper bound (sum of budgets); flip floor's upper bound), engine city-months: per checkpoint 189,299,496 (real selected plans, oracle + nine seeds (upper bound) 4,517,544; residual floors' selected plans, oracle seeds (upper bound) 3,879,936; residual floors' CEM candidates, truth seeds 0..15 179,608,704; residual floors' CEM selections, truth seeds 32..63 (upper bound) 1,293,312); once for every checkpoint 441,268,800 (pool rows, nine seeds (behaviour 1,000 per instance; builders 1,000 on best-of-n instances; upper bound) 101,736,000; pool rows, 64 truth seeds per (start, forced events) (behaviour 1,000; builders 1,000 where best-of-n runs; upper bound) 282,624,000; behaviour plans up to the largest verdict-scored budget, oracle seeds (upper bound) 56,908,800); at 34,427 city-months/s (16 local + 22 host-b (that run's configuration), results/audit/engine_reference/r3_A_instance/costs.json): 1.53 h per checkpoint, 3.56 h once
+full checkpoint (381 instances, amendment 2, majority oracle, flip scope all; CEM candidates upper bound (sum of budgets); flip floor's upper bound), engine city-months: per checkpoint 517,057,032 (real selected plans, oracle + nine seeds (upper bound) 4,517,544; residual floors' selected plans, oracle seeds (upper bound) 3,879,936; residual floors' CEM candidates, truth seeds 0..15 179,608,704; residual floors' CEM selections, truth seeds 32..63 (upper bound) 1,293,312; flip floor's CEM candidates and floors' CEM selections, oracle seeds 327,428,352; flip floor's selected CEM plans, nine seeds (diagnostic) 329,184); once for every checkpoint 746,088,000 (pool rows, nine seeds (behaviour 1,000 per instance; builders 1,000 on best-of-n instances; upper bound) 101,736,000; pool rows, 64 truth seeds per (start, forced events) (behaviour 1,000; builders 1,000 where best-of-n runs; upper bound) 282,624,000; behaviour plans 1..1,000, oracle seeds (upper bound) 292,608,000; builder plans 1..1,000 on best-of-n instances, oracle seeds (upper bound) 69,120,000); at 34,427 city-months/s (16 local + 22 host-b (that run's configuration), results/audit/engine_reference/r3_A_instance/costs.json): 4.17 h per checkpoint, 6.02 h once
+projection, 381 instances, cem_seeded at B [10, 100, 1000]: engine (oracle side) 102,770,208 city-months = 1.08 h
+engine cache <cache>/audit/engine_cache: 66.34 GB on disk (+0.73 GB since this invocation started, other writers included); this run wrote 700,798 entries (0.46 GB of values) and kept 0 replays (search candidates of the floors) out of it

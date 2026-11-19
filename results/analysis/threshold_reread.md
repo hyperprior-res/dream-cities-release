@@ -1,0 +1,23 @@
+# Threshold placement re-read: random search at 1,000 on the main checkpoint 
+
+Generated 2026-11-12T13:26:19Z by `PYTHONPATH=hpr-dream:code .venv/bin/python code/scripts/threshold_reread.py`. Records: `results/audit/ladder/os_50m_full/samples_006000000/tasks_v2_H24`; perfect emulator: `<repo>/results/audit/engine_reference/tasks_v2_H24/B_economy`; 193 instances. Thresholds: theta32_l25 (a quarter of the way from the best constant plan c to the engine-side search's best e), theta32_l50 (halfway, the audit's) and theta32_l75, from the tasks file. Intervals: cluster bootstrap over start-state families, 2000 resamples, seed 0, BCa (percentile where BCa is undefined; exact one-sided bound where no unit is hacked). The audit's theta equals theta32_l50 on every instance: yes.
+
+Exact re-read needs the selection unchanged and the selected plans' per-sample outcomes at the new threshold. Both hold only where the margin is the statistic's clause alone and every trajectory is feasible (a change of theta then shifts every margin by one constant); this is checked on `dc.tasks` itself for each family.
+
+| family | instances | margin a uniform shift of theta | status |
+|---|---|---|---|
+| grow | 40 | no (all feasible: no; largest deviation 0.3) | not computed: the margin is the minimum over the statistic's clause and the funds clause; a stored margin does not say which clause binds, so a change of theta does not shift every candidate's score by one constant (the selection cannot be recomputed from the stored candidate scores) and the per-sample verdicts at another theta cannot be read from the stored per-sample margins |
+| solvent | 38 | no (all feasible: no; largest deviation 0.3) | not computed: the margin is the minimum over the statistic's clause and the funds-floor clause; a stored margin does not say which clause binds, so a change of theta does not shift every candidate's score by one constant (the selection cannot be recomputed from the stored candidate scores) and the per-sample verdicts at another theta cannot be read from the stored per-sample margins |
+| treasury | 40 | no (all feasible: no; largest deviation 0.3) | not computed: the margin is the minimum over the statistic's clause and the funds and tax-rate clauses; a stored margin does not say which clause binds, so a change of theta does not shift every candidate's score by one constant (the selection cannot be recomputed from the stored candidate scores) and the per-sample verdicts at another theta cannot be read from the stored per-sample margins |
+| recover | 35 | yes (all feasible: yes; largest deviation 1.05e-15) | ok |
+| power | 40 | no (all feasible: no; largest deviation 0.3) | not computed: the margin is the minimum over the statistic's clause and the powered-share and plant-count clauses; a stored margin does not say which clause binds, so a change of theta does not shift every candidate's score by one constant (the selection cannot be recomputed from the stored candidate scores) and the per-sample verdicts at another theta cannot be read from the stored per-sample margins |
+
+## recover
+
+Selection unchanged: the selected plan's smallest lead over the runner-up among the 1000 candidate scores (stored, recovered as the analysis plan does): emulator 4.44e-16, perfect emulator 0.00292. Tied on the emulator's score (within 1e-09): ho-g-13-v0|recover|H24 (selected candidate 63, tied with [795]). A tie at theta is a tie at every theta and the search takes the first tied candidate, so the selection is unchanged in exact arithmetic; a rerun in floating point could break the tie the other way, the other plan's per-sample outcomes are not stored, and the instance can move each count by at most one. Smallest distance of a per-sample margin to a shifted bar: 0.000425. At theta32_l50 the re-read reproduces every stored verdict: yes.
+
+| threshold | n | false acceptance | perfect emulator | excess | real success | perfect emulator's real success | emulator accepts | hacked / perfect hacked / oracle accepts / perfect oracle accepts |
+|---|---|---|---|---|---|---|---|---|
+| theta32_l25 (a quarter of the way from c to e) | 35 | 0.257 [0.143, 0.429] | 0.200 [0.086, 0.371] | +0.057 [-0.114, +0.229] | 0.514 [0.343, 0.686] | 0.486 [0.314, 0.657] | 0.657 [0.486, 0.800] | 9 / 7 / 18 / 17 |
+| theta32_l50 (halfway (the audit's)) | 35 | 0.343 [0.200, 0.514] | 0.143 [0.057, 0.286] | +0.200 [+0.000, +0.400] | 0.314 [0.171, 0.486] | 0.343 [0.200, 0.514] | 0.571 [0.400, 0.714] | 12 / 5 / 11 / 12 |
+| theta32_l75 (three quarters of the way from c to e) | 35 | 0.400 [0.257, 0.571] | 0.171 [0.086, 0.314] | +0.229 [+0.000, +0.429] | 0.143 [0.057, 0.286] | 0.143 [0.057, 0.286] | 0.486 [0.314, 0.629] | 14 / 6 / 5 / 5 |

@@ -1,0 +1,135 @@
+\documentclass{hyperprior}
+\input{numbers.tex}
+\input{sections/switched.tex}
+\wordmarkpath{../template/wordmark.pdf}
+\newcommand{\FinishingDate}{2026-11-15}
+\title{Dream Cities: Measuring World-Model Exploitation Against an Exact Simulator}
+\author{Patrick Steele}
+\affiliation{HyperPrior Research, London}
+\date{\FinishingDate}
+\hypersetup{pdfauthor={Patrick Steele},pdfsubject={Measuring world-model exploitation under planning and reinforcement learning against an exact spatial-economic simulator},
+  pdfkeywords={world models, learned simulators, spatial-economic simulation, model-based reinforcement learning, planning, optimiser's curse}}
+\keywords{world models, learned simulators, spatial-economic simulation, model-based reinforcement learning, planning, optimiser's curse}
+\usepackage{xurl}
+\urlstyle{same}
+
+% Refined academic typographic scale (9.6/11.6 pt XCharter matches optical x-height of
+% 10 pt journal body type across narrow 3.16-in columns), classic indented paragraphs
+% without simultaneous parskip gaps, breathable 16 pt column gutter, optical margin
+% protrusion, and flush-left ragged-right section headings.
+\makeatletter
+\renewcommand\normalsize{%
+  \@setfontsize\normalsize{9.6}{11.6}%
+  \abovedisplayskip 7\p@ \@plus2\p@ \@minus3.5\p@
+  \abovedisplayshortskip \z@ \@plus2\p@
+  \belowdisplayshortskip 4.5\p@ \@plus2\p@ \@minus2\p@
+  \belowdisplayskip \abovedisplayskip
+  \let\@listi\@listI}
+\normalsize
+\renewcommand\small{%
+  \@setfontsize\small{8.6}{10.4}%
+  \abovedisplayskip 6\p@ \@plus2\p@ \@minus3\p@
+  \abovedisplayshortskip \z@ \@plus1.5\p@
+  \belowdisplayshortskip 3.5\p@ \@plus1.5\p@ \@minus1.5\p@
+  \def\@listi{\leftmargin\leftmargini
+              \topsep 3\p@ \@plus1\p@ \@minus1\p@
+              \parsep 1.5\p@ \@plus\p@ \@minus\p@
+              \itemsep \parsep}%
+  \belowdisplayskip \abovedisplayskip}
+\renewcommand\footnotesize{%
+  \@setfontsize\footnotesize{7.8}{9.4}%
+  \abovedisplayskip 5\p@ \@plus1.5\p@ \@minus2.5\p@
+  \abovedisplayshortskip \z@ \@plus\p@
+  \belowdisplayshortskip 2.5\p@ \@plus\p@ \@minus\p@
+  \def\@listi{\leftmargin\leftmargini
+              \topsep 2.5\p@ \@plus\p@ \@minus\p@
+              \parsep 1\p@ \@plus\p@ \@minus\p@
+              \itemsep \parsep}%
+  \belowdisplayskip \abovedisplayskip}
+\renewcommand\scriptsize{\@setfontsize\scriptsize{7.0}{8.4}}
+\renewcommand\tiny{\@setfontsize\tiny{5.8}{7.0}}
+\renewcommand\large{\@setfontsize\large{11.2}{13.4}}
+\renewcommand\Large{\@setfontsize\Large{13.2}{15.8}}
+\makeatother
+
+\setlength{\columnsep}{16pt}
+\setlength{\parskip}{0pt plus 0.30pt}
+\setlength{\parindent}{1.1em}
+\setlength{\emergencystretch}{2.2em}
+\hyphenpenalty=50
+\exhyphenpenalty=50
+\widowpenalty=10000
+\clubpenalty=10000
+\displaywidowpenalty=10000
+
+\setlist[itemize]{leftmargin=1.25em,topsep=3.5pt plus 1.5pt minus 1pt,itemsep=2pt plus 0.8pt minus 0.4pt,parsep=0pt}
+\setlist[enumerate]{leftmargin=1.35em,topsep=3.5pt plus 1.5pt minus 1pt,itemsep=2pt plus 0.8pt minus 0.4pt,parsep=0pt}
+
+\titleformat{\section}[block]{\normalfont\bfseries\fontsize{11.5}{13.2}\selectfont\raggedright}{\thesection.}{0.5em}{}
+\titleformat{\subsection}[block]{\normalfont\bfseries\fontsize{9.8}{11.6}\selectfont\raggedright}{\thesubsection.}{0.5em}{}
+\titleformat{\subsubsection}[block]{\normalfont\bfseries\itshape\fontsize{9.6}{11.4}\selectfont\raggedright}{\thesubsubsection.}{0.5em}{}
+\titleformat{\paragraph}[runin]{\normalfont\normalsize\bfseries}{}{0pt}{}
+\titlespacing*{\section}{0pt}{2.30ex plus 0.45ex minus 0.2ex}{0.75ex}
+\titlespacing*{\subsection}{0pt}{1.80ex plus 0.35ex minus 0.15ex}{0.50ex}
+\titlespacing*{\subsubsection}{0pt}{1.40ex plus 0.25ex minus 0.15ex}{0.40ex}
+\titlespacing*{\paragraph}{0pt}{1.10ex plus 0.25ex minus 0.15ex}{0.55em}
+
+\RenewDocumentCommand{\maketitle}{}{%
+  \twocolumn[\begin{minipage}{\textwidth}
+  \setlength{\parindent}{0pt}
+  \setlength{\parskip}{0pt}
+  \vspace*{2.73pt}
+  {\raggedright\normalfont\bfseries\fontsize{20.5}{22.8}\selectfont\hprtitle\par}
+  \vspace{10.5pt}
+  {\raggedright\normalfont\bfseries\fontsize{9.0}{12.5}\selectfont\hprauthors\par}
+  \vspace{1.0pt}
+  {\raggedright\normalfont\fontsize{8.0}{10.0}\selectfont\hpraffiliation\par}
+  \vspace{15.0pt}
+  {\normalfont\bfseries\fontsize{9.4}{11.9}\selectfont\hprabstract\par}
+  \vspace{8.5pt}
+  {\raggedright\normalfont\itshape\fontsize{9.2}{11.4}\selectfont Keywords: \hprkeywords\par}
+  \vspace{18.0pt}
+  \end{minipage}]
+  \thispagestyle{hprfirst}
+}
+
+\DeclareCaptionFont{hprcap}{\fontsize{8.5}{10.4}\selectfont}
+\captionsetup{font=hprcap,labelfont={bf},labelsep=hprbar,singlelinecheck=false,justification=justified,aboveskip=6pt,belowskip=0pt}
+
+\renewcommand{\topfraction}{0.9}
+\renewcommand{\textfraction}{0.07}
+\renewcommand{\floatpagefraction}{0.8}
+\renewcommand{\dblfloatpagefraction}{0.8}
+\renewcommand{\dbltopfraction}{0.86}
+\setcounter{topnumber}{2}
+\setlength{\textfloatsep}{11pt plus 2pt minus 2pt}
+\setlength{\dbltextfloatsep}{11pt plus 2pt minus 2pt}
+\setcounter{dbltopnumber}{2}
+\setlength{\bibsep}{3pt plus 1pt minus 0.5pt}
+\newcommand{\slot}[2]{\textcolor{hprred}{[SLOT~#1: #2]}}
+\newcommand{\slotmark}[1]{\textcolor{hprred}{\footnotesize[#1]}}
+\newcommand{\Bp}[1]{$10^{#1}$}
+\newcommand{\hpd}{\textnormal{\texttt{hpr-dream}}}
+\newcommand{\ci}[1]{#1}
+\renewcommand{\bibfont}{\small}
+\newcommand{\AbsFonts}{\def\textminus{-}}
+\begin{abstract}
+\AbsFonts
+Optimising inside a learned world model entangles finite-sample selection luck with model exploitation. In Micropolis, a spatial-economic simulator with bit-exact replay, we benchmark planning error above finite-sample selection luck by running each optimiser identically inside a learned world model and inside an exact-simulator reference on fresh seeds. Across a \Ladder-checkpoint model ladder that clears short-horizon fidelity gates yet drifts over our \Horizon-month horizon, excess false acceptance appears before search and persists across budgets. Under cross-entropy search, world-model ground-truth pass rates stall between \Bp{3} and \Bp{4} plans while exact-simulator discovery keeps climbing, widening the absolute shortfall from \PaTenShort{} to \PaTenThouShort{}\AbsReplanClause. In-imagination PPO policies trained for \RlMonths{} imagined months show parallel optimism, and perturbation-controlled patching isolates post-earthquake fire spread as a causal driver on recovery. Within this ladder (\AcPairs{} model-task pairs), trajectory-fidelity metrics show weak association with PPO exploitation, whereas single-plan verdict calibration on one logged plan per starting instance achieves Spearman \AcEOneRho{} (\AcEOneWithin{} within family). Single-seed fiscal-coverage retraining cuts planning excess without raising ground-truth pass rates, while post-hoc inference defences reduce false acceptance only by rejecting many truly passing plans. Extending primary one-step training sixfold on a single seed (\ExtTrEpochs{} epochs) raises held-out likelihood yet worsens \Horizon-month spatial drift, flipping miscalibration from optimistic false acceptance to pessimistic rejection.
+\end{abstract}
+\begin{document}
+\maketitle
+
+\input{sections/intro.tex}
+\input{sections/setting.tex}
+\input{sections/pressure.tex}
+\input{sections/where.tex}
+\input{sections/across.tex}
+\input{sections/coverage.tex}
+\input{sections/defences.tex}
+\input{sections/related.tex}
+
+\bibliography{refs_tex}
+\clearpage\onecolumn\appendix
+\input{sections/appendices.tex}
+\end{document}

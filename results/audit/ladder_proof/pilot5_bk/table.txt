@@ -1,0 +1,34 @@
+judge emulator; 10 instances in 10 clusters; residual pool rule economy (120 rows per pool); family confusion rates on 1000 behaviour plans: grow fp 0.240 fn 0.450; solvent fp 0.190 fn 0.079; treasury fp 0.016 fn 0.093; recover fp 0.801 fn 0.016; power fp 0.059 fn 0.232
+method (scoring)       B     n  hackability [BCa]      judge acc  eng acc  unlucky  residual floor [BCa]          excess over residual [BCa]   flip floor [BCa]          excess over flip [BCa]   emu steps/row  eng months/row
+best_of_n (margin)       1     4  0.500 [0.000,1.000]       0.500    0.000    0.500  0.500 [0.000,1.000]    0.000 [0.000,0.000]       0.500 [0.000,1.000]    0.000 [-0.750,0.750]                240             432
+best_of_n (margin)      10     4  0.500 [0.000,1.000]       0.750    0.250    1.000  0.250 [0.000,0.750]    0.250 [0.000,0.750]       0.250 [0.000,0.750]    0.250 [0.000,0.750]                 672           2,106
+best_of_n (margin)     100     4  0.750 [0.250,1.000]       1.000    0.250    0.667  0.500 [0.000,1.000]    0.250 [0.000,0.750]       0.500 [0.000,1.000]    0.250 [0.000,0.750]               4,992          17,928
+cem (margin)             1    10  0.200 [0.000,0.500]       0.200    0.200    0.000  0.100 [0.000,0.500]    0.100 [0.000,0.400]       0.300 [0.100,0.600]    -0.100 [-0.469,0.000]               240             432
+cem (margin)            10    10  0.100 [0.000,0.400]       0.300    0.400    0.000  0.200 [0.000,0.500]    -0.100 [-0.400,0.000]     0.700 [0.300,0.900]    -0.600 [-0.900,-0.300]              672           2,690
+cem (margin)           100    10  0.300 [0.100,0.600]       0.800    0.500    0.333  0.600 [0.300,0.900]    -0.300 [-0.700,0.100]     0.600 [0.300,0.900]    -0.300 [-0.700,0.100]             4,992          31,831
+random (margin)          1    10  0.200 [0.000,0.500]       0.300    0.300    0.500  0.200 [0.000,0.500]    0.000 [0.000,0.000]       0.300 [0.100,0.600]    -0.100 [-0.400,0.000]               240             432
+random (margin)         10    10  0.200 [0.000,0.500]       0.800    0.700    0.500  0.300 [0.100,0.600]    -0.100 [-0.400,0.000]     0.400 [0.100,0.700]    -0.200 [-0.600,0.000]               672           2,074
+random (margin)        100    10  0.200 [0.000,0.500]       1.000    0.800    0.500  0.300 [0.100,0.638]    -0.100 [-0.400,0.200]     0.400 [0.100,0.700]    -0.200 [-0.600,0.200]             4,992          17,388
+random_verdict (verdict)     1    10  0.300 [0.100,0.600]       0.400    0.300    0.333  0.200 [0.000,0.500]    0.100 [0.000,0.455]       0.300 [0.100,0.600]    0.000 [-0.300,0.300]                384             216
+random_verdict (verdict)    10    10  0.100 [0.000,0.400]       1.000    0.900    0.000  0.300 [0.100,0.600]    -0.200 [-0.500,0.000]     0.400 [0.100,0.700]    -0.300 [-0.600,-0.100]            2,112             216
+random_verdict (verdict)   100    10  0.200 [0.000,0.500]       1.000    0.800    0.000  0.300 [0.100,0.638]    -0.100 [-0.400,0.200]     0.400 [0.100,0.700]    -0.200 [-0.500,0.000]            19,392             216
+summary residual floor, margin-scored groups: excess excludes 0 (BCa) in 0 of 9; mean excess -0.0000; largest |excess| -0.300 (cem B=100)
+summary flip floor, verdict-scored groups: excess excludes 0 (BCa) in 1 of 3; mean excess -0.1667; largest |excess| -0.300 (random_shooting B=10)
+cross-check subset: 5 instances; residual floor by the economy pool and by the fully paired pool, side by side
+method (scoring)          B     n  hackability [BCa]      economy floor [BCa]    excess [BCa]             paired floor [BCa]     excess [BCa]
+best_of_n (margin)           1     4  0.500 [0.000,1.000]    0.500 [0.000,1.000]    0.000 [0.000,0.000]      0.500 [0.000,1.000]    0.000 [0.000,0.000]
+best_of_n (margin)          10     4  0.500 [0.000,1.000]    0.250 [0.000,0.750]    0.250 [0.000,0.750]      0.000 [0.000,0.527]    0.500 [0.000,1.000]
+best_of_n (margin)         100     4  0.750 [0.250,1.000]    0.500 [0.000,1.000]    0.250 [0.000,0.750]      0.500 [0.000,1.000]    0.250 [0.000,0.750]
+cem (margin)                 1     5  0.200 [0.000,0.800]    0.000 [0.000,0.451]    0.200 [0.000,0.800]      0.200 [0.000,0.800]    0.000 [0.000,0.000]
+cem (margin)                10     5  0.200 [0.000,0.800]    0.200 [0.000,0.800]    0.000 [0.000,0.000]      0.600 [0.200,1.000]    -0.400 [-0.800,0.000]
+cem (margin)               100     5  0.600 [0.200,1.000]    0.600 [0.200,1.000]    0.000 [-0.600,0.600]     0.800 [0.200,1.000]    -0.200 [-0.800,0.600]
+random_shooting (margin)     1     5  0.000 [0.000,0.451]    0.000 [0.000,0.451]    0.000 [0.000,0.000]      0.000 [0.000,0.451]    0.000 [0.000,0.000]
+random_shooting (margin)    10     5  0.200 [0.000,0.800]    0.200 [0.000,0.800]    0.000 [0.000,0.000]      0.400 [0.000,0.800]    -0.200 [-0.800,0.000]
+random_shooting (margin)   100     5  0.200 [0.000,0.800]    0.600 [0.200,1.000]    -0.400 [-0.800,0.000]    0.200 [0.000,0.800]    0.000 [0.000,0.000]
+random_shooting (verdict)     1     5  0.200 [0.000,0.800]    0.000 [0.000,0.451]    0.200 [0.000,0.800]      0.000 [0.000,0.451]    0.200 [0.000,0.800]
+random_shooting (verdict)    10     5  0.200 [0.000,0.800]    0.200 [0.000,0.800]    0.000 [0.000,0.000]      0.400 [0.000,0.800]    -0.200 [-0.800,0.000]
+random_shooting (verdict)   100     5  0.200 [0.000,0.800]    0.600 [0.200,1.000]    -0.400 [-0.800,0.000]    0.200 [0.000,0.800]    0.000 [0.000,0.000]
+costs: judge 468,768 month-steps in 661 s (709/s), padding 103,392; engine 261,888 city-months replayed in 8 s (34,613/s, local workers [12], 7,645 replays remote); per instance phase 1 66.3 s, phase 2 0.9 s; design month-steps match counter: None
+wall clock per instance (s): cem 23.8, random 8.6, best_of_n 11.3, random_verdict 23.5, pool statistics 0.0
+design check (this run): judge month-steps by plan 468,768, counter 468,768: match
+full checkpoint (200 instances, amendment 2), emulator month-steps: random-search proposals (K=2) 3,840,000; shared 8-sample verdicts, behaviour plans 8,448,000; best-of-n proposals (K=2) 1,920,000; shared 8-sample verdicts, builder plans 3,840,000; CEM (K=2) 10,665,600; economy verdict rows, behaviour plans 1,536,000; economy verdict rows, builder plans 768,000; selected-plan verdicts (8 samples) 506,880; total 31,524,480 = 12.35 h at this run's 709/s

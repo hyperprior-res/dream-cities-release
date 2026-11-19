@@ -1,0 +1,283 @@
+{
+ "version": "bc-1",
+ "store": "<cache>/data/train_full",
+ "store_manifest_sha256": "bdaf215157f423b6ba804ffeb8c07f4b1688e4864e66f7f11d33c2ed150be315",
+ "store_traj_rec_sha256": "72ec1bccad833d5aacb8ce53fd553ab2a45cc50182a481f24fe65a55d9e2b12f",
+ "rows": 385032,
+ "rows_by_split": {
+  "train": 348120,
+  "val": 18720,
+  "heldout": 18192
+ },
+ "trajectories_by_split": {
+  "train": 14505,
+  "val": 780,
+  "heldout": 758
+ },
+ "selection": {
+  "store": "<cache>/data/train_full",
+  "store_trajectories": 49000,
+  "store_months": 3000000,
+  "kept_trajectories": 16043,
+  "kept_months_stored": 984696,
+  "kept_months_used": 385032,
+  "episode_months": 24,
+  "by_style": {
+   "boom": {
+    "trajectories": 2002,
+    "months_stored": 121728,
+    "months_used": 48048,
+    "months_left_out_after_24": 73680
+   },
+   "corridor": {
+    "trajectories": 2024,
+    "months_stored": 123864,
+    "months_used": 48576,
+    "months_left_out_after_24": 75288
+   },
+   "frugal": {
+    "trajectories": 2034,
+    "months_stored": 126504,
+    "months_used": 48816,
+    "months_left_out_after_24": 77688
+   },
+   "grid": {
+    "trajectories": 3640,
+    "months_stored": 224616,
+    "months_used": 87360,
+    "months_left_out_after_24": 137256
+   },
+   "industry": {
+    "trajectories": 2118,
+    "months_stored": 129168,
+    "months_used": 50832,
+    "months_left_out_after_24": 78336
+   },
+   "satellite": {
+    "trajectories": 2078,
+    "months_stored": 126600,
+    "months_used": 49872,
+    "months_left_out_after_24": 76728
+   },
+   "transit": {
+    "trajectories": 2147,
+    "months_stored": 132216,
+    "months_used": 51528,
+    "months_left_out_after_24": 80688
+   }
+  },
+  "left_out": {
+   "not a builder": {
+    "reason": "random editors, no-op months and budget sweeps (random/*, noop, budget_sweep): not builders",
+    "trajectories": 22361,
+    "months": 1366440,
+    "by_label": {
+     "budget_sweep": {
+      "trajectories": 4081,
+      "months": 250824
+     },
+     "budget_sweep+perturb": {
+      "trajectories": 1724,
+      "months": 105432
+     },
+     "noop": {
+      "trajectories": 3337,
+      "months": 203232
+     },
+     "noop+perturb": {
+      "trajectories": 1498,
+      "months": 91272
+     },
+     "random/sprinkle": {
+      "trajectories": 4745,
+      "months": 286512
+     },
+     "random/sprinkle+perturb": {
+      "trajectories": 2054,
+      "months": 128256
+     },
+     "random/uniform": {
+      "trajectories": 3479,
+      "months": 212280
+     },
+     "random/uniform+perturb": {
+      "trajectories": 1443,
+      "months": 88632
+     }
+    }
+   },
+   "perturbed builder": {
+    "reason": "builder/<style>+perturb: tax shocks, funding cuts, bulldozed wires, roads and plants and forced disasters mixed into the months, not the builder's choices, in months the store does not mark",
+    "trajectories": 7896,
+    "months": 481968,
+    "by_label": {
+     "builder/boom+perturb": {
+      "trajectories": 1089,
+      "months": 65520
+     },
+     "builder/corridor+perturb": {
+      "trajectories": 1013,
+      "months": 61656
+     },
+     "builder/frugal+perturb": {
+      "trajectories": 1017,
+      "months": 63432
+     },
+     "builder/grid+perturb": {
+      "trajectories": 1711,
+      "months": 103008
+     },
+     "builder/industry+perturb": {
+      "trajectories": 993,
+      "months": 60768
+     },
+     "builder/satellite+perturb": {
+      "trajectories": 1028,
+      "months": 63240
+     },
+     "builder/transit+perturb": {
+      "trajectories": 1045,
+      "months": 64344
+     }
+    }
+   },
+   "random disasters on": {
+    "reason": "the RL environments run with disasters off; the switch is a ledger entry the policy reads",
+    "trajectories": 2700,
+    "months": 166896,
+    "by_label": {
+     "builder/boom": {
+      "trajectories": 312,
+      "months": 19368
+     },
+     "builder/corridor": {
+      "trajectories": 346,
+      "months": 21360
+     },
+     "builder/frugal": {
+      "trajectories": 377,
+      "months": 23928
+     },
+     "builder/grid": {
+      "trajectories": 621,
+      "months": 37368
+     },
+     "builder/industry": {
+      "trajectories": 334,
+      "months": 20496
+     },
+     "builder/satellite": {
+      "trajectories": 360,
+      "months": 22464
+     },
+     "builder/transit": {
+      "trajectories": 350,
+      "months": 21912
+     }
+    }
+   }
+  },
+  "months_after_24_left_out": "the RL episode is 24 months from a loaded start; month t of a stored trajectory is month t of an episode only for t < 24"
+ },
+ "split": {
+  "rule": "seeded permutation of the families (seed_for('bc-split')); in that order, families go to the held-out split while adding one brings its share nearer to 5% of the trajectories, then to validation likewise (5%), the rest to training",
+  "splits": {
+   "train": {
+    "families": 54,
+    "family_ids": null,
+    "trajectories": 14505,
+    "share": 0.9041326435205386,
+    "months": 348120
+   },
+   "val": {
+    "families": 3,
+    "family_ids": [
+     "tr-b-linecity",
+     "tr-g-14",
+     "tr-g-25"
+    ],
+    "trajectories": 780,
+    "share": 0.048619335535747675,
+    "months": 18720
+   },
+   "heldout": {
+    "families": 3,
+    "family_ids": [
+     "tr-g-09",
+     "tr-g-17",
+     "tr-g-27"
+    ],
+    "trajectories": 758,
+    "share": 0.04724802094371377,
+    "months": 18192
+   }
+  }
+ },
+ "limit": null,
+ "task_vec_cols": [
+  0,
+  1,
+  2,
+  3,
+  4,
+  69,
+  70,
+  72,
+  73
+ ],
+ "files": {
+  "tiles16": {
+   "file": "tiles16.i16.npy",
+   "sha256": "642e2f827bf830316f71bda10be1b693b9d23fa0ca79a761bf8446ead3b46bf3"
+  },
+  "power": {
+   "file": "power.u1.npy",
+   "sha256": "3bb2ab0974e99b50886eca653a3110b974758a838db13615f34fabd2f4d4788e"
+  },
+  "half": {
+   "file": "half.u8.npy",
+   "sha256": "8197d485bb1e97ce4229c8489f50730116595c715acc1d273dc417f3e5d04ccf"
+  },
+  "eighth": {
+   "file": "eighth.i16.npy",
+   "sha256": "5fb255d73e1a9b83a5cac9fc51b7045ecf42c5d02ede8a364a2b37f4b520a0aa"
+  },
+  "terrain": {
+   "file": "terrain.u8.npy",
+   "sha256": "b3b048abf482897c296bbac8f4718da5a4225fa87035bba0c111b00ccc8fcf3f"
+  },
+  "com_rate": {
+   "file": "com_rate.i16.npy",
+   "sha256": "e7d3838ac69d05d05661b3f13022ca852661bf6a6865d0ab1f82d92c9e8c62be"
+  },
+  "scalars": {
+   "file": "scalars.f32.npy",
+   "sha256": "5067d9e2548a209b98608cf169cc1dda87a264bed89ad379f68f30a802ad04c1"
+  },
+  "ledger": {
+   "file": "ledger.f32.npy",
+   "sha256": "05eb3071a74384c17e5a4c15437788ce9b59b43de1ec24150699bb25ed045075"
+  },
+  "vec": {
+   "file": "vec.f32.npy",
+   "sha256": "81b644ecc7fb46ec520c8d82fbc4577fb43977c35b64ab4478b406a3ff21e20d"
+  },
+  "actions": {
+   "file": "actions.i16.npy",
+   "sha256": "2c46427eb687dcc59e75a89e72e80cb9704010ff92f1e4184ed01ac1c7b73deb"
+  },
+  "rows": {
+   "file": "rows.i16.npy",
+   "sha256": "945274140aff8b63bcc00a15c338b10fa160120d9fa590a0a355bc8cb54b4a08"
+  },
+  "trajectories": {
+   "file": "trajectories.npz",
+   "sha256": "7613bdbaba0cccc97d973d7f1db5ee17158ba07d42c113e28493c8796fb448c3"
+  }
+ },
+ "seconds": 111.90216088294983,
+ "code_sha256": {
+  "dc/bc.py": "71a4cd4a94feb5d165cdd774079eba9b055c347056a5ee1fabda7857e40d9328",
+  "dc/rl.py": "26e8f89b5aa20118b2c5ef649b51ce3631e51c705b9700bfa0793270c9ad7609"
+ }
+}
